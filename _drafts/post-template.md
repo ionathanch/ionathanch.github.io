@@ -1,9 +1,15 @@
 ---
 layout: post
 title: "Post Template"
-excerpt: "This is what is displayed on the home page."
+excerpt_separator: "<!--more-->"
 tags:
   - post
 categories:
   - templates
 ---
+
+This part will be displayed on the home page.
+
+<!--more-->
+
+This part will be shown in the full post.

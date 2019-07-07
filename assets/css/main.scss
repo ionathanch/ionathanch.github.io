@@ -4,5 +4,7 @@
 @import "hydeout";
 
 #sidebar .site-title {
-  font-size: 2rem;
+  &, .home & {
+    font-size: 2rem;
+  }
 }

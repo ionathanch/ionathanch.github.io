@@ -8,3 +8,12 @@
     font-size: 2rem;
   }
 }
+
+.image-wrapper {
+  text-align: center;
+
+  .image-caption {
+    color: $body-muted;
+    margin-top: $spacing-unit / 3;
+  }
+}

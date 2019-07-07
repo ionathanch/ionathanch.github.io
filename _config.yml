@@ -1,2 +1,13 @@
 remote_theme: fongandrew/hydeout
+
+title:   ⟨ortho|normal⟩
+tagline: '{Not a blog about math}'
+url:     https://hilb.ert.space
+
+author:
+  name: 'Jonathan Chan'
+  url:  https://github.com/ionathanch
+
 paginate: 5
+
+sidebar_home_link: true

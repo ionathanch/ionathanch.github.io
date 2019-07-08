@@ -42,7 +42,8 @@ And now for the fun part: tweaking the UI! As usual, I went for a flat + dark th
 The Conky configuration is based off of [this](https://github.com/zenzire/conkyrc) one and can be found [here](https://github.com/nonphatic/bunsenlabs-configs/blob/vmware/.conkyrc). In that repo are also configurations for Openbox and Tint2, whose defaults I’ve tweaked slightly with the following:
 
 * Bindings for lowering, raising, and muting volume in `~/.config/openbox/rc.xml`:
-```markup
+
+```xml
 <keybind key=”XF86AudioLowerVolume”>
     <action name=”Execute”>
         <command>amixer set -D pulse Master 5%- unmute</command>
@@ -61,6 +62,7 @@ The Conky configuration is based off of [this](https://github.com/zenzire/conkyr
 ```
 
 * Icons theme and clock format for Tint2 in `~/.config/tint2/tint2rc`:
+
 ```bash
 launcher_icon_theme = Paper
 time1_format = %a, %d %b | %H:%M
@@ -69,6 +71,7 @@ time1_format = %a, %d %b | %H:%M
 I’ve also replaced the following default programs using GAlternatives found under System > Edit Debian Alternatives (where adding the same path with a new priority will update an existing entry’s priority):
 
 * Geany -> VSCode (`/usr/bin/code`), with custom settings (under File > Preferences > Settings)
+
 ```json
 {
     "editor.scrollBeyondLastLine": false,
@@ -82,6 +85,7 @@ I’ve also replaced the following default programs using GAlternatives found un
 ```
 
 * Firefox -> ~~Opera Beta~~ Firefox Developer Edition. Note that updates would need to be manually installed, so I’ve written a script (in `$HOME/updatefirefox.sh`) to do that for me. The `update-alternatives` line isn’t necessary if it’s already been set through GAlternatives. This needs to be run with `sudo -E` because a few of these commands require root and I want to preserve `$HOME`.
+
 ```bash
 #!/bin/bash
 
@@ -100,6 +104,7 @@ Only a few final things to configure:
 * Adding `setxkbmap -option 'grp:ctrl_shift_toggle' 'ca(multix),us'` to `$HOME/.bashrc` to set toggling between US and Canadian Multilingual Standard keyboard layouts with Ctrl-Shift; note that this is only run when a shell has started so a terminal will have to be opened before the changes are made
 
 * Adding copy-paste functionality in Terminator (`~/.config/terminator/config`):
+
 ```bash
 [keybindings]
     paste = <Control>v

@@ -27,7 +27,6 @@ For reasons yet fathomable, I've decided to cross by foot (almost) all major ped
 | Dinsmore              | Sea Island      ⇔ Richmond       | Fraser River N. |
 | Golden Ears           | Pitt Meadows    ⇔ Langley        | Fraser River    |
 | Granville Street      | Vancouver       ⇔ downtown       | False Creek     |
-| Second Narrows        | North Vancouver ⇔ Vancouver      | Burrard Inlet   |
 | Knight Street         | Vancouver       ⇔ Richmond       | Fraser River N. |
 | Lions Gate            | Stanley Park    ⇔ N. Vancouver   | Burrard Inlet   |
 | No. 2 Road            | Sea Island      ⇔ Richmond       | Fraser River N. |
@@ -37,6 +36,7 @@ For reasons yet fathomable, I've decided to cross by foot (almost) all major ped
 | Pitt River            | Port Coquitlam  ⇔ Pitt Meadows   | Pitt River      |
 | Port Mann             | Coquitlam       ⇔ Surrey         | Fraser River    |
 | Queensborough         | New Westminster ⇔ Queensborough  | Fraser River N. |
+| Second Narrows        | North Vancouver ⇔ Vancouver      | Burrard Inlet   |
 | Sea Island Connector  | Richmond        ⇐ Sea Island     | Fraser River N. |
 | Moray                 | Richmond        ⇒ Sea Island     | Fraser River N. |
 ```

@@ -9,7 +9,9 @@ categories:
   - Advent of Code 2017
 ---
 
-My solution for star 2 can be found [here](https://github.com/nonphatic/adventofcode-2017/blob/master/03.hs), but without the four pages of diagramming I did to get there, it’s largely indecipherable, so here’s some explanation on the mental process.
+My solution for star 2 can be found [here](https://github.com/ionathanch/adventofcode-2017/blob/master/03.hs), but without the four pages of diagramming I did to get there, it’s largely indecipherable, so here’s some explanation on the mental process.
+
+<!--more-->
 
 # Star 1
 The spirals of the grid can be divided into “layers”:

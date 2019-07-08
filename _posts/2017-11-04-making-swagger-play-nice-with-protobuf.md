@@ -27,8 +27,12 @@ The first step was to collect all the ProtoBuf code into a single file. I’m su
 Note that messages with the same name in the same package can occur in different files, which can cause the same problems. These are circumvented in the Java generated classes because the all messages in one file are wrapped in an outer class named after the filename, but if we want to merge all the ProtoBuf files we must ensure these collisions don’t exist first to avoid having to append the filename too.
     
 * **Enumeration value name collision**. According to `protoc`, enum values don’t belong to the message they’re contained in, but are rather global to the file. This was similarly solved by appending the package name to the enum value name, which is stylistically uglier but functional.
-* Lack of services. When messages aren’t being used by a service, they aren’t converted at all, so for each message in the output file a dummy service was added: 
-```service DummyService { rpc Dummy (MyDTO) returns (MyDTO); }```
+
+* **Lack of services**. When messages aren’t being used by a service, they aren’t converted at all, so for each message in the output file a dummy service was added: 
+
+  ```scala
+  service DummyService { rpc Dummy (MyDTO) returns (MyDTO); }
+  ```
 
 * **Comment conversion**. Whole-line comments would appear in the Swagger definitions in unusual places, causing parsing errors later on, so they were removed. Post-line comments seemed to be fine, and luckily we didn’t have any multi-line comments to parse.
 

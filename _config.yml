@@ -18,3 +18,7 @@ defaults:
       type: "posts"
     values:
       comments: false
+      
+plugins:
+  - jekyll-feed
+  - jekyll-gist

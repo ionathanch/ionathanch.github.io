@@ -12,6 +12,8 @@ categories:
 
 As with Day 18, today’s problem involved running a custom assembly program. However, as stated in part b, the program run with `a = 1` is much too inefficient to run directly. Whereas with 18 you could simulate a machine in whichever language you choose and finish running the program in a reasonable amount of time, this problem requires deciphering what the program actually does, then optimizing it. We begin with the input (whose real values I won’t bother with hiding):
 
+<!--more-->
+
 ```asm
 set b 81
 set c b

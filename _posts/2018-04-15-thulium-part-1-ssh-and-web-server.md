@@ -17,6 +17,8 @@ categories:
 
 Exam season is ~~coming up~~ now, so naturally I’ve decided to spend my time setting up a home server. I’m hoping to eventually be able to replace Google Drive with a self-hosted instance of perhaps [NextCloud](https://nextcloud.com/) or [SyncThing](https://syncthing.net/), but we’ll start small first. I’ve installed [Ubuntu Server 16.04.4 LTS (Xenial Xerus)](https://wiki.ubuntu.com/XenialXerus/ReleaseNotes), which was sufficiently straightforward that I won’t elaborate on it except to say that using an LVM caused me to be unable to boot into the OS, so don’t do that.
 
+<!--more-->
+
 {% include image.html
            img="assets/images/neofetch.png"
            title="OS and hardware details from Neofetch"

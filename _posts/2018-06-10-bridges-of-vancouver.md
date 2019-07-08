@@ -15,9 +15,8 @@ For reasons yet fathomable, I've decided to cross by foot (almost) all major ped
            img="assets/images/bridges/map.png"
            caption="The twenty-one bridges of Greater Vancouver as listed below." %}
 
-```
 | Bridge                | Connects                          | Crosses         |
-|=======================|===================================|=================|
+|-----------------------|-----------------------------------|-----------------|
 | Alex Fraser           | Annacis Island  ⇔ Delta          | Fraser River S. |
 | Annacis Channel       | Queensborough   ⇔ Annacis Island | Annacis Channel |
 | Annacis Channel West  | Queensborough   ⇔ Annacis Island | Annacis Channel |
@@ -39,7 +38,6 @@ For reasons yet fathomable, I've decided to cross by foot (almost) all major ped
 | Second Narrows        | North Vancouver ⇔ Vancouver      | Burrard Inlet   |
 | Sea Island Connector  | Richmond        ⇐ Sea Island     | Fraser River N. |
 | Moray                 | Richmond        ⇒ Sea Island     | Fraser River N. |
-```
 
 The following have been excluded for the given reasons:
 * **Deering Island, various North Vancouver bridges (Dollarton, Eleanor Ward, Keith Road, Montroyal), Westham**: too small to be considered "major" (Westham is a bit more well-known, but also quite far away and difficult to reach via transit)

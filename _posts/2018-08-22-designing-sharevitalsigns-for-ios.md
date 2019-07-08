@@ -148,8 +148,8 @@ Because we need to support iOS 6+, many of the methods used are currently deprec
   `NSKeyedUnarchiver unarchivedObjectOfClass:fromData:error:` (>= 11.0)
 
 # Resources
-* "ShareVitalSigns Usage on iOS" from the LNhealth repository wiki: https://github.com/part-cw/LNhealth/wiki/Index-of-Module-sharevitalsigns-for-ios
-* "Tutorial: Sharing Data Locally Between iOS Apps" by Dillan Laughlin: http://www.enharmonichq.com/sharing-data-locally-between-ios-apps/
-* "Inter-App Communication" from Apple's Documentation Archive: https://developer.apple.com/library/archive/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html
-* "Support Universal Links" from Apple's Documentation Archive: https://developer.apple.com/library/archive/documentation/General/Conceptual/AppSearch/UniversalLinks.html
+* "ShareVitalSigns Usage on iOS" from the LNhealth repository wiki: <https://github.com/part-cw/LNhealth/wiki/Index-of-Module-sharevitalsigns-for-ios>
+* "Tutorial: Sharing Data Locally Between iOS Apps" by Dillan Laughlin: <http://www.enharmonichq.com/sharing-data-locally-between-ios-apps/>
+* "Inter-App Communication" from Apple's Documentation Archive: <https://developer.apple.com/library/archive/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html>
+* "Support Universal Links" from Apple's Documentation Archive: <https://developer.apple.com/library/archive/documentation/General/Conceptual/AppSearch/UniversalLinks.html>
 * PART repositories: [lambdanative](https://github.com/part-cw/lambdanative), [LNhealth](https://github.com/part-cw/LNhealth), and [sharevitalsigns](https://github.com/part-cw/sharevitalsigns).

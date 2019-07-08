@@ -39,6 +39,7 @@ services:
 
 The blog can be accessed at localhost:2368. In `config.production.json`, `"url"` needs to be set to `"http://hilb.ert.space"` so that the `@blog.url` variable in `.hbs` files will be correct. A reverse proxy and SSL can be set up as with Gitea to have the blog be accessible at [hilb.ert.space](https://hilb.ert.space) (i.e. the blog you currently are on, unless you're reading it from Medium). The current theme I've set up is forked from [The Shell](https://github.com/mityalebedev/The-Shell), with syntax highlighting using [Prism.js](http://prismjs.com/) with the [Duotone Sea](https://github.com/PrismJS/prism-themes/blob/master/themes/prism-duotone-sea.css) theme.
 
+{% raw %}
 ```html
 ...
 <head>
@@ -51,6 +52,7 @@ The blog can be accessed at localhost:2368. In `config.production.json`, `"url"`
     <script type="text/javascript" src="{{asset "js/prism.js"}}"></script>
 </body>
 ```
+{% endraw %}
 
 I've also added image captions following [this](https://blog.kchung.co/adding-image-captions-to-ghost/) blog post. The below snippets go under Settings -> Code injection -> Blog Header and Blog Footer.
 
@@ -76,11 +78,11 @@ I've also added image captions following [this](https://blog.kchung.co/adding-im
         if (e.alt) { 
             e.parentNode.innerHTML = 
                 `<figure class='image'>
-					${e.parentNode.innerHTML}
-    			</figure>
-				<figcaption>
-					${e.alt}
-    			</figcaption>`;
+                    ${e.parentNode.innerHTML}
+                </figure>
+                <figcaption>
+                    ${e.alt}
+                </figcaption>`;
         }
     });
 </script>

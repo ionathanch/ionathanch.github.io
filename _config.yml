@@ -10,3 +10,11 @@ author:
 paginate: 5
 
 sidebar_home_link: true
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      comments: false

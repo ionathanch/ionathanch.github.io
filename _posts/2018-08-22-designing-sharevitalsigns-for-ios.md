@@ -11,10 +11,10 @@ tags:
 
 _For usage notes, see the LNhealth wiki page on [SVS for iOS](https://github.com/part-cw/LNhealth/wiki/Index-of-Module-sharevitalsigns-for-ios). This post is cross-posted to the LNhealth wiki at [Designing ShareVitalSigns for iOS](https://github.com/part-cw/LNhealth/wiki/Designing-ShareVitalSigns-for-iOS)._
 
+<!--more-->
+
 # A Primer on ShareVitalSigns
 ShareVitalSigns is a method for transmitting vital sign data between [LambdaNative](https://github.com/part-cw/lambdanative) apps on Android and consists of a [`sharevitalsigns`](https://github.com/part-cw/LNhealth/tree/master/modules/sharevitalsigns) LambdaNative module and an [Android `.jar` library](https://github.com/part-cw/sharevitalsigns) containing a single `ShareVitalSigns` class containing methods to extract, store, and transmit the data. The workflow from a high-level Android perspective is as follows:
-
-<!--more-->
 
 1. The requester app creates an Intent, adds the code of the desired vital sign along with other data as extras, and sends a start Activity request with the Intent.
 2. The provider app, having the correct Intent filters, is initialized and declares the codes of the vital signs it can provide.

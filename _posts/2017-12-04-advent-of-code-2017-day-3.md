@@ -3,10 +3,10 @@ layout: post
 title: "Advent of Code 2017, Day 3"
 excerpt_separator: "<!--more-->"
 tags:
-  - Advent of Code
+  - Advent of Code 2017
   - Haskell
 categories:
-  - Advent of Code 2017
+  - Advent of Code
 ---
 
 My solution for star 2 can be found [here](https://github.com/ionathanch/adventofcode-2017/blob/master/03.hs), but without the four pages of diagramming I did to get there, it’s largely indecipherable, so here’s some explanation on the mental process.

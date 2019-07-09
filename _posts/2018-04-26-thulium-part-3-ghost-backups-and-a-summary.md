@@ -9,6 +9,8 @@ tags:
   - server monitoring
   - NGINX
   - blogging
+categories:
+  - Thulium
 ---
 
 *This is part 3 of the Thulium series. Go back to [part 2]({{ site.baseurl }}{% post_url 2018-04-19-thulium-part-2-nextcloud-and-gitea %}) or jump back to [part 1]({{ site.baseurl }}{% post_url 2018-04-15-thulium-part-1-ssh-and-web-server %}).*

@@ -232,4 +232,4 @@ And that’s it! Gitbert can now be used like an ordinary Git host to clone, pul
 * ArchWiki entry on Gitea: https://wiki.archlinux.org/index.php/Gitea
 * Gitea dark theme: https://gitea.werefoxsoftware.com/shadow8t4/Gitea-Dark-Theme
 
-*Next: [Thulium part 3]({{ site.baseurl }}{% post_url 2018-04-26-thulium-part-3-ghost-backups-and-a-summary %})** 
+*Next: [Thulium part 3]({{ site.baseurl }}{% post_url 2018-04-26-thulium-part-3-ghost-backups-and-a-summary %})*

@@ -8,7 +8,7 @@ categories:
   - Thulium
 ---
 
-A few months ago, on the 15th of April, was the one-year anniversary of [ert.space](https://ert.space) and the Thulium server, still running happily in its desktop tower, now with an extra 2 GB of RAM. Even if I didn't have the [Thulium posts]({% category/thulium.md %}) to remind me, I would always have the timely bill for the domain name. Over the past year, a multitude of services and Docker containers have risen and fallen, replaced or abandoned or, rarely, taken up a more permanent post. In 2018, I began with the following:
+A few months ago, on the 15th of April, was the one-year anniversary of [ert.space](https://ert.space) and the Thulium server, still running happily in its desktop tower, now with an extra 2 GB of RAM. Even if I didn't have the [Thulium posts]({% link category/thulium.md %}) to remind me, I would always have the timely bill for the domain name. Over the past year, a multitude of services and Docker containers have risen and fallen, replaced or abandoned or, rarely, taken up a more permanent post. In 2018, I began with the following:
 
 <!--more-->
 

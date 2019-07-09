@@ -10,6 +10,8 @@ tags:
   - NGINX
   - h4ai
   - Nextcloud
+categories:
+  - Thulium
 ---
 
 *This is part 2 of the Thulium series. Visit [part 3]({{ site.baseurl }}{% post_url 2018-04-26-thulium-part-3-ghost-backups-and-a-summary %}) or go back to [part 1]({{ site.baseurl }}{% post_url 2018-04-15-thulium-part-1-ssh-and-web-server %}).*

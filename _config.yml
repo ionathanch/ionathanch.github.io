@@ -14,11 +14,18 @@ sidebar_home_link: true
 defaults:
   -
     scope:
-      path: ""
-      type: "posts"
+      path: ''
+      type: 'posts'
     values:
       comments: false
       
 plugins:
   - jekyll-feed
   - jekyll-gist
+
+# Custom variables
+description: '{ not a blog about math }'
+social:
+  github: https://github.com/ionathanch
+  twitter: https://twitter.com/ionathanch
+  keybase: https://keybase.io/ionathan

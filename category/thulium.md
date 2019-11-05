@@ -1,4 +1,4 @@
 ---
 layout: category
-title: "Thulium"
+title: "🙚 Thulium"
 ---

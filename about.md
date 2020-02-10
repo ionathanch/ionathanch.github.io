@@ -6,9 +6,9 @@ sidebar_link: true
 
 ### The author:
 
-Hello! I'm Jonathan Chan. Although most people call me Jonathan, sometimes I'll refer to myself in cyberspace as Jon because it's fewer characters. (If they were easier to type, I would use a single non-ASCII Unicode character as an identifier.) I use [he/him](http://pronoun.is/he/him) pronouns.
+Hello! I'm Jonathan Chan. Although most people call me Jonathan, sometimes I'll refer to myself in cyberspace as Jon because it's fewer characters. (I am told this has caused some confusion on what I preferred to be referred to as.) I use [he/him](http://pronoun.is/he/him) pronouns.
 
-I am finishing up my BSc. in Computer Science and Physics at UBC. This will be updated with more exciting related news as they develop. For now, my academic interests include programming languages and type systems. I am currently working with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) for my undergrad honours thesis, which involves implementing [sized types in Coq](https://github.com/coq/coq/wiki/CoqTerminationDiscussion#sized). The resulting paper, "Practical Sized Types for Coq", was announced on [Twitter](https://twitter.com/wilbowma/status/1205305932466421761) and a draft of can be found on [arXiv](https://arxiv.org/abs/1912.05601), along with the implementation on my [GitHub](https://github.com/ionathanch/coq/tree/dev). It's recently been rejected from CPP 2020!
+I am finishing up my BSc. in Computer Science and Physics at UBC. This will be updated with more exciting related news as they develop. For now, my academic interests include programming languages and type systems. I am currently working with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on implementing [sized types in Coq](https://github.com/coq/coq/wiki/CoqTerminationDiscussion#sized). The resulting paper, "Practical Sized Types for Coq", was announced on [Twitter](https://twitter.com/wilbowma/status/1205305932466421761) and a draft of it can be found on [arXiv](https://arxiv.org/abs/1912.05601), along with the implementation on [GitHub](https://github.com/ionathanch/coq/tree/dev).
 
 Here are some linky links you can click or tap:
 * [GitHub](https://github.com/ionathanch)

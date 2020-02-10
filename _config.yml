@@ -1,15 +1,17 @@
 remote_theme: fongandrew/hydeout
 
-title:   ⟨ortho|normal⟩
-url:     https://hilb.ert.space
+title:   'Jonathan Chan'
+url:     https://ionathan.ch
 
 author:
   name: 'Jonathan Chan'
   url:  https://github.com/ionathanch
 
 paginate: 6
+paginate_path: /blog/page:num
 
 sidebar_home_link: true
+sidebar_blog_link: '/blog'
 
 defaults:
   -
@@ -24,8 +26,10 @@ plugins:
   - jekyll-gist
 
 # Custom variables
-description: '{ not a blog about math }'
+description: 'BSc. CS student @ UBC'
+profile: assets/images/profile.jpg
 social:
   github: https://github.com/ionathanch
   twitter: https://twitter.com/ionathanch
   keybase: https://keybase.io/ionathan
+  orcid: https://orcid.org/0000-0003-0830-3180

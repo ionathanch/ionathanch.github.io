@@ -1,0 +1,17 @@
+---
+layout: index
+title: Blog
+---
+
+<h2>Categories</h2>
+
+{% assign pages_list = site.pages|sort:"sidebar_sort_order" %}
+{% for node in pages_list %}
+  {% if node.title != null %}
+    {% if node.layout == "category" %}
+        <div>🙚 <a class="category-link {% if page.url == node.url %} active{% endif %}"
+          href="{{ node.url | relative_url }}">{{ node.title }}</a></div>
+    {% endif %}
+  {% endif %}
+{% endfor %}
+<br>

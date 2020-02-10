@@ -1,7 +1,6 @@
 ---
 layout: page
-title: About
-sidebar_link: true
+title: About...
 ---
 
 ### The author:

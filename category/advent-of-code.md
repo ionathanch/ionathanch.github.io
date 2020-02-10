@@ -1,4 +1,4 @@
 ---
 layout: category
-title: "🙚 Advent of Code"
+title: Advent of Code
 ---

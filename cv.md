@@ -1,7 +1,111 @@
 ---
 layout: page
 title: CV
+long_title: Curriculum Vitæ
 sidebar_link: true
 ---
 
-Coming soon!
+# Education
+
+**University of British Columbia**, *Vancouver, BC, Canada*
+<br/>
+BSc. Combined Honours in Computer Science and Physics, May 2020
+
+# Research Experience
+
+**Practical Sized Typing in Coq**, *undergraduate honours thesis*
+<br/>
+*Advisor*: [William J. Bowman](https://www.williamjbowman.com/)
+<br/>
+[[arXiv](https://arxiv.org/abs/1912.05601)] [[GitHub](https://github.com/ionathanch/coq/tree/dev)] [[DOI](https://doi.org/10.5281/zenodo.3516517)]
+
+# Cool PL Things
+
+Student volunteer at [POPL 2020](https://popl20.sigplan.org/) (47th ACM SIGPLAN Symposium on Principles of Programming Languages) in New Orleans, Louisiana, USA.
+
+Attended [PLISS 2019](https://pliss2019.github.io/) (Second International Programming Language Implementation Summer School) in Bertinoro, Italy.
+
+# Scholarships and Awards
+
+[**CRA Outstanding Undergraduate Researcher Award Honourable Mention**](https://cra.org/about/awards/outstanding-undergraduate-researcher-award/#2020), 2020
+<br/>
+<small>This award program recognizes undergraduate students in North American colleges and universities who show outstanding potential in an area of computing research.</small>
+
+**Dean of Science Scholarship**, *2018, 2015*
+<br/>
+<small>The Dean of Science Scholarship honours the most promising science undergraduate students and are made on the recommendation of the Faculty.</small>
+
+**Trek Excellence Scholarship for Continuing Students**, *2018, 2016, 2015*
+<br/>
+<small>Trek Excellence Scholarships are offered every year to students in the top 5% of their undergraduate year, faculty, and school.</small>
+
+**Charles and Jane Banks Scholarship**, *2017*
+<br/>
+<small>Scholarships are awarded on the recommendation of the Faculty of Science, to students who have completed at least one year, and are continuing in an undergraduate program.</small>
+
+**J. Fred Muir Memorial Scholarship in Science**, *2016*
+<br/>
+<small>The awards are offered to students in the Faculty of Science on the recommendation of the Faculty.</small>
+
+**Golden Key International Honour Society invitation (declined)**, *2019, 2015*
+<br/>
+<small>This is a scam for rich people.</small>
+
+# Work Experience
+
+**Department of Computer Science**, UBC, *Vancouver, BC, Canada*
+<br/>
+Teaching Assistant
+<br/>
+*January – April 2020*
+* Graded weekly assignments and held weekly office hours
+
+**Digital Health Innovation Lab**, BC Children's Hospital, *Vancouver, BC, Canada*
+<br/>
+Software Programmer Co-op
+<br/>
+*May – August 2018*
+* Contributed to [LambdaNative](https://github.com/part-cw/lambdanative), an open-source cross-platform app framework written in Gambit Scheme
+* Added features to LambdaNative apps [RRate](https://github.com/part-cw/LNhealth) and [ShareVitalSigns](https://github.com/part-cw/sharevitalsigns)
+* Cared for and nurtured the avocado seed growing on the windowsill in the lunch room
+
+**Visier Inc.**, *Vancouver, BC, Canada*
+<br/>
+Software Developer Co-op
+<br/>
+*May – December 2017*
+* Improved developer tools and workflows in the Frameworks and Enablement team
+* Created a proof-of-concept for migrating codebase from Mercurial to Git and designed a custom Gitflow workflow
+* Incorporated automated endpoint documentation generation in Scala backend codebase
+* Helped improve Angular web app compile/load times and modularity
+
+**Paragon Testing Enterprises**, *Vancouver, BC, Canada*
+<br/>
+Junior Software Developer and Quality Assurance Intern
+<br/>
+*January – August 2016*
+* Wrote a pilot test delivery application in WinForms for R&D to test and validate the design of the new CAEL computerized exam
+* Refactored web app test scripts
+* Participated in Paragon's volleyball team for the Broadway Tech Centre's volleyball tournament
+
+**Access and Diversity**, UBC, *Vancouver, BC, Canada*
+<br/>
+Notetaker
+<br/>
+*May – August 2015*
+* Took lecture and textbook notes for PSYC 309A (Cognitive Processes) and PSYC 350A (Human Sexuality)
+
+**Nikkei National Museum and Cultural Centre**, *Burnaby, BC, Canada*
+<br/>
+Volunteer Ambassador and Special Events Volunteer
+<br/>
+*September 2012 – June 2014*
+* Welcomed visitors at front desk and various administrative duties
+* Helped set up and take down equipment during various special events
+
+**Burnaby Newsleader**, *Burnaby, BC, Canada*
+<br/>
+Paper delivery route
+<br/>
+*June 2013 – June 2014*
+* Delivered the local paper every Wednesday and Friday. There isn't much to say about this. Sadly, they shut down in September of the following year :(

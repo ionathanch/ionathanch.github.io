@@ -9,6 +9,13 @@
   }
 }
 
+#profile {
+  @media (max-width: $large-breakpoint) {
+    width: 50%;
+    margin: 0 25% 1rem;
+  }
+}
+
 .image-wrapper {
   text-align: center;
 

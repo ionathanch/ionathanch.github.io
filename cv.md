@@ -27,23 +27,23 @@ Attended [PLISS 2019](https://pliss2019.github.io/) (Second International Progra
 
 # Scholarships and Awards
 
-[**CRA Outstanding Undergraduate Researcher Award Honourable Mention**](https://cra.org/about/awards/outstanding-undergraduate-researcher-award/#2020), 2020
+[**CRA Outstanding Undergraduate Researcher Award Honourable Mention**](https://cra.org/about/awards/outstanding-undergraduate-researcher-award/#2020), *2020*
 <br/>
 <small>This award program recognizes undergraduate students in North American colleges and universities who show outstanding potential in an area of computing research.</small>
 
-**Dean of Science Scholarship**, *2018, 2015*
+**Dean of Science Scholarship** (UBC), *2018, 2015*
 <br/>
 <small>The Dean of Science Scholarship honours the most promising science undergraduate students and are made on the recommendation of the Faculty.</small>
 
-**Trek Excellence Scholarship for Continuing Students**, *2018, 2016, 2015*
+**Trek Excellence Scholarship for Continuing Students** (UBC), *2018, 2016, 2015*
 <br/>
 <small>Trek Excellence Scholarships are offered every year to students in the top 5% of their undergraduate year, faculty, and school.</small>
 
-**Charles and Jane Banks Scholarship**, *2017*
+**Charles and Jane Banks Scholarship** (UBC), *2017*
 <br/>
 <small>Scholarships are awarded on the recommendation of the Faculty of Science, to students who have completed at least one year, and are continuing in an undergraduate program.</small>
 
-**J. Fred Muir Memorial Scholarship in Science**, *2016*
+**J. Fred Muir Memorial Scholarship in Science** (UBC), *2016*
 <br/>
 <small>The awards are offered to students in the Faculty of Science on the recommendation of the Faculty.</small>
 

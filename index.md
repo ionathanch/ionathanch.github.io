@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-Hello! My name is Jonathan, although I will occasionally refer to myself in cyberspace as Jon for brevity, and I use [he/him](http://pronoun.is/he/him) pronouns. I am in the final year of my BSc. in Computer Science and Physics at UBC, and am also a prospective Master's student at... some Canadian university, where I will be doing cool things related to programming languages theory. My interests range from type theory to logics to compilers.
+Hello! My name is Jonathan, although I will occasionally refer to myself in cyberspace as Jon for brevity. I am in the final year of my BSc. in Computer Science and Physics at UBC, and am also a prospective Master's student at... some Canadian university, where I will be doing cool things related to programming languages theory. My interests range from type theory to logics to compilers.
 
 ## Research
 
@@ -12,7 +12,7 @@ I am currently working with Prof. [William J. Bowman](https://www.williamjbowman
 ## Online Presence℠
 
 Here are some linky links you can click or tap:
-* [GitHub](https://github.com/ionathanch)
+* [GitHub](https://github.com/ionathanch), [GitLab](https://gitlab.com/ionathanch)
 * [Twitter](https://twitter.com/ionathanch)
 * [Keybase](https://keybase.io/ionathan)
 * food [Instagram](https://instagram.com/ionchyeats)

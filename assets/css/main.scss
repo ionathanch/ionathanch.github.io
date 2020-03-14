@@ -19,6 +19,10 @@
 .image-wrapper {
   text-align: center;
 
+  img {
+    border-radius: 0;
+  }
+
   .image-caption {
     color: $body-muted;
     margin-top: 0;

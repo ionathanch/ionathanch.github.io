@@ -39,7 +39,7 @@ Attended [PLISS 2019](https://pliss2019.github.io/) (Second International Progra
 <br/>
 <small>Trek Excellence Scholarships are offered every year to students in the top 5% of their undergraduate year, faculty, and school.</small>
 
-**Charles and Jane Banks Scholarship** (UBC), *2017*
+**Charles and Jane Banks Scholarship** (UBC), *2019, 2017*
 <br/>
 <small>Scholarships are awarded on the recommendation of the Faculty of Science, to students who have completed at least one year, and are continuing in an undergraduate program.</small>
 
@@ -55,7 +55,7 @@ Attended [PLISS 2019](https://pliss2019.github.io/) (Second International Progra
 
 **Department of Computer Science**, UBC, *Vancouver, BC, Canada*
 <br/>
-Teaching Assistant
+Teaching Assistant <small>(CPSC 303: Numerical Approximation and Discretization)</small>
 <br/>
 *January – April 2020*
 * Graded weekly assignments and held weekly office hours

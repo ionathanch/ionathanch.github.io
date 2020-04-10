@@ -3,11 +3,11 @@ layout: page
 title: About
 ---
 
-Hello! My name is Jonathan, although I will occasionally refer to myself in cyberspace as Jon for brevity. I am in the final year of my BSc. in Computer Science and Physics at UBC, and am also a prospective Master's student at... some Canadian university, where I will be doing cool things related to programming languages theory. My interests range from type theory to logics to compilers.
+Hello! My name is Jonathan, although I will occasionally refer to myself in cyberspace as Jon for brevity. I am a prospective Master's student at UBC, where I will be doing cool things related to programming languages theory. My interests range from type theory to logics to compilers.
 
 ## Research
 
-I am currently working with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on my undergraduate thesis, which involves implementing [sized types in Coq](https://github.com/coq/coq/wiki/CoqTerminationDiscussion#sized). The resulting paper, "Practical Sized Types for Coq", was announced on [Twitter](https://twitter.com/wilbowma/status/1205305932466421761) and a draft of it can be found on [arXiv](https://arxiv.org/abs/1912.05601), along with the implementation on [GitHub](https://github.com/ionathanch/coq/tree/dev).
+I worked with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on my undergraduate thesis, which involved implementing [sized types in Coq](https://github.com/coq/coq/wiki/CoqTerminationDiscussion#sized). The resulting paper, "Practical Sized Types for Coq", was announced on [Twitter](https://twitter.com/wilbowma/status/1205305932466421761) and a draft of it can be found on [arXiv](https://arxiv.org/abs/1912.05601), along with the implementation on [GitHub](https://github.com/ionathanch/coq/tree/dev).
 
 ## Online Presence℠
 

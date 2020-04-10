@@ -26,7 +26,7 @@ plugins:
   - jekyll-gist
 
 # Custom variables
-description: 'BSc. CS student @ UBC<br/><small><a href="http://pronoun.is/he/him">[he/him]</a></small>'
+description: 'MSc. CS student @ UBC<br/><small><a href="http://pronoun.is/he/him">[he/him]</a></small>'
 profile: assets/images/profile.jpg
 social:
   github: https://github.com/ionathanch

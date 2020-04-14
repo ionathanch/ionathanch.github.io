@@ -16,11 +16,11 @@ The definition of "difficulty" is intentionally vague, since the concept differs
 
 ### _q = 1_
 
-* [**nth-order logic**](https://en.wikipedia.org/wiki/Higher-order_logic): Is the validity of an arbitrary _n_th-order logic formula decidable? For propositional logic it is, but for first-order logic and higher it is not.
+* [**nth-order logic**](https://en.wikipedia.org/wiki/Higher-order_logic): Is the validity of an arbitrary _n_​th-order logic formula decidable? For propositional logic it is, but for first-order logic and higher it is not.
 
 ### _q = 2_
 
-* [**nth-order logic**](https://en.wikipedia.org/wiki/Higher-order_logic): Does there exist a sound and complete proof system for _n_th-order logic? Is the logic compact? For propositional and first-order logic, the answer to both of these is yes, while for second-order and higher-order logics, it is no.
+* [**nth-order logic**](https://en.wikipedia.org/wiki/Higher-order_logic): Does there exist a sound and complete proof system for _n_​th-order logic? Is the logic compact? For propositional and first-order logic, the answer to both of these is yes, while for second-order and higher-order logics, it is no.
 
 ### _q = 3_
 

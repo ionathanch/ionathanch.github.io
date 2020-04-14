@@ -34,6 +34,10 @@ There are many problems whose complexity is NP-complete only for _q = 3_ or poss
 * [**n-dimensional matching**](https://en.wikipedia.org/wiki/3-dimensional_matching): Given a natural number _k_, _n_ finite disjoint sets, and a subset _T_ of their Cartesian product, is there a subset _M_ of _T_ such that _\|M\| > k_ and the elements of the tuples of _M_ are disjoint? 1D matching (trivial) and 2D matching (bipartite matching) are in P, while 3-SAT and higher are NP-complete.
 * [**Graph k-colouring**](https://en.wikipedia.org/wiki/Graph_coloring): Given a graph, is there a way to assign each node one of _k_ colours such that no two nodes of the same colour share an edge? 1-colouring (trivial) and 2-colouring are in P, while 3-colouring is in NP. Interestingly, for [4-colouring](https://en.wikipedia.org/wiki/Four_color_theorem) the answer is always yes.
 
+### _q = 4_
+
+* [**Stable orbits in n dimensions**](https://en.wikipedia.org/wiki/Anthropic_principle#Dimensions_of_spacetime): Are 2-body orbits due to an inverse-square central force law stable in _n_ dimensions? In 2 and 3 dimensions, yes; in 4 or more dimensions, no.
+
 ### _q = 5_
 
 The following two are closely related (and the first is usually proven using the second).

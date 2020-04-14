@@ -6,6 +6,7 @@ tags:
   - numbers
   - mathematics
   - computational complexity
+  - physics
 ---
 
 This post is based on the observation that, in many areas of mathematics (if we take computational theory to be a subset thereof), classes of problems start to get hard at curiously small numbers. <!--more--> Somewhat more formally,
@@ -22,11 +23,13 @@ The definition of "difficulty" is intentionally vague, since the concept differs
 
 * [**nth-order logic**](https://en.wikipedia.org/wiki/Higher-order_logic): Does there exist a sound and complete proof system for _n_​th-order logic? Is the logic compact? For propositional and first-order logic, the answer to both of these is yes, while for second-order and higher-order logics, it is no.
 
+* [**General relativistic n-body problem**](https://en.wikipedia.org/wiki/Two-body_problem_in_general_relativity#Beyond_the_Schwarzschild_solution): Given the initial positions and velocities of _n_ bodies in the Schwarzschild metric, can their paths be expressed as closed-form expressions? For the 0-body and 1-body problems (trivial), they can, but not for the 2-body problem (in the general case of comparable masses) or more.
+
 ### _q = 3_
 
 * [**Rank-k polymorphism**](https://en.wikipedia.org/wiki/Parametric_polymorphism#Higher-ranked_polymorphism): In a polymorphic type system where forall quantifiers are restricted to no more than _k_ arrows deep on the left (i.e. `((forall a. a -> t_1) ... -> t_k)`), is type inference decidable? For rank-0 (simple types), rank-1 (prenex or Hindley-Milner), or rank-2, type inference is decidable, but for rank-3 and higher, it is not.
 
-* [**n-body problem**](https://en.wikipedia.org/wiki/N-body_problem): Given the initial positions and velocities of _n_ bodies mutually subject to an inverse-square central force law, can their paths be expressed as a closed-form expression? For the 1-body problem (trivial) and 2-body problem (e.g. the Kepler problem), they can, but not for the 3-body problem or higher.
+* [**Classical Newtonian n-body problem**](https://en.wikipedia.org/wiki/N-body_problem): Given the initial positions and velocities of _n_ bodies mutually subject to an inverse-square central force law, can their paths be expressed as closed-form expressions? For the 0-body, 1-body (both trivial), and 2-body problems (e.g. the Kepler problem), they can, but not for the 3-body problem or more.
 
 There are many problems whose complexity is NP-complete only for _q = 3_ or possibly higher. Here are three classical problems that are usually encountered. I won't list any more simply because there are far too many of their kind.
 
@@ -36,7 +39,7 @@ There are many problems whose complexity is NP-complete only for _q = 3_ or poss
 
 ### _q = 4_
 
-* [**Stable orbits in n dimensions**](https://en.wikipedia.org/wiki/Anthropic_principle#Dimensions_of_spacetime): Are 2-body orbits due to an inverse-square central force law stable in _n_ dimensions? In 2 and 3 dimensions, yes; in 4 or more dimensions, no.
+* [**Gravitational orbits in d dimensions**](https://en.wikipedia.org/wiki/Anthropic_principle#Dimensions_of_spacetime)<sup>*</sup>: Do stable bound gravitational orbits exist in _d_ dimensions? In 2 and 3 dimensions, the answer is yes; in 4 or more dimensions, the answer is no. (For 0 and 1 dimensions, the concept of an "orbit" is undefined.)
 
 ### _q = 5_
 
@@ -45,3 +48,25 @@ The following two are closely related (and the first is usually proven using the
 * [**Roots of n-degree polynomials**](https://en.wikipedia.org/wiki/Abel%E2%80%93Ruffini_theorem): Is there a general algebraic solution for the roots of an n-degree polynomial? For polynomials of degree four or less there is, but for degree five or higher there is not.
 
 * [**Alternating groups of degree n**](https://en.wikipedia.org/wiki/Alternating_group): Is _A(n)_ solvable? _A(2), A(3), A(4)_ are abelian, so they are solvable, while A(5) and higher are not.
+
+<br>
+
+## <sup>*</sup>An Aside on Gravitation and Electromagnetism in Higher Dimensions
+
+The original result by Ehrenfest [1] (and reëxpressed by Freeman [2] in English) uses Poisson's equation to derive a potential proportional to _1/r<sup>d - 2</sup>_ (or to _ln(r)_ for _d = 2_), giving rise to higher-dimensional analogues of Newtownian gravitation and Coulomb's law. It was shown that bound orbits and the Bohr model are not stable for _d > 3_.
+
+This has been generalized by Tangherlini [3] to a Schwarzschild field (due to a nonrotating, uncharged mass), with the result that stable bound orbits still do not exist in _d > 3_. Since the Schwarzschild metric is a special case of other metrics (Kerr, for rotating masses; Reissner–Nördstrom, for charged masses; Kerr–Newman, for rotating, charged masses), it is not expected that these will have stable bound orbits in _d > 3_ either. There probably are papers that deal with them explicitly.
+
+On the other hand, it was shown [4] that bound states of a single electron in a _1/r<sup>d - 2</sup>_ potential using the Schrödinger equation do exist for _d > 4_. As relativistic effects are usually small corrections, it would be expected that special relativistic equations (e.g. Dirac, Klein–Goron, Proca) would also yield the same results. But then we would delve into the world of quantum field theory and have to consider the strong force, the weak force, and Lagrangians, which is beyond the scope of this aside. As a subaside, Tegmark [5] argues for the impossiblity of more or less than one _time_ dimension.
+
+<hr>
+
+[1] Ehrenfest, Paul. (1920). Welche Rolle spielt die Dreidimensionalität des Raumes in den Grundgesetzen der Physik?. Ann. Phys., 366:, 440-446. [http://doi.org/10.1002/andp.19203660503](http://doi.org/10.1002/andp.19203660503).
+
+[2] Freeman, Ira M. (1969). Why is Space Three-Dimensional?. American Journal of Physics, 37:12, 1222-1224. [https://doi.org/10.1119/1.1975283](https://doi.org/10.1119/1.1975283).
+
+[3] Tangherlini, F. R. Schwarzschild field inn dimensions and the dimensionality of space problem. Nuovo Cim, 27:3 636–651 (1963). [https://doi.org/10.1007/BF02784569](https://doi.org/10.1007/BF02784569).
+
+[4] Caruso, F., Martins, J., and Oguri, V. (2013). On the existence of hydrogen atoms in higher dimensional Euclidean spaces. Physics Letters A, 377:9, 694–698. [http://dx.doi.org/10.1016/j.physleta.2013.01.026](http://dx.doi.org/10.1016/j.physleta.2013.01.026).
+
+[5] Tegmark, Max. (1997). On the dimensionality of spacetime. Classical and Quantum Gravity, 14:4, L69–L75. [http://dx.doi.org/10.1088/0264-9381/14/4/002](http://dx.doi.org/10.1088/0264-9381/14/4/002).

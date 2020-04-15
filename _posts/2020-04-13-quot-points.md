@@ -23,18 +23,22 @@ The definition of "difficulty" is intentionally vague, since the concept differs
 
 * [**nth-order logic**](https://en.wikipedia.org/wiki/Higher-order_logic): Does there exist a sound and complete proof system for _n_​th-order logic? Is the logic compact? For propositional and first-order logic, the answer to both of these is yes, while for second-order and higher-order logics, it is no.
 
+* [**nth-order polymorphism**](https://en.wikipedia.org/wiki/System_F#System_F.CF.89): In a Curry-style _n_​th-order polymorphic lambda calculus where the argument types of type-level functions are at most _(n-1)_​th-order, is type inference and type checking decidable? For 1st-order (simply-typed lambda calculus) it is, but for 2nd-order (System F) and higher (fragments of System F<sub>ω</sub>, or System F with various levels of type operators) it is not.
+
 * [**General relativistic n-body problem**](https://en.wikipedia.org/wiki/Two-body_problem_in_general_relativity#Beyond_the_Schwarzschild_solution): Given the initial positions and velocities of _n_ bodies in the Schwarzschild metric, can their paths be expressed as closed-form expressions? For the 0-body and 1-body problems (trivial), they can, but not for the 2-body problem (in the general case of comparable masses) or more.
 
 ### _q = 3_
 
-* [**Rank-k polymorphism**](https://en.wikipedia.org/wiki/Parametric_polymorphism#Higher-ranked_polymorphism): In a polymorphic type system where forall quantifiers are restricted to no more than _k_ arrows deep on the left (i.e. `((forall a. a -> t_1) ... -> t_k)`), is type inference decidable? For rank-0 (simple types), rank-1 (prenex or Hindley-Milner), or rank-2, type inference is decidable, but for rank-3 and higher, it is not.
+* [**Rank-k polymorphism**](https://en.wikipedia.org/wiki/Parametric_polymorphism#Higher-ranked_polymorphism): In a Curry-style polymorphic lambda calculus where forall quantifiers are restricted to no more than _k_ arrows deep on the left (i.e. `((forall a. a -> t_1) ... -> t_k)`), is type inference decidable? For rank-0 (simple types), rank-1 (prenex or Hindley-Milner), or rank-2, type inference is decidable, but for rank-3 and higher, it is not.
 
 * [**Classical Newtonian n-body problem**](https://en.wikipedia.org/wiki/N-body_problem): Given the initial positions and velocities of _n_ bodies mutually subject to an inverse-square central force law, can their paths be expressed as closed-form expressions? For the 0-body, 1-body (both trivial), and 2-body problems (e.g. the Kepler problem), they can, but not for the 3-body problem or more.
 
 There are many problems whose complexity is NP-complete only for _q = 3_ or possibly higher. Here are three classical problems that are usually encountered. I won't list any more simply because there are far too many of their kind.
 
 * [**n-SAT**](https://en.wikipedia.org/wiki/Boolean_satisfiability_problem): Given a formula in conjunctive normal form where each clause has _n_ literals, is there an assignment of truth values to its variables such that the formula is satisfied? 1-SAT and 2-SAT are in P, while 3-SAT and higher are NP-complete.
+
 * [**n-dimensional matching**](https://en.wikipedia.org/wiki/3-dimensional_matching): Given a natural number _k_, _n_ finite disjoint sets, and a subset _T_ of their Cartesian product, is there a subset _M_ of _T_ such that _\|M\| > k_ and the elements of the tuples of _M_ are disjoint? 1D matching (trivial) and 2D matching (bipartite matching) are in P, while 3-SAT and higher are NP-complete.
+
 * [**Graph k-colouring**](https://en.wikipedia.org/wiki/Graph_coloring): Given a graph, is there a way to assign each node one of _k_ colours such that no two nodes of the same colour share an edge? 1-colouring (trivial) and 2-colouring are in P, while 3-colouring is in NP. Interestingly, for [4-colouring](https://en.wikipedia.org/wiki/Four_color_theorem) the answer is always yes.
 
 ### _q = 4_

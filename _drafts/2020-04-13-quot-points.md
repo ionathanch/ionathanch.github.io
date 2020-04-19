@@ -57,7 +57,7 @@ The following two are closely related (and the first is usually proven using the
 
 There are also certain problems that are hard only for small numbers. That is, the claim is that
 
-> Given a class of decision problems _P_ parameterized by some natural number _n_, for some definition of "difficulty" (e.g. complexity, undecidability, nonexistence), if there is some number _t_ such that for all 0 ⩽ n ⩽ t, _P(n)_ is difficult but for all n' > t _P(n')_ is not, then _t_ is "small".
+> Given a class of decision problems _P_ parameterized by some natural number _n_, for some definition of "difficulty" (e.g. complexity, undecidability, nonexistence), if there is some number _t_ such that for all 0 ⩽ n ⩽ t, _P(n)_ is difficult but for all n' > t, _P(n')_ is not, then _t_ is "small".
 
 These follow the same principle in regards to "difficulty" and "small". Analogously, these will be called _touq points_, and below are _t-touq_ problems.
 

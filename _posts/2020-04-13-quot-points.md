@@ -53,6 +53,20 @@ The following two are closely related (and the first is usually proven using the
 
 * [**Alternating groups of degree n**](https://en.wikipedia.org/wiki/Alternating_group): Is _A(n)_ solvable? _A(2), A(3), A(4)_ are abelian, so they are solvable, while A(5) and higher are not.
 
+## Things Also Become Simpler Real Quick
+
+There are also certain problems that are hard only for small numbers. That is, the claim is that
+
+> Given a class of decision problems _P_ parameterized by some natural number _n_, for some definition of "difficulty" (e.g. complexity, undecidability, nonexistence), if there is some number _t_ such that for all 0 ⩽ n ⩽ t, _P(n)_ is difficult but for all n' > t _P(n')_ is not, then _t_ is "small".
+
+These follow the same principle in regards to "difficulty" and "small". Analogously, these will be called _touq points_, and below are _t-touq_ problems.
+
+### _t = 4_
+
+* [**Regular polytopes**](https://en.wikipedia.org/wiki/Regular_polytope): Do there exist regular polytopes in _n_ dimensions beyond the simplices, (with _(n + 1)_ faces of _(n - 1)_-dimensional simplices), the quadruplices (with _2n_ faces of _(n - 1)_-dimensional quadruplices), and the orthoplices (with _2ⁿ_ faces of _(n - 1)_-dimensional simplices)? For dimensions greater than 4, the answer is no. For _n = 4_, the convex ones are the 120-cell, the 600-cell, and the 24-cell, and the star ones are Schläfli–Hess polychora. For _n = 3_, the convex ones are the icosahedron and the dodecahedron, and the star ones are Kepler–Poinsot polyhedra. For _n = 2_, there are infinitely many (star) polygons. The problem is ill-defined for lower dimensions, as the line and the point could be said to be either the only 1-dimensional and 0-dimensional (star) polytopes, or to be generalizations of the infinitely-many 2-dimensional polygons. The same sort of coincidence occurs in 2 dimensions, where a square is both a 2-quadruplex and a 2-orthoplex.
+
+* [**Semiregular polytopes**](https://en.wikipedia.org/wiki/Semiregular_polytope): Do there exist semiregular polytops in _n_ dimensions beyond the [_k₂₁_ polytopes](https://en.wikipedia.org/wiki/Uniform_k_21_polytope)? For dimensions greater than 4, the answer is no. For _n = 4_, these are the rectified 600-cell and the snub 24-cell. For _n = 3_, these are the prisms, the antiprisms, the Archimedean solids, and the Platonic solids. For lower dimensions, the semiregular polytopes are exactly the regular polytopes.
+
 <br>
 
 ## <sup>*</sup>An Aside on Gravitation and Electromagnetism in Higher Dimensions

@@ -13,7 +13,7 @@ I worked with Prof. [William J. Bowman](https://www.williamjbowman.com/index.htm
 
 Here are some linky links you can click or tap:
 * [GitHub](https://github.com/ionathanch), [GitLab](https://gitlab.com/ionathanch)
-* [Twitter](https://twitter.com/ionathanch)
+* [Twitter](https://twitter.com/ionathanch), [Mastodon](https://scholar.social/ionathanch)
 * [Keybase](https://keybase.io/ionathan)
 * food [Instagram](https://instagram.com/ionchyeats)
 * [personal wiki](https://wiki.ert.space/en/latest/) hosted on ReadTheDocs

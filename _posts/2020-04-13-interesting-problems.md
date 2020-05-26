@@ -11,6 +11,8 @@ tags:
 
 This post is based on the observation that, in a variety of fields (e.g. mathematics, logic, computation, physics), while certain classes of problems can be parameterized by some natural number _n_, it appears that the interesting problems―not so simple as to be trivial, but not so complex as to be unsolvable, undecidable, intractable, or nonexistent―always occur at small _n_. Below is a collection of such problems, describing at which _n_ they are interesting, and how so.
 
+<!--more-->
+
 ### A Summary
 
 * First-order predicate logic

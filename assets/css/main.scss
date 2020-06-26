@@ -3,9 +3,12 @@
 
 @import "hydeout";
 
-#sidebar .site-title {
+#sidebar {
   &, .home & {
-    font-size: 1.9rem;
+    .site-title {
+      font-size: 2rem;
+    }
+    width: 19rem;
   }
 }
 

@@ -7,7 +7,7 @@ Hello! My name is Jonathan, although I will occasionally refer to myself in cybe
 
 ## Research
 
-I worked with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on my undergraduate thesis, which involved implementing [sized types in Coq](https://github.com/coq/coq/wiki/CoqTerminationDiscussion#sized). The resulting paper, "Practical Sized Types for Coq", was announced on [Twitter](https://twitter.com/wilbowma/status/1205305932466421761) and a draft of it can be found on [arXiv](https://arxiv.org/abs/1912.05601), along with the implementation on [GitHub](https://github.com/ionathanch/coq/tree/dev).
+I worked with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on my undergraduate thesis, which involved implementing [sized types in Coq](https://github.com/coq/coq/wiki/CoqTerminationDiscussion#sized). The implementation can be found on [GitHub](https://github.com/ionathanch/coq/tree/dev).
 
 ## Online Presence℠
 

@@ -9,6 +9,10 @@ sidebar_link: true
 
 **University of British Columbia**, *Vancouver, BC, Canada*
 <br/>
+MSc. in Computer Science, present
+
+**University of British Columbia**, *Vancouver, BC, Canada*
+<br/>
 BSc. Combined Honours in Computer Science and Physics, May 2020
 
 # Research Experience
@@ -20,6 +24,8 @@ BSc. Combined Honours in Computer Science and Physics, May 2020
 [[arXiv](https://arxiv.org/abs/1912.05601)] [[GitHub](https://github.com/ionathanch/coq/tree/dev)] [[DOI](https://doi.org/10.5281/zenodo.3516517)]
 
 # Cool PL Things
+
+Student volunteer at [ICFP 2020](https://icfp20.sigplan.org/) (25th ACM SIGPLAN International Conference on Functional Programming) in cyberspace.
 
 Student volunteer at [POPL 2020](https://popl20.sigplan.org/) (47th ACM SIGPLAN Symposium on Principles of Programming Languages) in New Orleans, Louisiana, USA.
 

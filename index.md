@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-Hello! My name is Jonathan, although I will occasionally refer to myself in cyberspace as Jon for brevity. I am a prospective Master's student at UBC, where I will be doing cool things related to programming languages theory. My interests range from type theory to logics to compilers.
+Hello! My name is Jonathan, although I will occasionally refer to myself in cyberspace as Jon for brevity. I am a prospective Master's student at UBC, where I will be doing cool things related to programming languages theory. My interests range from dependent types to compilers to logics.
 
 ## Research
 
@@ -11,7 +11,6 @@ I worked with Prof. [William J. Bowman](https://www.williamjbowman.com/index.htm
 
 ## Online Presence℠
 
-Here are some linky links you can click or tap:
 * [GitHub](https://github.com/ionathanch), [GitLab](https://gitlab.com/ionathanch)
 * [Twitter](https://twitter.com/ionathanch), [Mastodon](https://scholar.social/ionathanch)
 * [Keybase](https://keybase.io/ionathan)

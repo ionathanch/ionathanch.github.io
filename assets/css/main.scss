@@ -9,13 +9,17 @@
       font-size: 2rem;
     }
     width: 19rem;
+
+    @media (max-width: $large-breakpoint) {
+      width: 100%;
+    }
   }
 }
 
 #profile {
   @media (max-width: $large-breakpoint) {
-    width: 50%;
-    margin: 0 25% 1rem;
+    width: 40%;
+    margin: 0 30% 1rem;
   }
 }
 

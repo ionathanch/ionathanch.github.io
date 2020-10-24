@@ -15,7 +15,7 @@ I worked with Prof. [William J. Bowman](https://www.williamjbowman.com/index.htm
 * [Twitter](https://twitter.com/ionathanch), [Mastodon](https://scholar.social/ionathanch)
 * [Keybase](https://keybase.io/ionathan)
 * food [Instagram](https://instagram.com/ionchyeats)
-* [personal wiki](https://wiki.ert.space/en/latest/) hosted on ReadTheDocs
+* [personal wiki](https://wiki.ionathan.ch/en/latest/) hosted on ReadTheDocs
 * [email](mailto:jcxz@cs.ubc.ca) (subject to change)
 
 <img src="http://localhost:4000/favicon.png" alt="" style="float: left; margin: 0 0.5em 0 0;">

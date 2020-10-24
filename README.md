@@ -5,7 +5,7 @@ Assuming `jekyll` and `bundler` have been installed in a Ruby environment, run `
 Most of these changes are marked with a comment indicating where the original was modified.
 * Added profile picture to `_includes/sidebar.html`
 * Removed category links from `_includes/sidebar-nav-links.html`
-* `_includes/custon-icon-links.html` contains social media links
+* `_includes/custon-icon-links.html` contains an icon
 * NEW: `_includes/image.html` provides an `include` that adds image captions below images
 * Added image caption styling and made title font smaller in `assets/css/main.scss`
 * NEW: `blog/index.html` is a page containing blog posts, with a list of categories copied from `_layouts/category.html`

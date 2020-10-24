@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-Hello! My name is Jonathan, although I will occasionally refer to myself in cyberspace as Jon for brevity. I am a prospective Master's student at UBC, where I will be doing cool things related to programming languages theory. My interests range from dependent types to compilers to logics.
+Hello! My name is Jonathan, although I will occasionally refer to myself in cyberspace as Jon for brevity. I am a Master's student at UBC, where I will be doing cool things related to programming languages. My interests range from dependent types to compilers to logics.
 
 ## Research
 

@@ -61,6 +61,15 @@ Attended [PLISS 2019](https://pliss2019.github.io/) (Second International Progra
 
 **Department of Computer Science**, UBC, *Vancouver, BC, Canada*
 <br/>
+Teaching Assistant <small>(CPSC 311: Definition of Programming Languages)</small>
+<br/>
+*September – December 2020*
+* Held biweekly tutorial sessions and weekly office hours
+* Graded assignments and midterm/final exams
+* Helped with administering and invigilating exams
+
+**Department of Computer Science**, UBC, *Vancouver, BC, Canada*
+<br/>
 Teaching Assistant <small>(CPSC 303: Numerical Approximation and Discretization)</small>
 <br/>
 *January – April 2020*

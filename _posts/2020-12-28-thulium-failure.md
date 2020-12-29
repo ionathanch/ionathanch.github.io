@@ -167,7 +167,14 @@ OpenSSH (v6)               ALLOW       Anywhere (v6)
 
 ### Step 1: Web Servers and Docker Containers
 
-Setting up all of my Nginx configurations is easy, since I have them all committed [here](https://github.com/ionathanch/sites-available). For recreating my SSL certificates, I not only need to install `certbot`, but also `python3-certbot-nginx`. Then running `sudo certbot --nginx -d` followed by the comma-separated domains installs certificates for those domains (and `--expand -d` followed by a superset of those domains expands the certificate).
+Setting up all of my Nginx configurations is easy, since I have them all committed [here](https://github.com/ionathanch/sites-available). For recreating my SSL certificates, I not only need to install `certbot`, but also `python3-certbot-nginx`. Then running `sudo certbot --nginx -d` followed by the comma-separated domains installs certificates for those domains (and `--expand -d` followed by a superset of those domains expands the certificate). I also have a daily cron job to update my DDNS with my public IP address:
+
+```bash
+#!/bin/sh
+
+curl --silent --output /dev/null "https://dynamicdns.park-your-domain.com/update?host=@&domain=ert.space&password=secretpasswordhere"
+curl --silent --output /dev/null "https://dynamicdns.park-your-domain.com/update?host=@&domain=ionathan.ch&password=secretpasswordhere"
+```
 
 Docker is a bit trickier. I do have all of my Docker Compose configurations [here](https://github.com/ionathanch/docker-compose), but none of the data is there. But first to pull the images that I need for Gitea, TTRSS, and Nextcloud:
 

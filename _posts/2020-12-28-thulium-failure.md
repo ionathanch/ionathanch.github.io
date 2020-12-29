@@ -239,7 +239,7 @@ Now that everything I want has been copied over from Sasha to Victor, I can use 
 But the computer had other plans.
 
 {% include image.html
-           img="assets/images/error-1962.png"
+           img="assets/images/error-1962.jpg"
            title="Error 1962: No operating system found. Press any key to repeat boot sequence."
            caption="No operating system found on Sasha, despite there very clearly having been one two days ago." %}
 

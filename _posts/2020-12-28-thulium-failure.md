@@ -182,6 +182,14 @@ $ docker pull x86dev/docker-ttrss           # Tiny Tiny RSS
 
 The first container I set up was for TTRSS. I had some strange Docker Compose setting that uses someone else's old Postgres image, so I switched over to the recommended `postgres:alpine` image. In the process of setting things up, I found a [bug](https://github.com/x86dev/docker-ttrss/pull/45) this this particular image for TTRSS. After that was all resolved, I imported my old OPML settings for TTRSS. Easy peasy!
 
+The second was Gitea. There were several options, in decreasing order of difficulty: I could set up a new instance of Gitea completely and re-add my repositories one by one (painful); I could create a Docker image from the data back over on Sasha and somehow integrate that with Docker Compose to keep using the same config file but at the same time use that image (confusing); or I could literally copy all of the files from Sasha over to Victor, `docker-compose up`, and see if that works. To my surprise, the latter really did work! I think I have my past self to thank for setting up the volumes so that the entire `/data/` directory in the Gitea image exists in my `docker/gitea/` directory, but I won't look too much into it.
+
+Finally, I have my Nextcloud instance to set up. I decided to try the Gitea technique here as well. Because there were a *lot* of files to copy over and I also needed to preserve *everything* from timestamps to permissions, I used `rsync -av` (archive, verbose) instead of the usual `cp`. This worked perfectly as well, and I also got a minor upgrade to Nextcloud. I noticed there was a locally-deleted folder that wasn't deleted in the web client,and it didn't seem to be a file lock problem since `DELETE FROM oc_file_locks WHERE lock=-1;` didn't get rid of it, so I had to use `SELECT fileid FROM oc_filecache WHERE storage=2 AND path LIKE '%[file]%'` to get its primary key, making sure there's just the one entry, and `DELETE FROM oc_filecache WHERE fileid=[fileid]` to delete it.
+
+I might as well clean up my Nextcloud files while I'm here. During copying I noticed that I had a lot of old course textbook PDFs that should be easy to obtain <del>on LibGen</del> through legal and not illegal methods, so I think I'll be getting rid of those. I also added exclusion rules `*.gnucash.*.gnucash` and `*.gnucash.*.log` to get rid of those pesky backup files. I could probably also add `*~`, usually generated from Racket files by DrRacket, but I haven't noticed any syncing issues with those (as opposed to with GNUCash).
+
+As for the Docker Compose files from all my old containers, I think I'll keep those around, even though I doubt I'll ever be running a MediaWiki or a Ghost or a Funkwhale here again.
+
 ### Step 2: Borgification
 
 ### Step 3: Ubuntu Server as a Desktop
@@ -196,3 +204,4 @@ The first container I set up was for TTRSS. I had some strange Docker Compose se
 * Interrupted `smartctl` long tests: https://sourceforge.net/p/smartmontools/mailman/message/32461042/
 * Burning an ISO to a USB: https://unix.stackexchange.com/questions/224277/
 * Using Certbot: https://certbot.eff.org/docs/using.html#nginx
+* Migrating Nextcloud: https://docs.nextcloud.com/server/15/admin_manual/maintenance/migrating.html

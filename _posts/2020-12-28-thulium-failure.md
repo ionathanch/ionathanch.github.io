@@ -172,13 +172,15 @@ Setting up all of my Nginx configurations is easy, since I have them all committ
 Docker is a bit trickier. I do have all of my Docker Compose configurations [here](https://github.com/ionathanch/docker-compose), but none of the data is there. But first to pull the images that I need for Gitea, TTRSS, and Nextcloud:
 
 ```bash
-$ sudo apt install docker.io      # No longer docker-ce, it seems
-$ sudo gpasswd -a jonathan docker # Add myself to the docker group so I can use it without sudo
-$ newgrp docker                   # Log in to docker group
-$ docker pull gitea/gitea         # Gitea
-$ docker pull nextcloud           # Nextcloud
-$ docker pull x86dev/docker-ttrss # Tiny Tiny RSS
+$ sudo apt install docker.io docker-compose # No longer docker-ce, it seems
+$ sudo gpasswd -a jonathan docker           # Add myself to the docker group so I can use it without sudo
+$ newgrp docker                             # Log in to docker group
+$ docker pull gitea/gitea                   # Gitea
+$ docker pull nextcloud                     # Nextcloud
+$ docker pull x86dev/docker-ttrss           # Tiny Tiny RSS
 ```
+
+The first container I set up was for TTRSS. I had some strange Docker Compose setting that uses someone else's old Postgres image, so I switched over to the recommended `postgres:alpine` image. In the process of setting things up, I found a [bug](https://github.com/x86dev/docker-ttrss/pull/45) this this particular image for TTRSS. After that was all resolved, I imported my old OPML settings for TTRSS. Easy peasy!
 
 ### Step 2: Borgification
 

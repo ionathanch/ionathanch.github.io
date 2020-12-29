@@ -114,7 +114,7 @@ I haven't looked into directly copying from Sasha to Orion byte-for-byte, but I 
 
 Several problems were encountered from the get-go, each one worse than the other. First, I burned a Ubuntu Server ISO to my USB drive using `pv ubuntu-20.04.1-live-server-amd64.iso > /dev/sdb` as root, but got a weird `isolinux.bin is missing or corrupt` error when trying to boot from it. I ended up using `gnome-disks` from `gnome-disk-utility` to erase the drive, then write ("restore", in Gnome Disks terms) the ISO.
 
-Then I tried to boot from the drive, but only got `Error 1962: No operating system found. Press any key to repeat boot sequence.` Changing from UEFI boot to legacy boot and changing from AHCI to IDE (and combinations thereof) in the BIOS didn't work. In the end, I moved Victor from the original server computer to the desktop computer it originally came from, and things booted up fine. I'm not really sure what's going on here, but this took me an entire day to figure out, so I'm going to leave it at what works.
+Then I tried to boot from the drive, but only got `Error 1962: No operating system found. Press any key to repeat boot sequence.` Changing from UEFI boot to legacy boot and changing from AHCI to IDE (and combinations thereof) in the BIOS didn't work. In the end, I moved Victor from the original server computer to the desktop computer it originally came from, and things booted up fine. I'm not really sure what's going on here, but this took me an entire day to figure out, so I'm going to leave it at what works. I'm basically turning my desktop computer into the server at this point, and the computer that was originally the server will become a regular desktop.
 
 ### Step 0: Basic Setup
 
@@ -227,19 +227,38 @@ curl -o /srv/docker/ttrss/ttrss.opml "https://rss.ionathan.ch/opml.php?op=publis
 
 ### Step 3: Ubuntu Server as a Desktop
 
-Now that everything I want has been copied over from Sasha to Victor, I can use Sasha as a desktop disk (until it dies for good). I do have a good amount of uncopied files on it, like my entire music library in Funkwhale, so I don't want to wipe it just yet. I'll only remove all the Nginx sites enabled, remove all Docker containers, and add a GUI.
+Now that everything I want has been copied over from Sasha to Victor, I can use Sasha as a desktop disk (until it dies for good), back in the computer that it originally was in. I do have a good amount of uncopied files on it, like my entire music library in Funkwhale, so I don't want to wipe it just yet. I'll only remove all the Nginx sites enabled, remove all Docker containers, and add a GUI.
+
+But the computer had other plans.
+
+{% include image.html
+           img="assets/images/error-1962.png"
+           title="Error 1962: No operating system found. Press any key to repeat boot sequence."
+           caption="No operating system found on Sasha, despite there very clearly having been one two days ago." %}
+
+I'll fiddle around with this some more, but I doubt I'll get anywhere. I really don't want to wipe out anything on Sasha, so it might just stay in there forever, motionless, unspinning, unused.
+
+### Step 4: Backing up Photos
+
+Because I had to erase Orion, I backed up my backup of my photos to my laptop first. Now that everything with the server's set up, I decided not to back up my photos on it after all. It's a lot easier to copy photos from my phone to my laptop through a GUI, and I don't want to be doing this kind of thing exclusively through a terminal. This means that I'll only have a single duplicate copy of my photos rather than a triplicate, but like I said, they're not all that important, and I'm not going to be rooting around my photos directory in my terminal anyway, reducing the chances that I'm going to accidentally `rm -rf` everything. In fact, to even further prevent the threat of me being me in the wrong place, I'm going to back up my photos on the *Windows* boot of my laptop rather than the Linux boot. I rarely use it nowadays anyway, and the space I'd allocated for it might as well be put to use this way.
 
 ## Postmortem
+
+Days spent: 3 😩
+
+Dead computers: 1 (RIP)
+
+Extra screws: 4 (how???)
 
 Packages installed: `smartmontools`, `nginx`, `certbot`, `python3-certbot-nginx`, `docker.io`, `docker-compose`, `sqlite3`, `borgbackup`
 
 ## References
 
-* Interpreting SER and RRER values: http://www.users.on.net/~fzabkar/HDD/Seagate_SER_RRER_HEC.html
-* SMART attributes: https://en.wikipedia.org/wiki/S.M.A.R.T.
-* Interrupted `smartctl` long tests: https://sourceforge.net/p/smartmontools/mailman/message/32461042/
-* Burning an ISO to a USB: https://unix.stackexchange.com/questions/224277/
-* Using Certbot: https://certbot.eff.org/docs/using.html#nginx
-* Migrating Nextcloud: https://docs.nextcloud.com/server/15/admin_manual/maintenance/migrating.html
-* Setting up backups: https://www.williamjbowman.com/blog/2020/06/30/setting-up-your-backup-service/
-* Using Borg: https://borgbackup.readthedocs.io/en/stable/quickstart.html
+* Interpreting SER and RRER values: [http://www.users.on.net/~fzabkar/HDD/Seagate_SER_RRER_HEC.html](http://www.users.on.net/~fzabkar/HDD/Seagate_SER_RRER_HEC.html)
+* SMART attributes: [https://en.wikipedia.org/wiki/S.M.A.R.T.](https://en.wikipedia.org/wiki/S.M.A.R.T.)
+* Interrupted `smartctl` long tests: [https://sourceforge.net/p/smartmontools/mailman/message/32461042/](https://sourceforge.net/p/smartmontools/mailman/message/32461042/)
+* Burning an ISO to a USB: [https://unix.stackexchange.com/questions/224277/](https://unix.stackexchange.com/questions/224277/)
+* Using Certbot: [https://certbot.eff.org/docs/using.html#nginx](https://certbot.eff.org/docs/using.html#nginx)
+* Migrating Nextcloud: [https://docs.nextcloud.com/server/15/admin_manual/maintenance/migrating.html](https://docs.nextcloud.com/server/15/admin_manual/maintenance/migrating.html)
+* Setting up backups: [https://www.williamjbowman.com/blog/2020/06/30/setting-up-your-backup-service/](https://www.williamjbowman.com/blog/2020/06/30/setting-up-your-backup-service/)
+* Using Borg: [https://borgbackup.readthedocs.io/en/stable/quickstart.html](https://borgbackup.readthedocs.io/en/stable/quickstart.html)

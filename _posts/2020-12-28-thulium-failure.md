@@ -93,8 +93,8 @@ Here's a brief description of my current setup as well, with where all my data i
 
 I haven't been exactly vigilant in maintaining good data redundancy. I doubt that I ever will, since I'll only exert just enough effort to create a setup that I'll deem "good enough". But since I've been given a chance to rearrange some things, here's what I plan to do:
 
-* Orion, being the largest healthy HDD, will be the primary Thulium drive, and will not only contain all of what Sasha currently has, but *also* a backup of all of my photos.
-* Victor, being the second largest, will be the backup Thulium drive, and will follow some of William's very complete but rather excessive [backup guide](https://www.williamjbowman.com/blog/2020/06/30/setting-up-your-backup-service/) to sync from Orion.
+* Victor, will be the primary Thulium drive, and will not only contain all of what Sasha currently has, but *also* a backup of all of my photos.
+* Orion, will be the backup Thulium drive, and will follow some of William's very complete but rather excessive [backup guide](https://www.williamjbowman.com/blog/2020/06/30/setting-up-your-backup-service/) to sync from Orion.
 * Sasha will then be installed into my desktop, largely untouched, except with a GUI and my development tools installed, because I want to see just how long I can keep using it until it really dies out.
 * Monty and Gerty will be retired and stored away.
 
@@ -104,16 +104,93 @@ So in the end, my Nextcloud will be synchronized in triplicate, my other Thulium
 
 Since I never interact with my Nextcloud files on my laptop through the terminal (instead using various GUI programs like browsers and editors), the biggest point of failure is me on the terminal messing around in my server, so the synchronous backup from Orion to Victor will be a good step towards recovery. And despite the apparent emphasis I've placed on keeping my photos around, I don't think they're quite as important; besides, the family photos are pretty much in sextuplicate at this point, since both my parents should have a local copy on mobile devices, as well as another copy stored in their cloud somewhere.
 
+Just to be cautious, I ran `smartctl -t long /dev/sdb` on Orion and Victor, which were estimated to take 140 and 74 minutes respectively. Since I'm accessing them on my laptop through a USB connection to an external enclosure, the disk might be put on standby, according to [this](https://sourceforge.net/p/smartmontools/mailman/message/32461042/) thread, so I followed its instructions to copy a few bytes every minutes to keep it awake. Still, that didn't stop me from running `smartctl -c long /dev/sdb` every two minutes or so to check the progress.
+
 ## Treatment
 
 I haven't looked into directly copying from Sasha to Orion byte-for-byte, but I don't think that would work anyway, so I'm reinstalling Ubuntu Server on Orion and setting everything up from scratch. The good thing is that I have all of my old blog posts to refer to for this step, and in fact I'll reproduce them here as well for convenience, since three years ago I was kind of fumbling around anyway (not that I've ever stopped fumbling).
 
+### Step -1: Replace the Server Completely
+
+Several problems were encountered from the get-go, each one worse than the other. First, I burned a Ubuntu Server ISO to my USB drive using `pv ubuntu-20.04.1-live-server-amd64.iso > /dev/sdb` as root, but got a weird `isolinux.bin is missing or corrupt` error when trying to boot from it. I ended up using `gnome-disks` from `gnome-disk-utility` to erase the drive, then write ("restore", in Gnome Disks terms) the ISO.
+
+Then I tried to boot from the drive, but only got `Error 1962: No operating system found. Press any key to repeat boot sequence.` Changing from UEFI boot to legacy boot and changing from AHCI to IDE (and combinations thereof) in the BIOS didn't work. In the end, I moved Victor from the original server computer to the desktop computer it originally came from, and things booted up fine. I'm not really sure what's going on here, but this took me an entire day to figure out, so I'm going to leave it at what works.
+
 ### Step 0: Basic Setup
 
+The first step is to enable the ethernet connection. `sudo lshw -class network` tells me that the interface is named `enp0s25`, and `sudo ip link set up enp0s25` followed by `sudo dhclient enp0s25` enables it with DHCP. After updating and upgrading my packages, I set up the same static IP I had before. Unfortunately, it appears Ubuntu Server no longer uses the same incantations I had used two and a half year ago; now it's all about `netplan`. In `/etc/netplan/00-installer-config.yaml` goes the following:
+
+```yaml
+network:
+  ethernets:
+    enp0s25:
+      dhcp4: false
+      addresses: [192.168.0.69/24]
+      gateway4: 192.168.0.1
+      nameservers:
+        addresses: [84.200.69.80, 84.200.70.40]
+  version: 2
+```
+
+The `/24` at the end of the IP address is the *subnet prefix length*, which appears to correspond to a netmask of `255.255.255.0` (I still don't know what this means). Since the router's IP address is `192.168.0.0`, the gateway is the same but ending in `.1`. The DNS nameservers listed here are from DNSWatch. Then `sudo netplan apply` applies these settings, giving the server a static IP address of `192.168.0.69`. Nice.
+
+During the setup of Ubuntu Server, there was an option to copy my SSH keys from Github, so now that the server is connected to the internet, and my router is still forwarding ports, I can SSH right in without needing to fiddle with `PasswordAuthentication` in `/etc/ssh/sshd_config` and using `ssh-copy-id`. I still need to give Thulium its own SSH keys, though, with `ssh-keygen`.
+
+Now to enable the firewall:
+
+```bash
+$ sudo ufw app list
+Available applications:
+  Nginx Full
+  Nginx HTTP
+  Nginx HTTPS
+  OpenSSH
+$ sudo ufw allow "Nginx Full"
+Rules updated
+Rules updated (v6)
+$ sudo ufw allow "OpenSSH"
+Rules updated
+Rules updated (v6)
+$ sudo ufw enable
+Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
+Firewall is active and enabled on system startup
+$ sudo ufw status
+Status: active
+
+To                         Action      From
+--                         ------      ----
+Nginx Full                 ALLOW       Anywhere
+OpenSSH                    ALLOW       Anywhere
+Nginx Full (v6)            ALLOW       Anywhere (v6)
+OpenSSH (v6)               ALLOW       Anywhere (v6)
+```
+
 ### Step 1: Web Servers and Docker Containers
+
+Setting up all of my Nginx configurations is easy, since I have them all committed [here](https://github.com/ionathanch/sites-available). For recreating my SSL certificates, I not only need to install `certbot`, but also `python3-certbot-nginx`. Then running `sudo certbot --nginx -d` followed by the comma-separated domains installs certificates for those domains (and `--expand -d` followed by a superset of those domains expands the certificate).
+
+Docker is a bit trickier. I do have all of my Docker Compose configurations [here](https://github.com/ionathanch/docker-compose), but none of the data is there. But first to pull the images that I need for Gitea, TTRSS, and Nextcloud:
+
+```bash
+$ sudo apt install docker.io      # No longer docker-ce, it seems
+$ sudo gpasswd -a jonathan docker # Add myself to the docker group so I can use it without sudo
+$ newgrp docker                   # Log in to docker group
+$ docker pull gitea/gitea         # Gitea
+$ docker pull nextcloud           # Nextcloud
+$ docker pull x86dev/docker-ttrss # Tiny Tiny RSS
+```
 
 ### Step 2: Borgification
 
 ### Step 3: Ubuntu Server as a Desktop
 
 ## Postmortem
+
+## References
+
+* Interpreting SER and RRER values: http://www.users.on.net/~fzabkar/HDD/Seagate_SER_RRER_HEC.html
+* SMART attributes: https://en.wikipedia.org/wiki/S.M.A.R.T.
+* Setting up backups: https://www.williamjbowman.com/blog/2020/06/30/setting-up-your-backup-service/
+* Interrupted `smartctl` long tests: https://sourceforge.net/p/smartmontools/mailman/message/32461042/
+* Burning an ISO to a USB: https://unix.stackexchange.com/questions/224277/
+* Using Certbot: https://certbot.eff.org/docs/using.html#nginx

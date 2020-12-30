@@ -104,7 +104,29 @@ So in the end, my Nextcloud will be synchronized in triplicate, my other Thulium
 
 Since I never interact with my Nextcloud files on my laptop through the terminal (instead using various GUI programs like browsers and editors), the biggest point of failure is me on the terminal messing around in my server, so the synchronous backup from Orion to Victor will be a good step towards recovery. And despite the apparent emphasis I've placed on keeping my photos around, I don't think they're quite as important; besides, the family photos are pretty much in sextuplicate at this point, since both my parents should have a local copy on mobile devices, as well as another copy stored in their cloud somewhere.
 
-Just to be cautious, I ran `smartctl -t long /dev/sdb` on Orion and Victor, which were estimated to take 140 and 74 minutes respectively. Since I'm accessing them on my laptop through a USB connection to an external enclosure, the disk might be put on standby, according to [this](https://sourceforge.net/p/smartmontools/mailman/message/32461042/) thread, so I followed its instructions to copy a few bytes every minutes to keep it awake. Still, that didn't stop me from running `smartctl -c long /dev/sdb` every two minutes or so to check the progress.
+Just to be cautious, I ran `smartctl -t long /dev/sdX` on Orion and Victor, which were estimated to take 140 and 74 minutes respectively. Since I'm accessing them on my laptop through a USB connection to an external enclosure, the disk might be put on standby, according to [this](https://sourceforge.net/p/smartmontools/mailman/message/32461042/) thread, so I followed its instructions to copy a few bytes every minutes to keep it awake. Still, that didn't stop me from running `smartctl -c long /dev/sdX` every two minutes or so to check the progress.
+
+Aside from health tests, there's also performance tests that can be run. Here are some results from running `hdparm -Tt /dev/sdX`:
+
+```bash
+/dev/sda: # Victor
+ Timing cached reads: 9434 MB in  2.00 seconds = 4725.97 MB/sec
+ Timing buffered disk reads: 276 MB in  3.02 seconds =  91.50 MB/sec
+/dev/sdb: # Orion
+ Timing cached reads: 8806 MB in  2.00 seconds = 4411.38 MB/sec
+ Timing buffered disk reads: 312 MB in  3.00 seconds = 103.91 MB/sec
+/dev/sdc: # Sasha
+ Timing cached reads: 24778 MB in  1.99 seconds = 12470.19 MB/sec
+ Timing buffered disk reads: 546 MB in  3.01 seconds = 181.67 MB/sec
+/dev/sda: # Monty
+ Timing cached reads: 1534 MB in  2.00 seconds = 766.34 MB/sec
+ Timing buffered disk reads: 152 MB in  3.13 seconds =  48.55 MB/sec
+/dev/sdb: # Gerty
+ Timing cached reads: 1516 MB in  2.00 seconds = 758.06 MB/sec
+ Timing buffered disk reads: 312 MB in  3.00 seconds = 71.10 MB/sec
+```
+
+I also used `gnome-disks` from `gnome-disk-utility` to benchmark read/write rates and access times more robustly than just using `dd` above. Sasha's average read/write rates and access times were 31.1 MB/s, 38.8 MB/s, and 62.26 ms. For comparison, Gerty's were 62.3 MB/s, 49.4 MB/s, and 13.63 ms.
 
 ## Treatment
 
@@ -112,7 +134,7 @@ I haven't looked into directly copying from Sasha to Orion byte-for-byte, but I 
 
 ### Step -1: Replace the Server Completely
 
-Several problems were encountered from the get-go, each one worse than the other. First, I burned a Ubuntu Server ISO to my USB drive using `pv ubuntu-20.04.1-live-server-amd64.iso > /dev/sdb` as root, but got a weird `isolinux.bin is missing or corrupt` error when trying to boot from it. I ended up using `gnome-disks` from `gnome-disk-utility` to erase the drive, then write ("restore", in Gnome Disks terms) the ISO.
+Several problems were encountered from the get-go, each one worse than the other. First, I burned a Ubuntu Server ISO to my USB drive using `pv ubuntu-20.04.1-live-server-amd64.iso > /dev/sdb` as root, but got a weird `isolinux.bin is missing or corrupt` error when trying to boot from it. I ended up using `gnome-disks` to erase the drive, then write ("restore", in their terms) the ISO.
 
 Then I tried to boot from the drive, but only got `Error 1962: No operating system found. Press any key to repeat boot sequence.` Changing from UEFI boot to legacy boot and changing from AHCI to IDE (and combinations thereof) in the BIOS didn't work. In the end, I moved Victor from the original server computer to the desktop computer it originally came from, and things booted up fine. I'm not really sure what's going on here, but this took me an entire day to figure out, so I'm going to leave it at what works. I'm basically turning my desktop computer into the server at this point, and the computer that was originally the server will become a regular desktop.
 
@@ -199,7 +221,7 @@ As for the Docker Compose files from all my old containers, I think I'll keep th
 
 ### Step 2: Borgification
 
-So far, all of my Docker-related files are in `/srv/docker/`, while other sites being served are in `/srv/www/`. These will be the directories I want to back up with Borg to Orion, which is mounted at `/backup`.
+So far, all of my Docker-related files are in `/srv/docker/`, while other sites being served are in `/srv/www/`. These will be the directories I want to back up with Borg to Orion, which is mounted at `/backup`. Since I need root permission to read these files, all of the commands below are as root.
 
 ```bash
 $ borg init --encryption keyfile /backup/borg # Initializes a Borg repo and stores the keyfile in ~/.config/borg
@@ -208,21 +230,27 @@ $ borg create --stats --exclude-from ~/borg-exclude /backup/borg::$(date +'%FT%T
 $ borg list # Check that the backup was actually created
 ```
 
-If later I find that there's certain patterns of files I want to exclude, I can add them to `borg-exclude`. Now that I've checked that Borg works (although not whether I can restore from it), I'll add an hourly backup cron job. First, I need to copy the configs to `/root/.config/borg`, since these cron jobs will be run by root. (Alternatively, I can add the job to my user's crontab, but it's all the same.) Then into `/etc/cron.hourly/borg-backup.sh` goes the following (and `chmod +x` to make it executable):
+If later I find that there's certain patterns of files I want to exclude, I can add them to `borg-exclude`. Now that I've checked that Borg works (although not whether I can restore from it), I'll add an hourly backup cron job. First, I need to copy the configs to `/root/.config/borg`, since these cron jobs will be run by root. Then into `/etc/cron.hourly/borg-backup` goes the following (and `chmod +x` to make it executable):
 
 ```bash
 #!/bin/sh
 
-borg create --exclude-from /home/jonathan/borg-exclude /backup/borg::$(date +'%FT%T') /srv
+borg create --exclude-from ~/borg-exclude /backup/borg::$(date +'%FT%T') /srv
 ```
 
-And finally, I'll add a daily cron job `/etc/cron.daily/borg-prune.sh` to prune the backups I have. I'll keep 24 hourly backups, 7 daily ones, and 2 weekly ones. If something has gone wrong with my server and I haven't noticed in two weeks, I may have bigger problems in my life.
+And finally, I'll add a daily cron job `/etc/cron.daily/borg-prune` to prune the backups I have. I'll keep 24 hourly backups, 7 daily ones, and 2 weekly ones. If something has gone wrong with my server and I haven't noticed in two weeks, I may have bigger problems in my life.
 
 ```bash
 #!/bin/sh
 
 borg prune -H 24 -d 7 -w 2 /backup/borg
 ```
+
+As an aside, I had originally named these scripts ending in `.sh`, and I tested them by running as root, but when I checked a while later, they didn't seem to have been run: there weren't any new backups listed. Hidden in the Arch Linux wiki for cron was this note:
+
+> Cronie uses run-parts to carry out scripts in the different directories. The filenames should not include any dot (.) since run-parts in its default mode will silently ignore them. The names must consist only of upper and lower-case letters, digits, underscores and minus-hyphens.
+
+So the extension is the culprit! Running `run-parts --test /etc/cron.hourly` (`--report` to actually run the scripts) also indicated that no scripts would be run. Removing those extra `.sh` extensions seems to be the solution.
 
 Borg backups should be easily restored by `borg mount`ing them and then copying them with `rsync -av --progress`. This takes care of my Nextcloud and Gitea files. All the TTRSS files, on the other hand, are in a Docker volume, but as seen above, setting up a fresh container isn't all that hard; I just need the OPML file with the feeds and settings. Unfortunately, TTRSS doesn't provide a public URL to fetch the settings, so I'll do it once now, and hopefully remember to copy them over whenever I change a notable preference. I'll set up yet another daily cron job to fetch the public feeds, although I don't expect any of my feeds to change within periods of months.
 
@@ -245,6 +273,8 @@ But the computer had other plans.
 
 I'll fiddle around with this some more, but I doubt I'll get anywhere. I really don't want to wipe out anything on Sasha, so it might just stay in there forever, motionless, unspinning, unused.
 
+**UPDATE**: Even though installing Ubuntu Server on Victor (and even Orion!) and using Sasha with the original computer gave me an Error 1962, it seems that installing an OS (Manjaro KDE, to be precise, but I doubt it matters) on Gerty (or Monty? I've already mixed them up) is perfectly fine. I suspect that it's because the computer itself is old, and those two disks are older than Victor and Orion, and there was some sort of incompatability that revealed itself as an Error 1962. With Sasha, the error was likely genuine: it's a failing disk, after all. So I'm going to continue using Gerty and Monty both in that computer as a desktop for now. Manjaro KDE really is nice.
+
 ### Step 4: Backing up Photos
 
 Because I had to erase Orion, I backed up my backup of my photos to my laptop first. Now that everything with the server's set up, I decided not to back up my photos on it after all. It's a lot easier to copy photos from my phone to my laptop through a GUI, and I don't want to be doing this kind of thing exclusively through a terminal. This means that I'll only have a single duplicate copy of my photos rather than a triplicate, but like I said, they're not all that important, and I'm not going to be rooting around my photos directory in my terminal anyway, reducing the chances that I'm going to accidentally `rm -rf` everything. In fact, to even further prevent the threat of me being me in the wrong place, I'm going to back up my photos on the *Windows* boot of my laptop rather than the Linux boot. I rarely use it nowadays anyway, and the space I'd allocated for it might as well be put to use this way.
@@ -253,19 +283,21 @@ Because I had to erase Orion, I backed up my backup of my photos to my laptop fi
 
 Days spent: 3 😩
 
-Dead computers: 1 (RIP)
+Hard drives rearranged: 5
 
 Extra screws: 4 (how???)
 
-Packages installed: `smartmontools`, `nginx`, `certbot`, `python3-certbot-nginx`, `docker.io`, `docker-compose`, `sqlite3`, `borgbackup`
+Packages installed: `smartmontools`, `gnome-disk-utility`, `nginx`, `certbot`, `python3-certbot-nginx`, `docker.io`, `docker-compose`, `sqlite3`, `borgbackup`
 
 ## References
 
 * Interpreting SER and RRER values: [http://www.users.on.net/~fzabkar/HDD/Seagate_SER_RRER_HEC.html](http://www.users.on.net/~fzabkar/HDD/Seagate_SER_RRER_HEC.html)
 * SMART attributes: [https://en.wikipedia.org/wiki/S.M.A.R.T.](https://en.wikipedia.org/wiki/S.M.A.R.T.)
 * Interrupted `smartctl` long tests: [https://sourceforge.net/p/smartmontools/mailman/message/32461042/](https://sourceforge.net/p/smartmontools/mailman/message/32461042/)
+* Benchmarking: [https://wiki.archlinux.org/index.php/Benchmarking](https://wiki.archlinux.org/index.php/Benchmarking)
 * Burning an ISO to a USB: [https://unix.stackexchange.com/questions/224277/](https://unix.stackexchange.com/questions/224277/)
 * Using Certbot: [https://certbot.eff.org/docs/using.html#nginx](https://certbot.eff.org/docs/using.html#nginx)
 * Migrating Nextcloud: [https://docs.nextcloud.com/server/15/admin_manual/maintenance/migrating.html](https://docs.nextcloud.com/server/15/admin_manual/maintenance/migrating.html)
 * Setting up backups: [https://www.williamjbowman.com/blog/2020/06/30/setting-up-your-backup-service/](https://www.williamjbowman.com/blog/2020/06/30/setting-up-your-backup-service/)
 * Using Borg: [https://borgbackup.readthedocs.io/en/stable/quickstart.html](https://borgbackup.readthedocs.io/en/stable/quickstart.html)
+* Cron: [https://wiki.archlinux.org/index.php/Cron](https://wiki.archlinux.org/index.php/Cron)

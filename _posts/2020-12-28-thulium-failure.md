@@ -98,11 +98,9 @@ I haven't been exactly vigilant in maintaining good data redundancy. I doubt tha
 * Sasha will then be installed into my desktop, largely untouched, except with a GUI and my development tools installed, because I want to see just how long I can keep using it until it really dies out.
 * Monty and Gerty will be retired and stored away.
 
-In addition to this, on a regular basis, at my leisure, I will plug my phone into my server, and manually copy photos over via SSH through my laptop. I have considered syncing from my phone via Nextcloud, but I just have such a large amount of photos that it would take an incredibly long time to initially synchronize, and I don't necessarily want *all* of my photos synchronized, because I'll clean out my camera roll from time to time. I can probably find a more automatic solution to the mobile phone photo synchronization problem that doesn't involve Google Photos, but that's for another blog post.
+In addition to this, on a regular basis, at my leisure, I will plug my phone into my laptop and manually copy photos into it. The photos will be synced to Thulium via Syncthing, rather than Nextcloud, since I won't have the need to browse through them on a foreign machine. I briefly considered syncing directly from my phone, but the initial sync would take incredibly long, and the directory structure of my photos backup is rather different from that on my phone. Maybe one day I'll settle for some automatic solution that won't involve my direct intervention (i.e. plugging my phone in).
 
-So in the end, my Nextcloud will be synchronized in triplicate, my other Thulium data (including a feed aggregator and a collection of private repositories) will be synchronized in duplicate, and my photos will be asynchronously backed up in triplicate. I think it's good enough for me, especially when the biggest threat in my threat model isn't a disk failure but **me** doing silly things like wiping everything out from the terminal.
-
-Since I never interact with my Nextcloud files on my laptop through the terminal (instead using various GUI programs like browsers and editors), the biggest point of failure is me on the terminal messing around in my server, so the synchronous backup from Orion to Victor will be a good step towards recovery. And despite the apparent emphasis I've placed on keeping my photos around, I don't think they're quite as important; besides, the family photos are pretty much in sextuplicate at this point, since both my parents should have a local copy on mobile devices, as well as another copy stored in their cloud somewhere.
+So in the end, my Nextcloud will be synchronized in triplicate, my other Thulium data (including a feed aggregator and a collection of private repositories) will be synchronized in duplicate, and my photos will be partially asynchronously backed up in quadruplicate (excluding the SD card). I think it's good enough for me, especially when the biggest threat in my threat model isn't a disk failure but **me** doing silly things like wiping everything out from the terminal. I'm also using Nextcloud because of a few other features it has, which is why my entire setup isn't exclusively through something like Borg.
 
 Just to be cautious, I ran `smartctl -t long /dev/sdX` on Orion and Victor, which were estimated to take 140 and 74 minutes respectively. Since I'm accessing them on my laptop through a USB connection to an external enclosure, the disk might be put on standby, according to [this](https://sourceforge.net/p/smartmontools/mailman/message/32461042/) thread, so I followed its instructions to copy a few bytes every minutes to keep it awake. Still, that didn't stop me from running `smartctl -c long /dev/sdX` every two minutes or so to check the progress.
 
@@ -156,7 +154,7 @@ network:
 
 The `/24` at the end of the IP address is the *subnet prefix length*, which appears to correspond to a netmask of `255.255.255.0` (I still don't know what this means). Since the router's IP address is `192.168.0.0`, the gateway is the same but ending in `.1`. The DNS nameservers listed here are from DNSWatch. Then `sudo netplan apply` applies these settings, giving the server a static IP address of `192.168.0.69`. Nice.
 
-During the setup of Ubuntu Server, there was an option to copy my SSH keys from Github, so now that the server is connected to the internet, and my router is still forwarding ports, I can SSH right in without needing to fiddle with `PasswordAuthentication` in `/etc/ssh/sshd_config` and using `ssh-copy-id`. I still need to give Thulium its own SSH keys, though, with `ssh-keygen`.
+During the setup of Ubuntu Server, there was an option to copy my SSH keys from Github, so now that the server is connected to the internet, and my router is still forwarding ports, I can SSH right in without needing to fiddle with `PasswordAuthentication` in `/etc/ssh/sshd_config` and using `ssh-copy-id`. I still need to give Thulium its own SSH keys, though, with `ssh-keygen`. I also added new ports to forward for Syncthing, 22000 for TCP and 21027 for UDP, through my router's settings at `http://192.168.0.1`.
 
 Now to enable the firewall:
 
@@ -168,14 +166,10 @@ Available applications:
   Nginx HTTPS
   OpenSSH
 $ sudo ufw allow "Nginx Full"
-Rules updated
-Rules updated (v6)
 $ sudo ufw allow "OpenSSH"
-Rules updated
-Rules updated (v6)
-$ sudo ufw enable
-Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
-Firewall is active and enabled on system startup
+$ sudo ufw allow 22000/tcp # TCP port for Syncthing
+$ sudo ufw allow 21027/udp # UDP port for Syncthing
+$ sudo ufw enable # `sudo ufw reload` to load new rules if already enabled
 $ sudo ufw status
 Status: active
 
@@ -207,11 +201,14 @@ $ newgrp docker                             # Log in to docker group
 $ docker pull gitea/gitea                   # Gitea
 $ docker pull nextcloud                     # Nextcloud
 $ docker pull x86dev/docker-ttrss           # Tiny Tiny RSS
+$ docker pull syncthing/syncthing           # Syncthing
 ```
 
 The first container I set up was for TTRSS. I had some strange Docker Compose setting that uses someone else's old Postgres image, so I switched over to the recommended `postgres:alpine` image. In the process of setting things up, I found a [bug](https://github.com/x86dev/docker-ttrss/pull/45) this this particular image for TTRSS. After that was all resolved, I imported my old OPML settings for TTRSS. Easy peasy!
 
 The second was Gitea. There were several options, in decreasing order of difficulty: I could set up a new instance of Gitea completely and re-add my repositories one by one (painful); I could create a Docker image from the data back over on Sasha and somehow integrate that with Docker Compose to keep using the same config file but at the same time use that image (confusing); or I could literally copy all of the files from Sasha over to Victor, `docker-compose up`, and see if that works. To my surprise, the latter really did work! I think I have my past self to thank for setting up the volumes so that the entire `/data/` directory in the Gitea image exists in my `docker/gitea/` directory, but I won't look too much into it.
+
+Next to set up was Syncthing. I created a new Docker Compose configuration for it [here](https://github.com/ionathanch/docker-compose/blob/master/syncthing/docker-compose.yml) since my old one seems to have disappeared (and they now have an official Docker image!). There doesn't seem to be anything else to configure, except for the other end, which will be the Windows boot of my laptop. This I will do later on, but I'm sure things are unlikely to go terribly wrong.
 
 Finally, I have my Nextcloud instance to set up. I decided to try the Gitea technique here as well. Because there were a *lot* of files to copy over and I also needed to preserve *everything* from timestamps to permissions, I used `rsync -av --progress` (archive, verbose, show progress) instead of the usual `cp`. This worked perfectly as well, and I also got a minor upgrade to Nextcloud. I noticed there was a locally-deleted folder that wasn't deleted in the web client,and it didn't seem to be a file lock problem since `DELETE FROM oc_file_locks WHERE lock=-1;` didn't get rid of it, so I had to use `SELECT fileid FROM oc_filecache WHERE storage=2 AND path LIKE '%[file]%'` to get its primary key, making sure there's just the one entry, and `DELETE FROM oc_filecache WHERE fileid=[fileid]` to delete it.
 
@@ -275,10 +272,6 @@ I'll fiddle around with this some more, but I doubt I'll get anywhere. I really 
 
 **UPDATE**: Even though installing Ubuntu Server on Victor (and even Orion!) and using Sasha with the original computer gave me an Error 1962, it seems that installing an OS (Manjaro KDE, to be precise, but I doubt it matters) on Gerty (or Monty? I've already mixed them up) is perfectly fine. I suspect that it's because the computer itself is old, and those two disks are older than Victor and Orion, and there was some sort of incompatability that revealed itself as an Error 1962. With Sasha, the error was likely genuine: it's a failing disk, after all. So I'm going to continue using Gerty and Monty both in that computer as a desktop for now. Manjaro KDE really is nice.
 
-### Step 4: Backing up Photos
-
-Because I had to erase Orion, I backed up my backup of my photos to my laptop first. Now that everything with the server's set up, I decided not to back up my photos on it after all. It's a lot easier to copy photos from my phone to my laptop through a GUI, and I don't want to be doing this kind of thing exclusively through a terminal. This means that I'll only have a single duplicate copy of my photos rather than a triplicate, but like I said, they're not all that important, and I'm not going to be rooting around my photos directory in my terminal anyway, reducing the chances that I'm going to accidentally `rm -rf` everything. In fact, to even further prevent the threat of me being me in the wrong place, I'm going to back up my photos on the *Windows* boot of my laptop rather than the Linux boot. I rarely use it nowadays anyway, and the space I'd allocated for it might as well be put to use this way.
-
 ## Postmortem
 
 Days spent: 3 😩
@@ -298,6 +291,7 @@ Packages installed: `smartmontools`, `gnome-disk-utility`, `nginx`, `certbot`, `
 * Burning an ISO to a USB: [https://unix.stackexchange.com/questions/224277/](https://unix.stackexchange.com/questions/224277/)
 * Using Certbot: [https://certbot.eff.org/docs/using.html#nginx](https://certbot.eff.org/docs/using.html#nginx)
 * Migrating Nextcloud: [https://docs.nextcloud.com/server/15/admin_manual/maintenance/migrating.html](https://docs.nextcloud.com/server/15/admin_manual/maintenance/migrating.html)
+* Syncthing with Docker: [https://github.com/syncthing/syncthing/blob/main/README-Docker.md](https://github.com/syncthing/syncthing/blob/main/README-Docker.md)
 * Setting up backups: [https://www.williamjbowman.com/blog/2020/06/30/setting-up-your-backup-service/](https://www.williamjbowman.com/blog/2020/06/30/setting-up-your-backup-service/)
 * Using Borg: [https://borgbackup.readthedocs.io/en/stable/quickstart.html](https://borgbackup.readthedocs.io/en/stable/quickstart.html)
 * Cron: [https://wiki.archlinux.org/index.php/Cron](https://wiki.archlinux.org/index.php/Cron)

@@ -212,6 +212,12 @@ Next to set up was Syncthing. I created a new Docker Compose configuration for i
 
 Finally, I have my Nextcloud instance to set up. I decided to try the Gitea technique here as well. Because there were a *lot* of files to copy over and I also needed to preserve *everything* from timestamps to permissions, I used `rsync -av --progress` (archive, verbose, show progress) instead of the usual `cp`. This worked perfectly as well, and I also got a minor upgrade to Nextcloud. I noticed there was a locally-deleted folder that wasn't deleted in the web client,and it didn't seem to be a file lock problem since `DELETE FROM oc_file_locks WHERE lock=-1;` didn't get rid of it, so I had to use `SELECT fileid FROM oc_filecache WHERE storage=2 AND path LIKE '%[file]%'` to get its primary key, making sure there's just the one entry, and `DELETE FROM oc_filecache WHERE fileid=[fileid]` to delete it.
 
+EDIT: I noticed that under Settings > Administration > Basic Settings > Background jobs, the background jobs were not run for months. Presumably the first time I set Nextcloud up, I had also set up background jobs, but forgot to take note of it. I ended up choosing the Cron option, using `sudo crontab -u root -e` to add the following:
+
+```cron
+*/5 * * * * docker exec -u www-data nextcloud php cron.php
+```
+
 I might as well clean up my Nextcloud files while I'm here. During copying I noticed that I had a lot of old course textbook PDFs that should be easy to obtain <del>on LibGen</del> through legal and not illegal methods, so I think I'll be getting rid of those. I also added exclusion rules `*.gnucash.*.gnucash` and `*.gnucash.*.log` to get rid of those pesky backup files. I could probably also add `*~`, usually generated from Racket files by DrRacket, but I haven't noticed any syncing issues with those (as opposed to with GNUCash).
 
 As for the Docker Compose files from all my old containers, I think I'll keep those around, even though I doubt I'll ever be running a MediaWiki or a Ghost or a Funkwhale here again.

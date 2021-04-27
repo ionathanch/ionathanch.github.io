@@ -15,8 +15,8 @@ For reasons yet fathomable, I've decided to cross by foot (almost) all major ped
            img="assets/images/bridges/map.png"
            caption="The twenty-one bridges of Greater Vancouver as listed below." %}
 
-| Bridge                | Connects                          | Crosses         |
-|-----------------------|-----------------------------------|-----------------|
+| Bridge                | Connects                         | Crosses         |
+|-----------------------|----------------------------------|-----------------|
 | Alex Fraser           | Annacis Island  ⇔ Delta          | Fraser River S. |
 | Annacis Channel       | Queensborough   ⇔ Annacis Island | Annacis Channel |
 | Annacis Channel West  | Queensborough   ⇔ Annacis Island | Annacis Channel |
@@ -40,13 +40,14 @@ For reasons yet fathomable, I've decided to cross by foot (almost) all major ped
 | Moray                 | Richmond        ⇒ Sea Island     | Fraser River N. |
 
 The following have been excluded for the given reasons:
-* **Deering Island, various North Vancouver bridges (Dollarton, Eleanor Ward, Keith Road, Montroyal), Westham**: too small to be considered "major" (Westham is a bit more well-known, but also quite far away and difficult to reach via transit)
-* **CNR, Marpole, New Westminster, Pitt River Railway, Second Narrows**: carry only railway tracks
-* **Middle Arm, Skybridge**: carry only SkyTrain
-* **Arthur Liang**: carries only cars and bicycles
-* **Coast Meridian Overpass, Georgia Viaduct**: do not cross water
-* **Capilano Suspension Bridge, Lynn Canyon Suspension Bridge**: Capilano is private and Lynn crosses a canyon
-* **Mission Bridge**: although accessible by TransLink via the West Coast Express, it technically isn't part of Greater Vancouver
+* **Deering Island, various North Vancouver bridges (Dollarton, Eleanor Ward, Keith Road, Montroyal), [Westham](https://en.wikipedia.org/wiki/Westham_Island_Bridge)**: too small to be considered "major" (Westham is a bit more well-known, but also quite far away and difficult to reach via transit)
+* **[CNR](https://en.wikipedia.org/wiki/CNR_Bridge), [New Westminster](https://en.wikipedia.org/wiki/New_Westminster_Bridge), [Pitt River Railway](http://wikimapia.org/2390592/Pitt-River-Rail-Bridge), [Second Narrows](https://en.wikipedia.org/wiki/Second_Narrows_Bridge), [Mission Railway](https://en.wikipedia.org/wiki/Mission_Railway_Bridge)**: carry only railway tracks
+* **[Marpole](https://en.wikipedia.org/wiki/Marpole_Bridge)**: defunct railway-only bridge
+* **[Middle Arm](https://en.wikipedia.org/wiki/Middle_Arm_Bridge), [Skybridge](https://en.wikipedia.org/wiki/Skybridge_(TransLink))**: carry only SkyTrain
+* **[Arthur Liang](https://en.wikipedia.org/wiki/Arthur_Laing_Bridge)**: carries only cars and bicycles
+* **[Coast Meridian Overpass](https://en.wikipedia.org/wiki/Coast_Meridian_Overpass), [Georgia Viaduct](https://en.wikipedia.org/wiki/Georgia_Viaduct)**: do not cross water
+* **[Capilano Suspension Bridge](https://en.wikipedia.org/wiki/Capilano_Suspension_Bridge), [Lynn Canyon Suspension Bridge](https://en.wikipedia.org/wiki/Lynn_Canyon_Suspension_Bridge)**: Capilano is private and Lynn crosses a canyon
+* **[Mission Bridge](https://en.wikipedia.org/wiki/Mission_Bridge)**: although accessible by TransLink via the West Coast Express, it technically isn't part of Greater Vancouver
 
 # Gallery
 Naturally, it's a bit difficult to get good photos of a bridge when you're on said bridge; most of my nicer photos (not posted here) are of the views from the bridge. The following are mostly to show what the walkways look like, which often are shared-use paths also used by cyclists.

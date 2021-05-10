@@ -3,11 +3,11 @@ layout: page
 title: About
 ---
 
-Hello! My name is Jonathan, although I will occasionally refer to myself in cyberspace as Jon for brevity. I am a Master's student at UBC, where I will be doing cool things related to programming languages. My interests range from dependent types to compilers to logics.
+Hello! My name is Jonathan (or Jon for short, if I'm lazy). I am a Master's student in the [Software Practices Lab](https://spl.cs.ubc.ca/) at UBC. My research interests include dependent types, proof assistants, type theory, compilers, and mathematical logic.
 
 ## Research
 
-I worked with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on my undergraduate thesis, which involved implementing [sized types in Coq](https://github.com/coq/coq/wiki/CoqTerminationDiscussion#sized). The implementation can be found on [GitHub](https://github.com/ionathanch/coq/tree/dev).
+I worked with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on my undergraduate thesis on sized types, which is a type-based method of checking termination of recursive functions on (co)inductive data. An implementation in Coq's kernel can be found on [GitHub](https://github.com/ionathanch/coq/tree/dev). I continue to work with him as a Master's student on type-preserving closure conversion of recursive functions, which will also make use of sized types.
 
 <hr>
 

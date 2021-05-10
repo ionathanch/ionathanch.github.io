@@ -23,7 +23,7 @@ Jonathan Chan, Yufeng "Michael" Li, and William J. Bowman
 <br/>
 [[Manuscript](/asserts/pdfs/pstc-popl2021.pdf)] [[GitHub](https://github.com/ionathanch/coq/releases/tag/V8.12%2Bsized)] [[Artifact](https://doi.org/10.5281/zenodo.3937941)]
 
-**Practical Sized Typing in Coq**, manuscript
+**Practical Sized Typing in Coq**, *manuscript*
 <br/>
 Jonathan Chan and William J. Bowman
 <br/>
@@ -59,14 +59,15 @@ Attended [PLISS 2019](https://pliss2019.github.io/) (Second International Progra
 
 **Canada Graduate Scholarship – Master's**, *2021*
 <br/>
-<small>The objective of the Canada Graduate Scholarships – Master’s (CGS M) program is to help develop research skills and assist in the training of highly qualified personnel by supporting students who demonstrate a high standard of achievement in undergraduate and early graduate studies.</small>
-<br/>
 [[Outline of proposed research](/assets/pdfs/cgs-m-proposal.pdf)]
+<br/>
+<small>The objective of the Canada Graduate Scholarships – Master’s (CGS M) program is to help develop research skills and assist in the training of highly qualified personnel by supporting students who demonstrate a high standard of achievement in undergraduate and early graduate studies.</small>
 
 [**CRA Outstanding Undergraduate Researcher Award Honourable Mention**](https://cra.org/about/awards/outstanding-undergraduate-researcher-award/#2020), *2020*
+<br />
+[[Research summary](/assets/pdfs/bsc-summary.pdf)]
 <br/>
 <small>This award program recognizes undergraduate students in North American colleges and universities who show outstanding potential in an area of computing research.</small>
-[[Research summary](/assets/pdfs/bsc-summary.pdf)]
 
 **Dean of Science Scholarship** (UBC), *2018, 2015*
 <br/>
@@ -97,6 +98,13 @@ Teaching Assistant <small>([CPSC 312: Functional and Logic Programming](https://
 *January – April 2021*
 * Held semiweekly office hours
 * Graded group projects and midterm/final exams
+
+**[types.pl](https://types.pl)**, *Mastodon instance*
+<br/>
+Secondary administrator and moderator
+<br/>
+*23 October 2020 – present*
+types.pl is a small, leftist and progressive Mastodon instance for PL enthusiasts, researchers, and friends.
 
 **Department of Computer Science**, UBC, *Vancouver, BC, Canada*
 <br/>

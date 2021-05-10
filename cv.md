@@ -21,7 +21,7 @@ BSc. Combined Honours in Computer Science and Physics, May 2020
 <br/>
 Jonathan Chan, Yufeng "Michael" Li, and William J. Bowman
 <br/>
-[[Manuscript](/asserts/pdfs/pstc-popl2021.pdf)] [[GitHub](https://github.com/ionathanch/coq/releases/tag/V8.12%2Bsized)] [[Artifact](https://doi.org/10.5281/zenodo.3937941)]
+[[Manuscript](/assets/pdfs/pstc-popl2021.pdf)] [[GitHub](https://github.com/ionathanch/coq/releases/tag/V8.12%2Bsized)] [[Artifact](https://doi.org/10.5281/zenodo.3937941)]
 
 **Practical Sized Typing in Coq**, *manuscript*
 <br/>
@@ -104,6 +104,7 @@ Teaching Assistant <small>([CPSC 312: Functional and Logic Programming](https://
 Secondary administrator and moderator
 <br/>
 *23 October 2020 – present*
+<br/>
 types.pl is a small, leftist and progressive Mastodon instance for PL enthusiasts, researchers, and friends.
 
 **Department of Computer Science**, UBC, *Vancouver, BC, Canada*

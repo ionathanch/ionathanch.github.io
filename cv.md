@@ -15,15 +15,39 @@ MSc. in Computer Science, present
 <br/>
 BSc. Combined Honours in Computer Science and Physics, May 2020
 
-# Research Experience
+# Unpublications
+
+**Practical Sized Typing in Coq**, *rejected from [POPL 2021](https://popl21.sigplan.org/track/POPL-2021-research-papers)*
+<br/>
+Jonathan Chan, Yufeng "Michael" Li, and William J. Bowman
+<br/>
+[[Manuscript](/asserts/pdfs/pstc-popl2021.pdf)] [[GitHub](https://github.com/ionathanch/coq/releases/tag/V8.12%2Bsized)] [[Artifact](https://doi.org/10.5281/zenodo.3937941)]
+
+**Practical Sized Typing in Coq**, manuscript
+<br/>
+Jonathan Chan and William J. Bowman
+<br/>
+[[arXiv](https://arxiv.org/abs/1912.05601)]
+
+**Practical Sized Typing in Coq**, *rejected from [CPP 2020](https://popl20.sigplan.org/home/CPP-2020)*
+<br/>
+Jonathan Chan and William J. Bowman
+<br/>
+[[Manuscript](/assets/pdfs/pstc-cpp2020.pdf)] [[GitHub](https://github.com/ionathanch/coq/releases/tag/v0.1.0)] [[Artifact](https://doi.org/10.5281/zenodo.3516517)]
+
+# Theses
 
 **Practical Sized Typing in Coq**, *undergraduate honours thesis*
 <br/>
+*Submitted December 2019*
+<br/>
 *Advisor*: [William J. Bowman](https://www.williamjbowman.com/)
 <br/>
-[[arXiv](https://arxiv.org/abs/1912.05601)] [[GitHub](https://github.com/ionathanch/coq/tree/dev)] [[DOI](https://doi.org/10.5281/zenodo.3516517)]
+[[Thesis](/assets/pdfs/bsc-thesis.pdf)] [[GitHub](https://github.com/ionathanch/coq/tree/dev)] [[Proposal](/assets/pdfs/bsc-proposal.pdf)]
 
 # Cool PL Things
+
+Student volunteer at [POPL 2021](https://popl21.sigplan.org/) (48th etc.) in cyberspace.
 
 Student volunteer at [ICFP 2020](https://icfp20.sigplan.org/) (25th ACM SIGPLAN International Conference on Functional Programming) in cyberspace.
 
@@ -33,9 +57,16 @@ Attended [PLISS 2019](https://pliss2019.github.io/) (Second International Progra
 
 # Scholarships and Awards
 
+**Canada Graduate Scholarship – Master's**, *2021*
+<br/>
+<small>The objective of the Canada Graduate Scholarships – Master’s (CGS M) program is to help develop research skills and assist in the training of highly qualified personnel by supporting students who demonstrate a high standard of achievement in undergraduate and early graduate studies.</small>
+<br/>
+[[Outline of proposed research](/assets/pdfs/cgs-m-proposal.pdf)]
+
 [**CRA Outstanding Undergraduate Researcher Award Honourable Mention**](https://cra.org/about/awards/outstanding-undergraduate-researcher-award/#2020), *2020*
 <br/>
 <small>This award program recognizes undergraduate students in North American colleges and universities who show outstanding potential in an area of computing research.</small>
+[[Research summary](/assets/pdfs/bsc-summary.pdf)]
 
 **Dean of Science Scholarship** (UBC), *2018, 2015*
 <br/>
@@ -61,7 +92,15 @@ Attended [PLISS 2019](https://pliss2019.github.io/) (Second International Progra
 
 **Department of Computer Science**, UBC, *Vancouver, BC, Canada*
 <br/>
-Teaching Assistant <small>(CPSC 311: Definition of Programming Languages)</small>
+Teaching Assistant <small>([CPSC 312: Functional and Logic Programming](https://www.cs.ubc.ca/~poole/cs312/2021/))</small>
+<br/>
+*January – April 2021*
+* Held semiweekly office hours
+* Graded group projects and midterm/final exams
+
+**Department of Computer Science**, UBC, *Vancouver, BC, Canada*
+<br/>
+Teaching Assistant <small>([CPSC 311: Definition of Programming Languages](https://www.students.cs.ubc.ca/~cs-311/2020W1/))</small>
 <br/>
 *September – December 2020*
 * Held biweekly tutorial sessions and weekly office hours
@@ -70,7 +109,7 @@ Teaching Assistant <small>(CPSC 311: Definition of Programming Languages)</small
 
 **Department of Computer Science**, UBC, *Vancouver, BC, Canada*
 <br/>
-Teaching Assistant <small>(CPSC 303: Numerical Approximation and Discretization)</small>
+Teaching Assistant <small>([CPSC 303: Numerical Approximation and Discretization](https://www.cs.ubc.ca/~jf/courses/303.S2020/index.html))</small>
 <br/>
 *January – April 2020*
 * Graded weekly assignments and held weekly office hours

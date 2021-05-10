@@ -49,6 +49,8 @@ Jonathan Chan and William J. Bowman
 
 Student volunteer at [POPL 2021](https://popl21.sigplan.org/) (48th etc.) in cyberspace.
 
+Secondary administrator and moderator (with [Hazel](https://knightsofthelambdacalcul.us/)) for [types.pl](https://types.pl/) <small>(est. 23 October 2020)</small>, a small, leftist and progressive Mastodon instance for PL enthusiasts, researchers, and friends.
+
 Student volunteer at [ICFP 2020](https://icfp20.sigplan.org/) (25th ACM SIGPLAN International Conference on Functional Programming) in cyberspace.
 
 Student volunteer at [POPL 2020](https://popl20.sigplan.org/) (47th ACM SIGPLAN Symposium on Principles of Programming Languages) in New Orleans, Louisiana, USA.
@@ -98,14 +100,6 @@ Teaching Assistant <small>([CPSC 312: Functional and Logic Programming](https://
 *January – April 2021*
 * Held semiweekly office hours
 * Graded group projects and midterm/final exams
-
-**[types.pl](https://types.pl)**, *Mastodon instance*
-<br/>
-Secondary administrator and moderator
-<br/>
-*23 October 2020 – present*
-<br/>
-types.pl is a small, leftist and progressive Mastodon instance for PL enthusiasts, researchers, and friends.
 
 **Department of Computer Science**, UBC, *Vancouver, BC, Canada*
 <br/>

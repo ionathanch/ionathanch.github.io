@@ -39,7 +39,7 @@ Including an image:
             img="assets/images/image.png"
             title="title"
             caption="caption"
-            url="https://ert.space" % }
+            url="https://ionathan.ch" % }
 ```
 
 Linking to another post:

@@ -25,5 +25,7 @@ To add an image with a caption, use the following code, replacing the content wi
 ```liquid
 {% include image.html
            img="[relative path to image]"
-           caption="[caption]" %}
+           caption="[caption]"
+           title="[hovertext]"
+           url="[URL]" %}
 ```

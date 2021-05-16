@@ -7,7 +7,7 @@ author:
   name: 'Jonathan Chan'
   url:  https://github.com/ionathanch
 
-paginate: 6
+paginate: 8
 paginate_path: /blog/page:num
 
 sidebar_home_link: true
@@ -20,7 +20,10 @@ defaults:
       type: 'posts'
     values:
       comments: false
-      
+
+katex:
+  js_path: "_assets"
+
 plugins:
   - jekyll-feed
   - jekyll-katex

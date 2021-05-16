@@ -2,7 +2,6 @@
 layout: post
 title: "Interesting Problems at Small Values"
 excerpt_separator: "<!--more-->"
-use_math: true
 tags:
   - mathematics
   - topology
@@ -12,13 +11,9 @@ tags:
   - logic
 ---
 
-This post is based on the observation that, in a variety of fields (e.g. logic, computics, mathematics, physics), while certain classes of problems can be parameterized by some natural number
-<span class="katex"><span class="katex-html mathnormal mord">n</span></span>,
-it appears that the interesting problems―not so simple as to be trivial, but not so complex as to be unsolvable, undecidable, intractable, or nonexistent―always occur at small
-<span class="katex"><span class="katex-html mathnormal mord">n</span></span>.
-Below is a collection of such problems, describing at which
-<span class="katex"><span class="katex-html mathnormal mord">n</span></span>
-they are interesting, and how so.
+{% katexmm %}
+
+This post is based on the observation that, in a variety of fields (e.g. logic, computics, mathematics, physics), while certain classes of problems can be parameterized by some natural number $n$, it appears that the interesting problems―not so simple as to be trivial, but not so complex as to be unsolvable, undecidable, intractable, or nonexistent―always occur at small $n$. Below is a collection of such problems, describing at which $n$ they are interesting, and how so.
 
 <!--more-->
 
@@ -43,7 +38,7 @@ they are interesting, and how so.
 
 The polymorphic lambda calculus System F can be stratified into systems of [rank-​$k$ polymorphism](https://en.wikipedia.org/wiki/Parametric_polymorphism#Higher-ranked_polymorphism), where forall quantifiers are restricted to no more than $k$ arrows deep on the left (e.g. `((∀ a. a → t1) ... → tk)`). Beyond rank-1 (prenex or Hindley–Milner) and rank-2 polymorphism, type inference and type checking is undecidable [[1](#1)], which makes these interesting in terms of practicality. Rank-0 polymorphism is essentially STLC (i.e. nonpolymorphic), where type inference and type checking are trivially decidable.
 
-The higher-order polymorphic lambda calculus [System F$$_{\omega}$$](https://en.wikipedia.org/wiki/System_F#System_Fω) can be stratified into levels as well, where System F$$_{_1}$$ corresponds to STLC, System F$$_{_2}$$ corresponds to System F above, and System F$$_{_k}$$ allows type constructors with argument types of kind level $(k - 1)$. While there exist (Curry-style) lambda terms that cannot be typed in F$$_{_2}$$ but can be typed in F$$_{_3}$$ and above [[2](#2), [3](#3)], it is conjectured [[4](#4), [5](#5)] that all terms typeable in F$$_{_3}$$ and above are also typeable in F$$_{_3}$$ itself; there is a supposedly incorrect proof of this [[6](#6)]. This is not to say System F$$_{_3}$$ and above are uninteresting because they are too complex; in fact, it is interesting precisely because higher orders of polymorphism may collapse to F$$_{_3}$$. This is similar to NP-complete problems below, where classes of problems parametrized by $n$ are all NP-complete for $n \geq 3$.
+The higher-order polymorphic lambda calculus [System F$_{\omega}$](https://en.wikipedia.org/wiki/System_F#System_Fω) can be stratified into levels as well, where System F$_{_1}$ corresponds to STLC, System F$_{_2}$ corresponds to System F above, and System F$_{_k}$ allows type constructors with argument types of kind level $(k - 1)$. While there exist (Curry-style) lambda terms that cannot be typed in F$_{_2}$ but can be typed in F$_{_3}$ and above [[2](#2), [3](#3)], it is conjectured [[4](#4), [5](#5)] that all terms typeable in F$_{_3}$ and above are also typeable in F$_{_3}$ itself; there is a supposedly incorrect proof of this [[6](#6)]. This is not to say System F$_{_3}$ and above are uninteresting because they are too complex; in fact, it is interesting precisely because higher orders of polymorphism may collapse to F$_{_3}$. This is similar to NP-complete problems below, where classes of problems parametrized by $n$ are all NP-complete for $n \geq 3$.
 
 ### Computational Complexity
 
@@ -63,7 +58,7 @@ In mathematics, there appear to be many interesting structures in four-dimension
 
 In $n$ dimensions, there exist at least the following [regular polytopes](https://en.wikipedia.org/wiki/Regular_polytope): the simplices, (with $(n+1)$ faces of $(n-1)$-dimensional simplices), the quadruplices (with $2n$ faces of $(n-1)$-dimensional quadruplices), and the orthoplices (with $2^n$ faces of $(n-1)$-dimensional simplices). In 0D and 1D, these all collpase to the trivial point and line, respectively. In 2D, there are infinitely many regular convex and star polytopes (polygons and stars). For dimensions greater than 4, there are no other regular polytopes. However, in 3D and 4D, there exist other regular polytopes than the three categories above. In 3D, the convex polyhedra are the icosahedron and the dodecahedron, and the star polyhedra are Kepler–Poinsot polyhedra. In 4D, the convex polychora are the 120-cell (corresponding to the dodecahedron), the 600-cell (corresponding to the icosahedron), and the 24-cell (with no 3D counterpart), while the star ones are Schläfli–Hess polychora.
 
-Similarly, in $n$ dimensions, there exist at least the following [semiregular polytopes](https://en.wikipedia.org/wiki/Semiregular_polytope): the [$$k_{_{21}}$$ polytopes](https://en.wikipedia.org/wiki/Uniform_k_21_polytope), and the regular polytopes as described above. In 0D, 1D, and 2D, the semiregular polytopes are exactly the regular polytopes. For dimensions greater than 4, there are no other semiregular polytopes. However, in 3D and 4D, there exist other regular polytopes than the $$k_{_{21}}$$ polytopes. In 3D, these are the prisms, the antiprisms, and the 13 Archimedean solids (excluding enantiomorphs). In 4D, these are the rectified 600-cell (analogous to the icosidodecahedron) and the snub 24-cell.
+Similarly, in $n$ dimensions, there exist at least the following [semiregular polytopes](https://en.wikipedia.org/wiki/Semiregular_polytope): the [$k_{_{21}}$ polytopes](https://en.wikipedia.org/wiki/Uniform_k_21_polytope), and the regular polytopes as described above. In 0D, 1D, and 2D, the semiregular polytopes are exactly the regular polytopes. For dimensions greater than 4, there are no other semiregular polytopes. However, in 3D and 4D, there exist other regular polytopes than the $k_{_{21}}$ polytopes. In 3D, these are the prisms, the antiprisms, and the 13 Archimedean solids (excluding enantiomorphs). In 4D, these are the rectified 600-cell (analogous to the icosidodecahedron) and the snub 24-cell.
 
 ### Topology
 
@@ -82,6 +77,8 @@ Given a potential field described by Poisson's equation, the fundamental solutio
 This has been generalized by Tangherlini [[12](#12)] to a Schwarzschild field (due to a nonrotating, uncharged mass), with the result that stable bound orbits still do not exist in $d > 3$. Since the Schwarzschild metric is a special case of other metrics (Kerr, for rotating masses; Reissner–Nördstrom, for charged masses; Kerr–Newman, for rotating, charged masses), it is not expected that these will have stable bound orbits in $d > 3$ either. There probably are papers that deal with them explicitly.
 
 On the other hand, it was shown [[13](#13)] that bound states of a single electron in a $\frac{1}{r^{d-2}}$ potential using the Schrödinger equation do exist for $d > 4$. As relativistic effects are usually small corrections, it would be expected that special relativistic equations (e.g. Dirac, Klein–Goron, Proca) would also yield the same results. But then we would delve into the world of quantum field theory and have to consider the strong force, the weak force, and Lagrangians, which is beyond the scope of this post. As a subaside, Tegmark [[14](#14)] argues for the impossiblity of more or less than one _time_ dimension.
+
+{% endkatexmm %}
 
 <hr>
 

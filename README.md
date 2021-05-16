@@ -11,7 +11,7 @@ Most of these changes are marked with a comment indicating where the original wa
 * Removed comments and related posts from `_includes/post.html`
 * `_includes/custon-icon-links.html` contains an icon
 * NEW: `_includes/image.html` provides an `include` that adds image captions below images
-* NEW: `_includes/custom-head.html` adds LaTeX support via KaTeX to pages with `use_math: true`
+* NEW: `_includes/custom-head.html` adds LaTeX support via KaTeX to pages [`jekyll-katex`](https://github.com/linjer/jekyll-katex)
 * Added image caption styling and made title font smaller in `assets/css/main.scss`
 * NEW: `blog/index.html` is a page containing blog posts, with a list of categories copied from `_layouts/category.html`
 * Added option to display longer page title than in the sidebar to `_layouts/page.html`

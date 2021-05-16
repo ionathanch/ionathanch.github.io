@@ -1,5 +1,8 @@
 # Building
-Assuming `jekyll` and `bundler` have been installed in a Ruby environment, run `bundle install` to install Gems, then run `bundle exec jekyll serve` to build and host the site.
+1. Install the [correct version](https://pages.github.com/versions/) of Ruby.
+2. `gem install bundler jekyll`
+3. `bundle install`
+4. `bundle exec jekyll serve`
 
 # Theme changes to Hydeout
 Most of these changes are marked with a comment indicating where the original was modified.
@@ -7,6 +10,7 @@ Most of these changes are marked with a comment indicating where the original wa
 * Removed category links from `_includes/sidebar-nav-links.html`
 * `_includes/custon-icon-links.html` contains an icon
 * NEW: `_includes/image.html` provides an `include` that adds image captions below images
+* NEW: `_includes/custom-head.html` adds LaTeX support via KaTeX to pages with `use_math: true`
 * Added image caption styling and made title font smaller in `assets/css/main.scss`
 * NEW: `blog/index.html` is a page containing blog posts, with a list of categories copied from `_layouts/category.html`
 * Added option to display longer page title than in the sidebar to `_layouts/page.html`

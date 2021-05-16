@@ -12,7 +12,13 @@ tags:
   - logic
 ---
 
-This post is based on the observation that, in a variety of fields (e.g. logic, computics, mathematics, physics), while certain classes of problems can be parameterized by some natural number $n$, it appears that the interesting problems―not so simple as to be trivial, but not so complex as to be unsolvable, undecidable, intractable, or nonexistent―always occur at small $n$. Below is a collection of such problems, describing at which $n$ they are interesting, and how so.
+This post is based on the observation that, in a variety of fields (e.g. logic, computics, mathematics, physics), while certain classes of problems can be parameterized by some natural number
+<span class="katex"><span class="katex-html mathnormal mord">n</span></span>,
+it appears that the interesting problems―not so simple as to be trivial, but not so complex as to be unsolvable, undecidable, intractable, or nonexistent―always occur at small
+<span class="katex"><span class="katex-html mathnormal mord">n</span></span>.
+Below is a collection of such problems, describing at which
+<span class="katex"><span class="katex-html mathnormal mord">n</span></span>
+they are interesting, and how so.
 
 <!--more-->
 

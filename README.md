@@ -1,8 +1,7 @@
 # Building
 1. Install the [correct version](https://pages.github.com/versions/) of Ruby.
-2. `gem install bundler jekyll`
-3. `bundle install`
-4. `bundle exec jekyll serve`
+2. `make install`
+3. `make`
 
 # Theme changes to Hydeout
 Most of these changes are marked with a comment indicating where the original was modified.

@@ -3,18 +3,18 @@ layout: default
 ---
 
 <header>
-    <h1 class="page-title">
-        {% comment %}
-            Added long_title option
-        {% endcomment %}
+  <h1 class="page-title">
+    {% comment %}
+      Added long_title option
+    {% endcomment %}
 
-        {% if page.long_title %}
-            {{ page.long_title }}
-        {% else %}
-            {{ page.title }}
-        {% endif %}
-    </h1>
+    {% if page.long_title %}
+      {{ page.long_title }}
+    {% else %}
+      {{ page.title }}
+    {% endif %}
+  </h1>
 </header>
 <div class="content">
-    {{ content }}
+  {{ content }}
 </div>

@@ -8,6 +8,7 @@
 Most of these changes are marked with a comment indicating where the original was modified.
 * Added profile picture to `_includes/sidebar.html`
 * Removed category links from `_includes/sidebar-nav-links.html`
+* Removed comments and related posts from `_includes/post.html`
 * `_includes/custon-icon-links.html` contains an icon
 * NEW: `_includes/image.html` provides an `include` that adds image captions below images
 * NEW: `_includes/custom-head.html` adds LaTeX support via KaTeX to pages with `use_math: true`

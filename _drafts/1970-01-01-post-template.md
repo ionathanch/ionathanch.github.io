@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Post Template"
+use_math: true
 excerpt_separator: "<!--more-->"
 tags:
   - post

@@ -2,6 +2,7 @@
 layout: post
 title: "Interesting Problems at Small Values"
 excerpt_separator: "<!--more-->"
+katex: true
 tags:
   - mathematics
   - topology
@@ -11,7 +12,7 @@ tags:
   - logic
 ---
 
-{% katexmm %}
+<!-- { % katexmm % } -->
 
 This post is based on the observation that, in a variety of fields (e.g. logic, computics, mathematics, physics), while certain classes of problems can be parameterized by some natural number $n$, it appears that the interesting problems―not so simple as to be trivial, but not so complex as to be unsolvable, undecidable, intractable, or nonexistent―always occur at small $n$. Below is a collection of such problems, describing at which $n$ they are interesting, and how so.
 
@@ -21,7 +22,7 @@ This post is based on the observation that, in a variety of fields (e.g. logic, 
 
 * First-order predicate logic
 * Rank-1, rank-2 polymorphic lambda calculus
-* System F$_{_3}$
+* System F$$_{_3}$$
 * 3-SAT, 3D matching, graph 3-colouring
 * (Semi)regular polytopes in 3D and 4D
 * Exotic $\mathbb{R}^4$ and exotic 4-spheres
@@ -38,7 +39,7 @@ This post is based on the observation that, in a variety of fields (e.g. logic, 
 
 The polymorphic lambda calculus System F can be stratified into systems of [rank-​$k$ polymorphism](https://en.wikipedia.org/wiki/Parametric_polymorphism#Higher-ranked_polymorphism), where forall quantifiers are restricted to no more than $k$ arrows deep on the left (e.g. `((∀ a. a → t1) ... → tk)`). Beyond rank-1 (prenex or Hindley–Milner) and rank-2 polymorphism, type inference and type checking is undecidable [[1](#1)], which makes these interesting in terms of practicality. Rank-0 polymorphism is essentially STLC (i.e. nonpolymorphic), where type inference and type checking are trivially decidable.
 
-The higher-order polymorphic lambda calculus [System F$_{\omega}$](https://en.wikipedia.org/wiki/System_F#System_Fω) can be stratified into levels as well, where System F$_{_1}$ corresponds to STLC, System F$_{_2}$ corresponds to System F above, and System F$_{_k}$ allows type constructors with argument types of kind level $(k - 1)$. While there exist (Curry-style) lambda terms that cannot be typed in F$_{_2}$ but can be typed in F$_{_3}$ and above [[2](#2), [3](#3)], it is conjectured [[4](#4), [5](#5)] that all terms typeable in F$_{_3}$ and above are also typeable in F$_{_3}$ itself; there is a supposedly incorrect proof of this [[6](#6)]. This is not to say System F$_{_3}$ and above are uninteresting because they are too complex; in fact, it is interesting precisely because higher orders of polymorphism may collapse to F$_{_3}$. This is similar to NP-complete problems below, where classes of problems parametrized by $n$ are all NP-complete for $n \geq 3$.
+The higher-order polymorphic lambda calculus [System F$$_{\omega}$$](https://en.wikipedia.org/wiki/System_F#System_Fω) can be stratified into levels as well, where System F$_{_1}$ corresponds to STLC, System F$$_{_2}$$ corresponds to System F above, and System F$$_{_k}$$ allows type constructors with argument types of kind level $(k - 1)$. While there exist (Curry-style) lambda terms that cannot be typed in F$$_{_2}$$ but can be typed in F$$_{_3}$$ and above [[2](#2), [3](#3)], it is conjectured [[4](#4), [5](#5)] that all terms typeable in F$$_{_3}$$ and above are also typeable in F$$_{_3}$$ itself; there is a supposedly incorrect proof of this [[6](#6)]. This is not to say System F$$_{_3}$$ and above are uninteresting because they are too complex; in fact, it is interesting precisely because higher orders of polymorphism may collapse to F$$_{_3}$$. This is similar to NP-complete problems below, where classes of problems parametrized by $n$ are all NP-complete for $n \geq 3$.
 
 ### Computational Complexity
 
@@ -78,7 +79,7 @@ This has been generalized by Tangherlini [[12](#12)] to a Schwarzschild field (d
 
 On the other hand, it was shown [[13](#13)] that bound states of a single electron in a $\frac{1}{r^{d-2}}$ potential using the Schrödinger equation do exist for $d > 4$. As relativistic effects are usually small corrections, it would be expected that special relativistic equations (e.g. Dirac, Klein–Goron, Proca) would also yield the same results. But then we would delve into the world of quantum field theory and have to consider the strong force, the weak force, and Lagrangians, which is beyond the scope of this post. As a subaside, Tegmark [[14](#14)] argues for the impossiblity of more or less than one _time_ dimension.
 
-{% endkatexmm %}
+<!-- { % endkatexmm % } -->
 
 <hr>
 

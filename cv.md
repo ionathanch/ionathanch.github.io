@@ -5,6 +5,10 @@ long_title: Curriculum Vitæ
 sidebar_link: true
 ---
 
+**📧mail**: jcxz<img alt="&commat;" style="display: inline"/>cs.ubc.ca
+<br/>
+**ORCID**: [0000-0003-0830-3180](https://orcid.org/0000-0003-0830-3180){:target="_blank"}
+
 # Education
 
 **University of British Columbia**, *Vancouver, BC, Canada*

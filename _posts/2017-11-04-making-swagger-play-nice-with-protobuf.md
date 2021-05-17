@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Making Swagger play nice with ProtoBufs"
-excerpt_separator: "<!--more-->"
 tags:
   - Swagger
   - ProtoBuf

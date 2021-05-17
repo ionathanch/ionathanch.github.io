@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Interesting Problems at Small Values"
-excerpt_separator: "<!--more-->"
 katex: true
 tags:
   - mathematics
@@ -59,7 +58,7 @@ In mathematics, there appear to be many interesting structures in four-dimension
 
 In $n$ dimensions, there exist at least the following [regular polytopes](https://en.wikipedia.org/wiki/Regular_polytope): the simplices, (with $(n+1)$ faces of $(n-1)$-dimensional simplices), the quadruplices (with $2n$ faces of $(n-1)$-dimensional quadruplices), and the orthoplices (with $2^n$ faces of $(n-1)$-dimensional simplices). In 0D and 1D, these all collpase to the trivial point and line, respectively. In 2D, there are infinitely many regular convex and star polytopes (polygons and stars). For dimensions greater than 4, there are no other regular polytopes. However, in 3D and 4D, there exist other regular polytopes than the three categories above. In 3D, the convex polyhedra are the icosahedron and the dodecahedron, and the star polyhedra are Kepler–Poinsot polyhedra. In 4D, the convex polychora are the 120-cell (corresponding to the dodecahedron), the 600-cell (corresponding to the icosahedron), and the 24-cell (with no 3D counterpart), while the star ones are Schläfli–Hess polychora.
 
-Similarly, in $n$ dimensions, there exist at least the following [semiregular polytopes](https://en.wikipedia.org/wiki/Semiregular_polytope): the [$k_{_{21}}$ polytopes](https://en.wikipedia.org/wiki/Uniform_k_21_polytope), and the regular polytopes as described above. In 0D, 1D, and 2D, the semiregular polytopes are exactly the regular polytopes. For dimensions greater than 4, there are no other semiregular polytopes. However, in 3D and 4D, there exist other regular polytopes than the $k_{_{21}}$ polytopes. In 3D, these are the prisms, the antiprisms, and the 13 Archimedean solids (excluding enantiomorphs). In 4D, these are the rectified 600-cell (analogous to the icosidodecahedron) and the snub 24-cell.
+Similarly, in $n$ dimensions, there exist at least the following [semiregular polytopes](https://en.wikipedia.org/wiki/Semiregular_polytope): the [$$k_{_{21}}$$ polytopes](https://en.wikipedia.org/wiki/Uniform_k_21_polytope), and the regular polytopes as described above. In 0D, 1D, and 2D, the semiregular polytopes are exactly the regular polytopes. For dimensions greater than 4, there are no other semiregular polytopes. However, in 3D and 4D, there exist other regular polytopes than the $$k_{_{21}}$$ polytopes. In 3D, these are the prisms, the antiprisms, and the 13 Archimedean solids (excluding enantiomorphs). In 4D, these are the rectified 600-cell (analogous to the icosidodecahedron) and the snub 24-cell.
 
 ### Topology
 
@@ -83,30 +82,30 @@ On the other hand, it was shown [[13](#13)] that bound states of a single electr
 
 <hr>
 
-[<a name="1">1</a>] Kfoury, A. J. and Tiuryn, J. Type Reconstruction in Finite Rank Fragments of the Second-Order λ-Calculus. (1992). Information and Computation, 98:2, pp. 228-257. [https://doi.org/10.1016/0890-5401(92)90020-G](https://doi.org/10.1016/0890-5401(92)90020-G).
+[<a name="1">1</a>] Kfoury, A. J. and Tiuryn, J. "Type Reconstruction in Finite Rank Fragments of the Second-Order λ-Calculus". (1992). _Information and Computation_, 98:2, pp. 228–257. [https://doi.org/10.1016/0890-5401(92)90020-G](https://doi.org/10.1016/0890-5401(92)90020-G){:target="_blank"}.
 
-[<a name="2">2</a>] [https://www.cis.upenn.edu/~bcpierce/types/archives/1993/msg00026.html](https://www.cis.upenn.edu/~bcpierce/types/archives/1993/msg00026.html)
+[<a name="2">2</a>] [https://www.cis.upenn.edu/~bcpierce/types/archives/1993/msg00026.html](https://www.cis.upenn.edu/~bcpierce/types/archives/1993/msg00026.html){:target="_blank"}.
 
-[<a name="3">3</a>] Giannini, P. and Della Rocca, S.R. Characterization of typings in polymorphic type discipline. (1988). Third Annual Symposium on Logic in Computer Science, pp. 61-70. [https://doi.org/10.1109/LICS.1988.5101](https://doi.org/10.1109/LICS.1988.5101).
+[<a name="3">3</a>] Giannini, P. and Della Rocca, S.R. "Characterization of typings in polymorphic type discipline". (1988). _Third Annual Symposium on Logic in Computer Science_, pp. 61–70. [https://doi.org/10.1109/LICS.1988.5101](https://doi.org/10.1109/LICS.1988.5101){:target="_blank"}.
 
-[<a name="4">4</a>] [https://www.seas.upenn.edu/~sweirich/types/archive/1991/msg00054.html](https://www.seas.upenn.edu/~sweirich/types/archive/1991/msg00054.html).
+[<a name="4">4</a>] [https://www.seas.upenn.edu/~sweirich/types/archive/1991/msg00054.html](https://www.seas.upenn.edu/~sweirich/types/archive/1991/msg00054.html){:target="_blank"}.
 
-[<a name="5">5</a>] Giannini, P., Honsell, F., and Ronchi Della Rocca, S. (1993). Type Inference: Some results, Some problems. Fondamenta Informaticae, 19:1-2, pp. 87–125. [https://dl.acm.org/doi/abs/10.5555/175469.175472](https://dl.acm.org/doi/abs/10.5555/175469.175472).
+[<a name="5">5</a>] Giannini, P., Honsell, F., and Ronchi Della Rocca, S. (1993). "Type Inference: Some results, Some problems". _Fondamenta Informaticae_, 19:1–2, pp. 87–125. [https://dl.acm.org/doi/abs/10.5555/175469.175472](https://dl.acm.org/doi/abs/10.5555/175469.175472){:target="_blank"}.
 
-[<a name="6">6</a>] Malecki, S. (1997). Proofs in system Fω can be done in system Fω1. International Workshop on Computer Science Logic, pp. 297-315. [https://doi.org/10.1007/3-540-63172-0_46](https://doi.org/10.1007/3-540-63172-0_46).
+[<a name="6">6</a>] Malecki, S. (1997). "Proofs in system Fω can be done in system Fω1". _International Workshop on Computer Science Logic_, pp. 297–315. [https://doi.org/10.1007/3-540-63172-0_46](https://doi.org/10.1007/3-540-63172-0_46){:target="_blank"}.
 
-[<a name="7">7</a>] Stallings, J. (1961). The Piecewise-Linear Structure of Euclidean space. Proceedings of the Cambridge Philosophical Society, 58:, pp. 481–488. [https://doi.org/10.1017/s0305004100036756](https://doi.org/10.1017/s0305004100036756).
+[<a name="7">7</a>] Stallings, J. (1961). "The Piecewise-Linear Structure of Euclidean Space". _Proceedings of the Cambridge Philosophical Society_, 58:, pp. 481–488. [https://doi.org/10.1017/s0305004100036756](https://doi.org/10.1017/s0305004100036756){:target="_blank"}.
 
-[<a name="8">8</a>] Taubes, C. H. (1987). Gauge Theory on Asymptotically Periodic 4-Manifolds. Journal of Differential Geometry, 25:3, pp. 363-430. [https://doi.org/10.4310/jdg/1214440981](https://doi.org/10.4310/jdg/1214440981).
+[<a name="8">8</a>] Taubes, C. H. (1987). "Gauge Theory on Asymptotically Periodic 4-Manifolds". _Journal of Differential Geometry_, 25:3, pp. 363–430. [https://doi.org/10.4310/jdg/1214440981](https://doi.org/10.4310/jdg/1214440981){:target="_blank"}.
 
-[<a name="9">9</a>] Freedman, M., Gompf, R., Morrison, S., Walker, K. (2010). Man and Machine Thinking about the Smooth 4-Dimensional Poincaré Conjecture. Quantum Topology, 1:2, pp. 171-208. [https://doi.org/10.4171/qt/5](https://doi.org/10.4171/qt/5).
+[<a name="9">9</a>] Freedman, M., Gompf, R., Morrison, S., Walker, K. (2010). "Man and Machine Thinking about the Smooth 4-Dimensional Poincaré Conjecture". _Quantum Topology_, 1:2, pp. 171–208. [https://doi.org/10.4171/qt/5](https://doi.org/10.4171/qt/5){:target="_blank"}.
 
-[<a name="10">10</a>] Ehrenfest, Paul. (1920). Welche Rolle spielt die Dreidimensionalität des Raumes in den Grundgesetzen der Physik?. Ann. Phys., 366:, pp. 440-446. [http://doi.org/10.1002/andp.19203660503](http://doi.org/10.1002/andp.19203660503).
+[<a name="10">10</a>] Ehrenfest, Paul. (1920). "Welche Rolle spielt die Dreidimensionalität des Raumes in den Grundgesetzen der Physik?". _Ann. Phys._, 366:, pp. 440–446. [http://doi.org/10.1002/andp.19203660503](http://doi.org/10.1002/andp.19203660503){:target="_blank"}.
 
-[<a name="11">11</a>] Freeman, Ira M. (1969). Why is Space Three-Dimensional?. American Journal of Physics, 37:12, 1222-1224. [https://doi.org/10.1119/1.1975283](https://doi.org/10.1119/1.1975283).
+[<a name="11">11</a>] Freeman, Ira M. (1969). "Why is Space Three-Dimensional?". _American Journal of Physics_, 37:12, 1222–1224. [https://doi.org/10.1119/1.1975283](https://doi.org/10.1119/1.1975283){:target="_blank"}.
 
-[<a name="12">12</a>] Tangherlini, F. R. (1963). Schwarzschild field inn dimensions and the dimensionality of space problem. Nuovo Cim, 27:3, pp. 636–651. [https://doi.org/10.1007/BF02784569](https://doi.org/10.1007/BF02784569).
+[<a name="12">12</a>] Tangherlini, F. R. (1963). "Schwarzschild field inn dimensions and the dimensionality of space problem". _Nuovo Cim_, 27:3, pp. 636–651. [https://doi.org/10.1007/BF02784569](https://doi.org/10.1007/BF02784569){:target="_blank"}.
 
-[<a name="13">13</a>] Caruso, F., Martins, J., and Oguri, V. (2013). On the existence of hydrogen atoms in higher dimensional Euclidean spaces. Physics Letters A, 377:9, pp. 694–698. [http://dx.doi.org/10.1016/j.physleta.2013.01.026](http://dx.doi.org/10.1016/j.physleta.2013.01.026).
+[<a name="13">13</a>] Caruso, F., Martins, J., and Oguri, V. (2013). "On the existence of hydrogen atoms in higher dimensional Euclidean spaces". _Physics Letters A_, 377:9, pp. 694–698. [http://dx.doi.org/10.1016/j.physleta.2013.01.026](http://dx.doi.org/10.1016/j.physleta.2013.01.026){:target="_blank"}.
 
-[<a name="14">14</a>] Tegmark, Max. (1997). On the dimensionality of spacetime. Classical and Quantum Gravity, 14:4, pp. L69–L75. [http://dx.doi.org/10.1088/0264-9381/14/4/002](http://dx.doi.org/10.1088/0264-9381/14/4/002).
+[<a name="14">14</a>] Tegmark, Max. (1997). "On the dimensionality of spacetime". _Classical and Quantum Gravity_, 14:4, pp. L69–L75. [http://dx.doi.org/10.1088/0264-9381/14/4/002](http://dx.doi.org/10.1088/0264-9381/14/4/002){:target="_blank"}.

@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Thulium Part 2: Nextcloud (formerly Syncthing) and Gitea"
-excerpt_separator: "<!--more-->"
 tags:
   - Docker
   - Docker Compose

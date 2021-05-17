@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Bridges of Vancouver"
-excerpt_separator: "<!--more-->"
 tags:
   - bridge
   - Vancouver

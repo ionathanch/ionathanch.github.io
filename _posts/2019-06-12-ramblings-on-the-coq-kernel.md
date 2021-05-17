@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Ramblings on the Coq Kernel"
-excerpt_separator: "<!--more-->"
 tags:
   - Coq
   - OCaml

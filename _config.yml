@@ -1,38 +1,38 @@
 remote_theme: fongandrew/hydeout
 
-title:   'Jonathan Chan'
-url:     https://ionathanch.github.io
+title: 'Jonathan Chan'
+url:   https://ionathan.ch/
 
 author:
   name: 'Jonathan Chan'
-  url:  https://github.com/ionathanch
+  url:  https://github.com/ionathanch/
 
 paginate: 8
 paginate_path: /blog/page:num
 
 sidebar_home_link: true
-sidebar_blog_link: '/blog'
+sidebar_blog_link: /blog
 
 defaults:
-  -
-    scope:
-      path: ''
-      type: 'posts'
+  - scope:
+      type: posts
     values:
       comments: false
+      excerpt_separator: "<!--more-->"
 
-katex:
-  js_path: "_assets"
-
+# Plugins
 plugins:
   - jekyll-feed
   - jekyll-katex
+
+katex:
+  js_path: _assets
 
 # Custom variables
 description: 'MSc. CS student @ UBC<br/><small><a href="http://pronoun.is/he/him">[he/him]</a></small>'
 profile: assets/images/profile.png
 social:
-  github: https://github.com/ionathanch
+  github:  https://github.com/ionathanch
   twitter: https://twitter.com/ionathanch
   keybase: https://keybase.io/ionathan
-  orcid: https://orcid.org/0000-0003-0830-3180
+  orcid:   https://orcid.org/0000-0003-0830-3180

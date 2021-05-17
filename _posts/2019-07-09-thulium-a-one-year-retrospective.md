@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Thulium: A One-Year Retrospective"
-excerpt_separator: "<!--more-->"
 tags:
   - server
 categories:

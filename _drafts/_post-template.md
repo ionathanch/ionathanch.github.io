@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Post Template"
-excerpt_separator: "<!--more-->"
 tags:
   - post
 categories:
@@ -17,6 +16,7 @@ Front matter:
 layout: post
 title: "Post Template"
 excerpt_separator: "<!--more-->"
+comments: false
 tags:
   - post
 categories:

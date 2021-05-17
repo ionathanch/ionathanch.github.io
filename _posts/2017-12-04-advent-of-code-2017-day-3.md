@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Advent of Code 2017, Day 3"
-excerpt_separator: "<!--more-->"
 tags:
   - Advent of Code 2017
   - Haskell

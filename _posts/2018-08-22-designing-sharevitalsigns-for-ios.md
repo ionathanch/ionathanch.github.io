@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Designing ShareVitalSigns for iOS"
-excerpt_separator: "<!--more-->"
 tags:
   - ShareVitalSigns
   - iOS

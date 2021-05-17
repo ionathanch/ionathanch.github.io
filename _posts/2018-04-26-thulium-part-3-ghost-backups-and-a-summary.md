@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Thulium Part 3: Ghost, monitoring, backups, and a summary"
-excerpt_separator: "<!--more-->"
 tags:
   - Docker
   - Ghost

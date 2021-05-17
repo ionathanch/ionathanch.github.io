@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "BunsenLabs on VirtualBox on Windows 10 on a Laptop"
-excerpt_separator: "<!--more-->"
 tags:
   - Linux
   - BunsenLabs

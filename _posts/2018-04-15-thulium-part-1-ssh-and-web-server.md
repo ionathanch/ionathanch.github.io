@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Thulim Part 1: SSH and Web Server"
-excerpt_separator: "<!--more-->"
 tags:
   - home server
   - web server

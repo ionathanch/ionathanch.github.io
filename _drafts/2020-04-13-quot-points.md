@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Mathematically, Things Get Hard Real Quick"
-excerpt_separator: "<!--more-->"
 tags:
   - numbers
   - mathematics

@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "From Mercurial to Git"
-excerpt_separator: "<!--more-->"
 tags:
   - Git
   - Mercurial

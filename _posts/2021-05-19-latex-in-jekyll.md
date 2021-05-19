@@ -42,7 +42,7 @@ Inside of your HTML `<head>` tag, usually in `_layouts/default.html` for Jekyll 
 {% endif %}{% endraw %}
 ```
 
-This uses jsDelivr as the CDN to deliver the styles and scripts, and it uses KaTeX's [auto-render extension](https://katex.org/docs/autorender.html) to render everything within the specified delimiters. `display: true` is equivalent to a `displaymath` environment, while `display: false` is equivalent to an inline `math` environment. Their documentation has a few more options you can set, like which tags and classes to ignore during processing.
+This uses jsDelivr as the CDN to deliver the styles and scripts; replace `latest` in the URLs if you want to stick to a specific version. It uses KaTeX's [auto-render extension](https://katex.org/docs/autorender.html) to render everything within the specified delimiters. `display: true` is equivalent to a `displaymath` environment, while `display: false` is equivalent to an inline `math` environment. Their documentation has a few more options you can set, like which tags and classes to ignore during processing.
 
 To use LaTeX in a post, add `katex: true` to the front matter, and write your LaTeX within the specified delimiters. For instance, the body of the following:
 
@@ -85,7 +85,7 @@ end
 {% endif %}{% endraw %}
 ```
 
-The plugin will only render LaTeX within specific Liquid tags. The example above can be written as (removing the spaces between braces and `%`):
+You should probably replace `latest` with the [version](https://github.com/linjer/jekyll-katex/blob/master/package.json#L11) that the plugin comes with. It will only render LaTeX within specific Liquid tags. The example above can be written as (removing the spaces between braces and `%`):
 
 ```markdown
 {% raw %}This is an example of inline {% katex %} \LaTeX {% endkatex %}.
@@ -103,3 +103,9 @@ This is an example of inline $\LaTeX$. The following is Stokes' theorem in a
 ```
 
 There is no need to escape any special characters. However, there doesn't seem to be a way to customize the delimiters used in `katexmm`. The `katex` and `katexmm` Liquid tags can be ignored as usual, by wrapping content in `{​% raw %}{​% endraw %}` tags.
+
+# References
+
+[1] Auto-render plugin for $\KaTeX$: [https://katex.org/docs/autorender.html](https://katex.org/docs/autorender.html)
+[2] `jekyll-katex` plugin: [https://github.com/linjer/jekyll-katex/](https://github.com/linjer/jekyll-katex/)
+[3] Jekyll plugins supported by GitHub: [https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#plugins](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#plugins)

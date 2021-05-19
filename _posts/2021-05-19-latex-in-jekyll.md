@@ -106,6 +106,6 @@ There is no need to escape any special characters. However, there doesn't seem t
 
 # References
 
-[1] Auto-render plugin for $\KaTeX$: [https://katex.org/docs/autorender.html](https://katex.org/docs/autorender.html)
-[2] `jekyll-katex` plugin: [https://github.com/linjer/jekyll-katex/](https://github.com/linjer/jekyll-katex/)
-[3] Jekyll plugins supported by GitHub: [https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#plugins](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#plugins)
+* Auto-render plugin for $\KaTeX$: [https://katex.org/docs/autorender.html](https://katex.org/docs/autorender.html)
+* `jekyll-katex` plugin: [https://github.com/linjer/jekyll-katex/](https://github.com/linjer/jekyll-katex/)
+* Jekyll plugins supported by GitHub: [https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#plugins](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#plugins)

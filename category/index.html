@@ -1,12 +1,7 @@
 ---
-layout: index
-title: Blog
-katex: true
+layout: page
+title: Categories
 ---
-
-<h1 class="page-title">⟨ortho|normal⟩</h1 c>
-
-<h2>Categories</h2>
 
 {% assign pages_list = site.pages|sort:"sidebar_sort_order" %}
 {% for node in pages_list %}
@@ -17,5 +12,3 @@ katex: true
     {% endif %}
   {% endif %}
 {% endfor %}
-
-<hr>

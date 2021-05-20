@@ -51,6 +51,8 @@ Jonathan Chan and William J. Bowman
 
 # Cool PL Things
 
+Will attend [OPLSS 2021](https://www.cs.uoregon.edu/research/summerschool/summer21/) (19th Oregon Programming Languages Summer School) in cybrespace.
+
 Student volunteer at [POPL 2021](https://popl21.sigplan.org/) (48th etc.) in cyberspace.
 
 Secondary administrator and moderator (with [Hazel](https://knightsofthelambdacalcul.us/)) for [types.pl](https://types.pl/) <small>(est. 23 October 2020)</small>, a small, leftist and progressive Mastodon instance for PL enthusiasts, researchers, and friends.

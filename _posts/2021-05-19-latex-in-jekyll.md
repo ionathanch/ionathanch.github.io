@@ -85,7 +85,7 @@ end
 {% endif %}{% endraw %}
 ```
 
-You should probably replace `latest` with the [version](https://github.com/linjer/jekyll-katex/blob/master/package.json#L11) that the plugin comes with. It will only render LaTeX within specific Liquid tags. The example above can be written as (removing the spaces between braces and `%`):
+You should probably replace `latest` with the [version](https://github.com/linjer/jekyll-katex/blob/master/package.json#L11) that the plugin comes with. It will only render LaTeX within specific Liquid tags. The example above can be written as:
 
 ```markdown
 {% raw %}This is an example of inline {% katex %} \LaTeX {% endkatex %}.

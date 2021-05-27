@@ -13,6 +13,8 @@ Propositional equality is a notion of equality on terms as a proposition in the 
 Under the Curry–Howard correspondence between propositions and types, this means that equality is a type.
 In most modern proof assistants, the equality type and its constructor is defined as an inductive type.
 
+<!--more-->
+
 ```
 data _≡_ {A : Type} (a : A) : A → Type where
   refl : a ≡ a
@@ -185,17 +187,17 @@ Just as for the usual homogenous equality with J, this could also be equivalentl
 ```
    Γ ⊢ a : A
    Γ ⊢ b : B
-──────────────── ≊-form
-Γ ⊢ a ≊ b : Type
+──────────────── ≅-form
+Γ ⊢ a ≅ b : Type
 
      Γ ⊢ a : A
-─────────────────── ≊-intro
-Γ ⊢ refl* a : a ≊ a
+─────────────────── ≅-intro
+Γ ⊢ refl* a : a ≅ a
 
-Γ ⊢ p : a ≊ b
+Γ ⊢ p : a ≅ b
 Γ ⊢ a : A
 Γ ⊢ b : B
-Γ ⊢ P : (Y : Type) → (y : Y) → a ≊ y → Type
+Γ ⊢ P : (Y : Type) → (y : Y) → a ≅ y → Type
 Γ ⊢ d : P A a (refl* a)
 ─────────────────────────────────────────── J*-elim
           Γ ⊢ J* P d p : P B b p
@@ -213,18 +215,18 @@ since the types of the equalities on both sides of RIP need no longer be the sam
 A B : Type
 a : A
 b : B
-q : a ≊ b
-P (B : Type) (b : B) (p : a ≊ b) : Type ≔ refl* a ≊ p
+q : a ≅ b
+P (B : Type) (b : B) (p : a ≅ b) : Type ≔ refl* a ≅ p
 ───────────────────────────────────────────────────── RIP*
-J* P (refl* (refl* a)) q : refl* a ≊ q
+J* P (refl* (refl* a)) q : refl* a ≅ q
 
 A B : Type
 a : A
 b : B
-p q : a ≊ b
-P (b : A) (p : a ≊ b) : Type ≔ (q : a ≊ b) → p ≊ q
+p q : a ≅ b
+P (b : A) (p : a ≅ b) : Type ≔ (q : a ≅ b) → p ≅ q
 ────────────────────────────────────────────────── UIP*
-J* P (RIP* A B a b) p q : p ≊ q
+J* P (RIP* A B a b) p q : p ≅ q
 ```
 
 ### J and K from J*
@@ -238,25 +240,25 @@ We see a similar problem with trying to derive J where J's motive also doesn't a
 ```
 A : Type
 a b : A
-p : a ≊ b
+p : a ≅ b
 P : (A : Type) → A → Type
-Q (B : Type) (b : B) (_ : a ≊ b) : Type ≔ P A a → P B b
+Q (B : Type) (b : B) (_ : a ≅ b) : Type ≔ P A a → P B b
 id (pa : P A a) : P A a ≔ pa
 ─────────────────────────────────────────────────────── subst*
 J* Q id p : P A a → P B b
 
 A : Type
 a : A
-p : a ≊ a
-P : a ≊ a → Type
+p : a ≅ a
+P : a ≅ a → Type
 d : P (refl* a)
 ───────────────────────────────────────────────────── K?
-subst* (a ≊ a) (refl* a) p (RIP* A A a a p) ? d : P p
+subst* (a ≅ a) (refl* a) p (RIP* A A a a p) ? d : P p
 
 A : Type
 a b : A
-p : a ≊ b
-P : (y : A) → a ≊ y → Type
+p : a ≅ b
+P : (y : A) → a ≅ y → Type
 d : P a (refl a)
 ────────────────────────── J?
 J* ? d p : P b p
@@ -363,3 +365,56 @@ J*         ⊬ J, K
 ## Cubical Type Theory
 
 * No
+
+## Appendix: Level-Heterogenous Equality
+
+This is a generalization of heterogenous equality to be heterogenous in the universe level as well.
+
+```
+Γ ⊢ ℓ₁ : Level
+Γ ⊢ ℓ₂ : Level
+Γ ⊢ A : Set ℓ₁
+Γ ⊢ B : Set ℓ₂
+Γ ⊢ a : A
+Γ ⊢ b : B
+───────────────────────── ≊-form
+Γ ⊢ a ≊ b : Set (ℓ₁ ⊔ ℓ₂)
+
+Γ ⊢ a : A
+Γ ⊢ A : Set ℓ
+Γ ⊢ ℓ : Level
+────────────────── ≊-intro
+Γ ⊢ refl a : a ≊ a
+
+Γ ⊢ p : a ≊ b
+Γ ⊢ a : A
+Γ ⊢ b : B
+Γ ⊢ A : Set ℓ₁
+Γ ⊢ B : Set ℓ₂
+Γ ⊢ P : (ℓ : Level) → (Y : Set ℓ) → (y : Y) → a ≊ y → Type
+Γ ⊢ d : P ℓ₁ A a (refl a)
+────────────────────────────────────────────────────────── H-elim
+Γ ⊢ H P d p : P ℓ₂ B b p
+
+Γ ⊢ p : a ≊ b
+Γ ⊢ a : A
+Γ ⊢ b : B
+Γ ⊢ A B : Set ℓ
+Γ ⊢ P : (Y : Set ℓ) → (y : Y) → a ≊ y → Type
+Γ ⊢ d : P A a (refl a)
+──────────────────────────────────────────── I-elim
+Γ ⊢ I P d p : P B b p
+
+Γ ⊢ p : a ≊ b
+Γ ⊢ a b : A
+Γ ⊢ P : (y : A) → a ≊ y → Type
+Γ ⊢ d : P a (refl a)
+────────────────────────────── J-elim
+Γ ⊢ J P d p : P b p
+
+Γ ⊢ p : a ≊ a
+Γ ⊢ P : a ≊ a → Type
+Γ ⊢ d : P (refl a)
+──────────────────── K-elim
+Γ ⊢ K P d p : P p
+```

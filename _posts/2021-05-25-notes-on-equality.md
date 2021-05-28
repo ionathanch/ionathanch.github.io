@@ -554,8 +554,7 @@ are the ones related by the quotient relation.
 For a quotient to be effective, the relation must be an equivalence relation; that is,
 it must be reflexive, symmetric, and transitive.
 It also has to satisfy a weak form of propositional extensionality: if `x ~ z ↔ y ~ z`, then `x ~ z ≡ y ~ z`.
-This can be derived from full propositional extensionality, which equates any two bi-implicated relations,
-which in turn can be proven from propositionality, which equates all proofs of a relation.
+This can be derived from full propositional extensionality, which equates any two bi-implicated relations.
 We stick to only the weak extensionality, which is all we need, and collect all these facts in a record type.
 
 ```

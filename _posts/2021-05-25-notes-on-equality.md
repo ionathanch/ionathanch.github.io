@@ -1,19 +1,42 @@
 ---
 layout: post
-title: "Notes on Equality"
+title: "Notes on Propositional Equality"
 excerpt_separator: "<!--more-->"
 tags:
   - equality
   - type theory
 ---
 
-## Propositional Equality
-
 Propositional equality is a notion of equality on terms as a proposition in the theory.
 Under the Curry–Howard correspondence between propositions and types, this means that equality is a type.
-In most modern proof assistants, the equality type and its constructor is defined as an inductive type.
 
 <!--more-->
+
+## Table of Contents
+
+* [Inductively-Defined Equality](#inductively-defined-equality)
+* [The J Eliminator](#the-j-eliminator)
+  - [Uniqueness Rule for J](#uniqueness-rule-for-j)
+* [The K Eliminator](#the-k-eliminator)
+  * [UIP from K](#uip-from-k)
+* [Heterogeneous Equality](#heterogeneous-equality)
+  * [UIP from J*](#uip-from-j)
+  * [J and K from J*](#j-and-k-from-j)
+* [Substitution/Transport](#substitutiontransport)
+  * [J and K from Substitution](#j-and-k-from-substitution)
+* [Congruence and Coercion](#congruence-and-coercion)
+  * [More Computation for Congruence](#more-computation-for-congruence)
+* [Mid-Summary](#mid-summary)
+* [Extensional Equality and Univalence](#extensional-equality-and-univalence)
+* [Function Extensionality](#function-extensionality)
+* [Quotient Types](#quotient-types)
+  * [Effectiveness](#effectiveness)
+* [Higher Inductive Types](#higher-inductive-types)
+* [Appendix: Level-Heterogeneous Equality](#appendix-level-heterogeneous-equality)
+
+## Inductively-Defined Equality
+
+In most modern proof assistants, the equality type and its constructor is defined as an inductive type.
 
 ```
 data _≡_ {A : Type} (a : A) : A → Type where
@@ -88,9 +111,9 @@ J can also be treated as a function rather than a construct that takes a fixed n
 in that case, its type would be:
 
 ```
-J : (A : Type) → (a b : A) →
-    (P : (y : A) → a ≡ y → Type) →
-    (d : P a (refl a)) → (p : a ≡ b) → P b p
+J' : (A : Type) → (a b : A) →
+     (P : (y : A) → a ≡ y → Type) →
+     (d : P a (refl a)) → (p : a ≡ b) → P b p
 ```
 
 ### Uniqueness Rule for J
@@ -127,7 +150,7 @@ a ≈ l b p                   by reduction
   ≈ J P a p                 by reduction
   ≈ J P (r a (refl a)) p    by reduction
   ≈ r b p                   by uniq
-  ≈ b : A                   by reduction
+  ≈ b                       by reduction
 ```
 
 In short, given a propositional equality `a ≡ b`, we are able to derive a _definitional_ equality between `a` and `b`.
@@ -182,12 +205,12 @@ q : a ≡ a
 UIP A a a (refl a) q : refl a ≡ q
 ```
 
-## Heterogenous Equality
+## Heterogeneous Equality
 
 The formation rule asserts that both sides of the equality must have the same type.
-We can loosen this condition to create _heterogenous_ or _John Major_ equality, as coined by Conor McBride.
+We can loosen this condition to create _heterogeneous_ or _John Major_ equality, as coined by Conor McBride.
 The eliminator is then adjusted accordingly.
-Just as for the usual homogenous equality with J, this could also be equivalently defined as a inductive type.
+Just as for the usual homogeneous equality with J, this could also be equivalently defined as a inductive type.
 
 ```
    Γ ⊢ a : A
@@ -319,7 +342,7 @@ a b : A
 P : (y : A) → a ≡ y → Type
 d : P a (refl a)
 p : a ≡ b
-───────────────────────────────────────────────── J
+───────────────────────────────────────────────── J'
 Q (y : A) : Type ≔ (p : a ≡ y) → P y p
 e (p : a ≡ a) : P a p ≔ subst (P a) (RIP A a p) d
 -------------------------------------------------
@@ -335,15 +358,119 @@ a : A
 P : a ≡ a → Type
 d : P (refl a)
 p : a ≡ a
-─────────────────────────── K
+─────────────────────────── K'
 subst P (RIP A a p) d : P p
 ```
 
-## Properties of Equality
+## Congruence and Coercion
 
-We expect that equality should satisfy the usual properties of an equivalence relation,
-symmetry and transitivity, as well as congruence.
-We prove these using substitution, but they can also be proven directly with J.
+Congruence of equality and coercion of a term along an equality of types can both be proven from substitution alone.
+
+```
+A B : Type
+a b : A
+f : A → B
+p : a ≡ b
+────────────────────────────────── cong'
+P (y : A) : Type ≔ f a ≡ f y
+----------------------------------
+subst P p (refl (f a)) : f a ≡ f b
+
+A B : Type
+p : A ≡ B
+a : A
+──────────────────────── coe'
+id (T : Type) : Type ≔ T
+------------------------
+subst id p a : B
+```
+
+On the other hand, we could define these two properties as built-in eliminators for equality.
+If we deal only in homogeneous equality, then the function applied in congruence must be non-dependent,
+but it can be dependent if we instead typed it as a heterogeneous equality.
+
+```
+Γ ⊢ p : a ≡ b
+Γ ⊢ a : A
+Γ ⊢ b : A
+Γ ⊢ f : A → B
+──────────────────────── cong-elim
+Γ ⊢ cong f p : f a ≡ f b
+
+Γ ⊢ p : A ≡ B
+Γ ⊢ A : Type
+Γ ⊢ B : Type
+───────────────── coe-elim
+Γ ⊢ coe p : A → B
+
+──────────────────────────────── cong-comp
+Γ ⊢ cong f (refl a) ⊳ refl (f a)
+
+────────────────────── coe-comp
+Γ ⊢ coe (refl A) a ⊳ a
+```
+
+These two, in turn, can be used to define substitution.
+
+```
+A : Type
+a b : A
+P : A → Type
+p : a ≡ b
+────────────────────────── subst'
+coe (cong P p) : P a → P b
+```
+
+### More Computation for Congruence
+
+Notice that congruence only computes on reflexivity.
+We may want to also compute congruence when `f` is constant with respect to its argument:
+both sides of the resulting type are definitionally equal, and we expect that it computes to a reflexivity.
+If we allow using convertibility as a premise to reduction (which may not be possible in all type systems),
+we can add the following computation rule.
+If congruence carried all of the relevant types with it, as is the case with `cong'`,
+avoiding typing premises and typed convertibility is possible as well.
+
+```
+Γ ⊢ p : a ≡ b
+Γ ⊢ a : A
+Γ ⊢ b : A
+Γ ⊢ f : A → B
+Γ ⊢ f a ≈ f b : B
+───────────────────────── cong-comp'
+Γ ⊢ cong f p ⊳ refl (f a)
+
+Γ ⊢ f a ≈ f b
+────────────────────────────────── cong'-comp'
+Γ ⊢ cong' A B a b f p ⊳ refl (f a)
+```
+
+If substitution is defined by coercion and congruence, then substitution will also compute
+when the motive `P` is constant with respect to `a` and `b`.
+Furthermore, J defined using substition will compute this way as well.
+Note that this is orthogonal to UIP: congruence applied to an equality `p : a ≡ a` not (yet) definitionally equal to
+`refl a` will not compute without this rule even with RIP.
+
+## Mid-Summary
+
+Below summarizes the various relationships among J, K, substitution, and RIP/UIP.
+If you have the left side of the turnstile, then you may derive the right side.
+
+```
+J          ⊢ subst
+K          ⊢ RIP
+RIP, J     ⊢ UIP
+UIP        ⊢ RIP
+RIP, subst ⊢ J, K
+K,   subst ⊢ J
+J*         ⊢ RIP*, UIP*, subst*
+J*         ⊬ J, K
+subst      ⊢ coe, cong
+coe, cong  ⊢ subst
+```
+
+Equality also satisfies the two other properties of equivalence relations: symmetry and transitivity.
+We prove them here with substitution, but they can be proven directly using J as well.
 
 ```
 A : Type
@@ -362,31 +489,6 @@ q : b ≡ c
 P (y : A) : Type ≔ a ≡ y
 ------------------------
 subst P q p : a ≡ c
-
-A B : Type
-a b : A
-f : A → B
-p : a ≡ b
-────────────────────────────────── cong
-P (y : A) : Type ≔ f a ≡ f y
-----------------------------------
-subst P p (refl (f a)) : f a ≡ f b
-```
-
-## Mid-Summary
-
-Below summarizes the various relationships among J, K, substitution, and RIP/UIP.
-If you have the left side of the turnstile, then you may derive the right side.
-
-```
-J          ⊢ subst'
-K          ⊢ RIP
-RIP, J     ⊢ UIP
-UIP        ⊢ RIP
-RIP, subst ⊢ J, K
-K,   subst ⊢ J
-J*         ⊢ RIP*, UIP*, subst*
-J*         ⊬ J, K
 ```
 
 ## Extensional Equality and Univalence
@@ -432,7 +534,7 @@ TODO: Blurb introducing and explaining quotient types
 ```
 
 Because the function applied in the eliminator could be a dependent function, the condition that it acts identically
-on related elements is a heterogenous equality rather than a homogenous one.
+on related elements is a heterogeneous equality rather than a homogeneous one.
 However, we _know_ that the return types of the function must be equal, since they only depend on the quotiented elements,
 and quotients of related elements are equal by `Qax`.
 Therefore, we could alternatively replace `f x ≅ f y` by `subst P (Qax˷ x y r) (f x) ≡ f y`.
@@ -441,6 +543,8 @@ When `P` is constant with respect to its argument, we expect that the condition 
 However, this does not hold, since substitution does not reduce on the equality from `Qax`.
 The problem arises from quotients destroying _canonicity_ of equality: with the existence of `Qax`,
 there are now closed proofs of equality that are not constructed by `refl`.
+This specific problem with a constant `P` can be circumvented by the additional computation rule for congruence,
+but the larger problem of noncanonicity still exists.
 
 ### Effectiveness
 
@@ -485,7 +589,7 @@ Now we are ready to tackle effectiveness.
 Suppose we have `p : [a]˷ ≡ [b]˷`, where `~` is a propositional equivalence relation.
 We wish to show that `a ~ b`.
 By congruence on `p`, using our lifted function, we have that `P̂ [a]˷ ≡ P̂ [b]˷`, which computes to `a ~ a ≡ b ~ a`.
-Finally, by reflexivity of `~`, substitution over the equality, and symmetry of `~`, we obtain `a ~ b`.
+Finally, by reflexivity of `~`, coercion along the equality, and symmetry of `~`, we obtain `a ~ b`.
 The full proof is outlined below.
 
 ```
@@ -494,14 +598,14 @@ A : Type
 pe : PropEquiv A ~
 a b : A
 p : [a]˷ ≡ [b]˷
-──────────────────────────────────────────────────── eff
+────────────────────────────────────────────────── eff
 P (x : A) : Type ≔ x ~ a
 Q (_ : A⧸~) : Type ≔ Type
 P̂ (x : A⧸~): Type ≔ Qelim˷ Q (lemma₁ A ~ pe a) P x
-lemma₂ : a ~ a ≡ b ~ a ≔ cong A⧸~ Type [a]˷ [b]˷ P̂ p
+lemma₂ : a ~ a ≡ b ~ a ≔ cong P̂ p
 id (T : Type) : Type ≔ T
-----------------------------------------------------
-pe.~sym (subst id lemma₂ (pe.~refl a)) : a ~ b
+--------------------------------------------------
+pe.~sym (coe lemma₂ (pe.~refl a)) : a ~ b
 ```
 
 ## Higher Inductive Types
@@ -513,9 +617,9 @@ pe.~sym (subst id lemma₂ (pe.~refl a)) : a ~ b
 
 * No
 
-## Appendix: Level-Heterogenous Equality
+## Appendix: Level-Heterogeneous Equality
 
-This is a generalization of heterogenous equality to be heterogenous in the universe level as well.
+This is a generalization of heterogeneous equality to be heterogeneous in the universe level as well.
 
 ```
 Γ ⊢ ℓ₁ : Level

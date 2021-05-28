@@ -110,16 +110,18 @@ the target need not have the canonical `refl` form.
 ```
 
 (Note that this rule is mostly only useful if `e` is a neutral form.) However, adding this rule is dangerous,
-because we can now derive the following chain of conversions under the appropriate assumptions and definitions:
+because we can now derive the following chain of conversions (below the dashed bar) under the appropriate assumptions
+(above the solid bar) and definitions (between the two bars):
 
 ```
 A : Type
 a b : A
 p : a ≡ b
+────────────────────────────────
 l (_ : A) (_ : a ≡ y) : A ≔ a
 r (y : A) (_ : a ≡ y) : A ≔ y
 P (_ : A) (_ : a ≡ y) : Type ≔ A
-────────────────────────────────
+--------------------------------
 a ≈ l b p                   by reduction
   ≈ J P (l a (refl a)) p    by uniq
   ≈ J P a p                 by reduction
@@ -150,24 +152,27 @@ The it cannot be derived from J or the match expression, nor can it derive J.
 
 ### UIP from K
 
-K can be used to prove that all equalities on `a` are equal to `refl a`,
+K can be used to prove that all equalities on `a` are equal to `refl a` (RIP),
 and together they prove that all equalities of the same type are equal,
-known as the _unicity_ or _uniqueness of identity proofs_.
-(UIP in turn, of course, directly implies RIP.)
+known as the _unicity_ or _uniqueness of identity proofs_ (UIP).
+(We treat RIP as a function whose parameters are the assumptions above the solid bar.)
+UIP in turn, of course, directly implies RIP.
 
 ```
 A : Type
 a : A
 q : a ≡ a
-P (p : a ≡ a) : Type ≔ refl a ≡ p
 ────────────────────────────────── RIP
+P (p : a ≡ a) : Type ≔ refl a ≡ p
+----------------------------------
 K P (refl (refl a)) q : refl a ≡ q
 
 A : Type
 a b : A
 p q : a ≡ b
-P (b : A) (p : a ≡ b) : Type ≔ (q : a ≡ b) → p ≡ q
 ────────────────────────────────────────────────── UIP
+P (b : A) (p : a ≡ b) : Type ≔ (q : a ≡ b) → p ≡ q
+--------------------------------------------------
 J P (RIP A a) p q : p ≡ q
 
 A : Type
@@ -216,16 +221,18 @@ A B : Type
 a : A
 b : B
 q : a ≅ b
-P (B : Type) (b : B) (p : a ≅ b) : Type ≔ refl* a ≅ p
 ───────────────────────────────────────────────────── RIP*
+P (B : Type) (b : B) (p : a ≅ b) : Type ≔ refl* a ≅ p
+-----------------------------------------------------
 J* P (refl* (refl* a)) q : refl* a ≅ q
 
 A B : Type
 a : A
 b : B
 p q : a ≅ b
-P (b : A) (p : a ≅ b) : Type ≔ (q : a ≅ b) → p ≅ q
 ────────────────────────────────────────────────── UIP*
+P (b : A) (p : a ≅ b) : Type ≔ (q : a ≅ b) → p ≅ q
+--------------------------------------------------
 J* P (RIP* A B a b) p q : p ≅ q
 ```
 
@@ -242,24 +249,25 @@ A : Type
 a b : A
 p : a ≅ b
 P : (A : Type) → A → Type
+─────────────────────────────────────────────────────── subst*
 Q (B : Type) (b : B) (_ : a ≅ b) : Type ≔ P A a → P B b
 id (pa : P A a) : P A a ≔ pa
-─────────────────────────────────────────────────────── subst*
+-------------------------------------------------------
 J* Q id p : P A a → P B b
 
 A : Type
 a : A
-p : a ≅ a
 P : a ≅ a → Type
 d : P (refl* a)
+p : a ≅ a
 ───────────────────────────────────────────────────── K?
 subst* (a ≅ a) (refl* a) p (RIP* A A a a p) ? d : P p
 
 A : Type
 a b : A
-p : a ≅ b
 P : (y : A) → a ≅ y → Type
 d : P a (refl a)
+p : a ≅ b
 ────────────────────────── J?
 J* ? d p : P b p
 ```
@@ -274,11 +282,12 @@ As in the last section, we can derive this from the J eliminator.
 ```
 A : Type
 a b : A
-p : a ≡ b
 P : A → Type
+p : a ≡ b
+──────────────────────────────────────── subst'
 Q (y : A) (_ : a ≡ y) : Type ≔ P a → P y
 id (pa : P a) : P a ≔ pa
-──────────────────────────────────────── subst'
+----------------------------------------
 J Q id p : P a → P b
 ```
 
@@ -286,11 +295,13 @@ Alternatively, we can define subst as the core eliminator for equality.
 
 ```
 Γ ⊢ p : a ≡ b
-Γ ⊢ a : A
-Γ ⊢ b : A
+Γ ⊢ a b : A
 Γ ⊢ P : A → Type
 ───────────────────────── subst-elim
 Γ ⊢ subst P p : P a → P b
+
+──────────────────────────── subst-comp
+Γ ⊢ subst P (refl a) pa ⊳ pa
 ```
 
 ### J and K from Substitution
@@ -298,19 +309,20 @@ Alternatively, we can define subst as the core eliminator for equality.
 We can derive all of the nice properties of equality from subst as we do from J
 (such as symmetry, transitivity, and congruence), but we cannot derive J itself.
 However, with the help of UIP (either as an axiom or through K), we can.
-The idea is that using RIP, if we have an equality `p : a ≡ b`,
+The idea is that using RIP, if we have an equality `p : a ≡ a`,
 we can substitute from `P a (refl a)` to `P a p`,
 and then we can substitute from there to `P b p` via `p`.
 
 ```
 A : Type
 a b : A
-p : a ≡ b
 P : (y : A) → a ≡ y → Type
 d : P a (refl a)
+p : a ≡ b
+───────────────────────────────────────────────── J
 Q (y : A) : Type ≔ (p : a ≡ y) → P y p
 e (p : a ≡ a) : P a p ≔ subst (P a) (RIP A a p) d
-───────────────────────────────────────────────── J
+-------------------------------------------------
 subst Q p e p : P b p
 ```
 
@@ -320,11 +332,45 @@ We can then easily recover K with a single application of subst.
 ```
 A : Type
 a : A
-p : a ≡ a
 P : a ≡ a → Type
 d : P (refl a)
+p : a ≡ a
 ─────────────────────────── K
 subst P (RIP A a p) d : P p
+```
+
+## Properties of Equality
+
+We expect that equality should satisfy the usual properties of an equivalence relation,
+symmetry and transitivity, as well as congruence.
+We prove these using substitution, but they can also be proven directly with J.
+
+```
+A : Type
+a b : A
+p : a ≡ b
+────────────────────────── sym
+P (y : A) : Type ≔ y ≡ a
+--------------------------
+subst P p (refl a) : b ≡ a
+
+A : Type
+a b c : A
+p : a ≡ b
+q : b ≡ c
+──────────────────────── trans
+P (y : A) : Type ≔ a ≡ y
+------------------------
+subst P q p : a ≡ c
+
+A B : Type
+a b : A
+f : A → B
+p : a ≡ b
+────────────────────────────────── cong
+P (y : A) : Type ≔ f a ≡ f y
+----------------------------------
+subst P p (refl (f a)) : f a ≡ f b
 ```
 
 ## Mid-Summary
@@ -355,7 +401,108 @@ J*         ⊬ J, K
 
 ## Quotient Types
 
-* Give typing rules for quotient types
+TODO: Blurb introducing and explaining quotient types
+
+```
+Γ ⊢ A : Type
+Γ ⊢ ~ : A → A → Type
+──────────────────── Q-form
+Γ ⊢ A⧸~ : Type
+
+Γ ⊢ a : A
+Γ ⊢ ~ : A → A → Type
+──────────────────── Q-intro
+Γ ⊢ [a]˷ : A⧸~
+
+Γ ⊢ a b : A
+Γ ⊢ ~ : A → A → Type
+────────────────────────────────── Q-ax
+Γ ⊢ Qax˷ a b : a ~ b → [a]˷ ≡ [b]˷
+
+Γ ⊢ a : A⧸~
+Γ ⊢ P : A⧸~ → Type
+Γ ⊢ ~ : A → A → Type
+Γ ⊢ f : (x : A) → P [x]˷
+Γ ⊢ p : (x y : A) → (r : x ~ y) → f x ≅ f y
+─────────────────────────────────────────── Q-elim
+Γ ⊢ Qelim˷ P p f a : P a
+
+─────────────────────────── Q-comp
+Γ ⊢ Qelim˷ P p f [a]˷ ⊳ f a
+```
+
+Because the function applied in the eliminator could be a dependent function, the condition that it acts identically
+on related elements is a heterogenous equality rather than a homogenous one.
+However, we _know_ that the return types of the function must be equal, since they only depend on the quotiented elements,
+and quotients of related elements are equal by `Qax`.
+Therefore, we could alternatively replace `f x ≅ f y` by `subst P (Qax˷ x y r) (f x) ≡ f y`.
+
+When `P` is constant with respect to its argument, we expect that the condition should become `f x ≡ f y`.
+However, this does not hold, since substitution does not reduce on the equality from `Qax`.
+The problem arises from quotients destroying _canonicity_ of equality: with the existence of `Qax`,
+there are now closed proofs of equality that are not constructed by `refl`.
+
+### Effectiveness
+
+An important property that quotient types can have is _effectiveness_:
+the only elements belonging to an equivalence class of a quotiented element with respect to propositional equality
+are the ones related by the quotient relation.
+For a quotient to be effective, the relation must be an equivalence relation; that is,
+it must be reflexive, symmetric, and transitive.
+It also has to satisfy a weak form of propositional extensionality: if `x ~ z ↔ y ~ z`, then `x ~ z ≡ y ~ z`.
+This can be derived from full propositional extensionality, which equates any two bi-implicated relations,
+which in turn can be proven from propositionality, which equates all proofs of a relation.
+We stick to only the weak extensionality, which is all we need, and collect all these facts in a record type.
+
+```
+record PropEquiv (A : Type) (~ : A → A → Type) : Type where
+  ~refl : (x : A) → x ~ x
+  ~sym : (x y : A) → x ~ y → y ~ x
+  ~trans : (x y z : A) → x ~ y → y ~ z → x ~ z
+  ~ext : (x y z : A) → (y ~ z → x ~ z) → (x ~ z → y ~ z) → x ~ z ≡ y ~ z
+```
+
+With these, we can prove a lemma we will need later: if `x ~ y`, then for any `z`, `x ~ z ≡ y ~ z`.
+
+```
+A : Type
+~ : A → A → Type
+pe : PropEquiv A ~
+z x y : A
+r : x ~ y
+────────────────────────────────────────────────────── lemma₁
+yzxz : y ~ z → x ~ z ≔ pe.~trans x y z r
+xzyz : x ~ z → y ~ z ≔ pe.~trans y x z (pe.~sym x y r)
+------------------------------------------------------
+pe.~ext x y z yzxz xzyz : x ~ z ≡ y ~ z
+```
+
+Let `a` be some particular `A` we can quotient by `~`, and let `P : A → Type` be a function defined by `λ x ⇒ x ~ a`.
+Then we can "lift" `P` to a function `P̂ : A⧸~ → Type` using `Qelim˷`, since `lemma₁` gives us the required condition that
+if `x ~ y` then `P x ≡ P y` when instantiated with `a`.
+
+Now we are ready to tackle effectiveness.
+Suppose we have `p : [a]˷ ≡ [b]˷`, where `~` is a propositional equivalence relation.
+We wish to show that `a ~ b`.
+By congruence on `p`, using our lifted function, we have that `P̂ [a]˷ ≡ P̂ [b]˷`, which computes to `a ~ a ≡ b ~ a`.
+Finally, by reflexivity of `~`, substitution over the equality, and symmetry of `~`, we obtain `a ~ b`.
+The full proof is outlined below.
+
+```
+A : Type
+~ : A → A → Type
+pe : PropEquiv A ~
+a b : A
+p : [a]˷ ≡ [b]˷
+──────────────────────────────────────────────────── eff
+P (x : A) : Type ≔ x ~ a
+Q (_ : A⧸~) : Type ≔ Type
+P̂ (x : A⧸~): Type ≔ Qelim˷ Q (lemma₁ A ~ pe a) P x
+lemma₂ : a ~ a ≡ b ~ a ≔ cong A⧸~ Type [a]˷ [b]˷ P̂ p
+id (T : Type) : Type ≔ T
+----------------------------------------------------
+pe.~sym (subst id lemma₂ (pe.~refl a)) : a ~ b
+```
 
 ## Higher Inductive Types
 

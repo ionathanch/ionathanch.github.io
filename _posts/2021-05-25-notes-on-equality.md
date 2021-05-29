@@ -25,6 +25,7 @@ Under the Curry–Howard correspondence between propositions and types, this mea
 * [Substitution/Transport](#substitutiontransport)
   * [J and K from Substitution](#j-and-k-from-substitution)
 * [Congruence and Coercion](#congruence-and-coercion)
+  * [Congruence with Dependent Functions](#congruence-with-dependent-functions)
   * [More Computation for Congruence](#more-computation-for-congruence)
 * [Mid-Summary](#mid-summary)
 * [Extensional Equality](#extensional-equality)
@@ -424,6 +425,45 @@ p : a ≡ b
 coe (cong P p) : P a → P b
 ```
 
+### Congruence with Dependent Functions
+
+When using homogeneous equality, the function applied in congruence must be nondependent for both sides of the equality
+to have the same type.
+If we use heterogeneous equality, we can allow dependent functions.
+Alternatively, since we already have the proof of equality of the elements that the function is applied over,
+surely their types must be equal as well.
+We can then use substitution to "fix" the type of one side of the resultant equality.
+Instead of calling it dependent congruence, we'll call it `apd` in the HoTT tradition.
+
+```
+Γ ⊢ P : A → Type
+Γ ⊢ p : a ≡ b
+Γ ⊢ a : A
+Γ ⊢ b : A
+Γ ⊢ f : (x : A) → P x
+───────────────────────────────────── apd-elim
+Γ ⊢ apd P f p : subst P p (f a) ≡ f b
+
+───────────────────────────────── apd-comp
+Γ ⊢ apd P f (refl a) ⊳ refl (f a)
+```
+
+Unlike congruence, `apd` can only be proven from J, not substitution alone.
+
+```
+A : Type
+a b : A
+P : A → Type
+f : (x : A) → P x
+p : a ≡ b
+──────────────────────────────────────────────────── apd'
+Q (y : A) (p : a ≡ y) : Type ≔ subst P p (f a) ≡ f y
+----------------------------------------------------
+J Q (refl (f a)) p : subst P p (f a) ≡ f b
+```
+
+TODO: Can J be proven from `subst` and `apd` alone?
+
 ### More Computation for Congruence
 
 Notice that congruence only computes on reflexivity.
@@ -470,6 +510,7 @@ J*         ⊢ RIP*, UIP*, subst*
 J*         ⊬ J, K
 subst      ⊢ coe, cong
 coe, cong  ⊢ subst
+J          ⊢ apd
 ```
 
 Equality also satisfies the two other properties of equivalence relations: symmetry and transitivity.
@@ -701,9 +742,46 @@ unsq P p f ≔ Qelim˷ P (λ x y _ ⇒ p x y) f
 
 ## Higher Inductive Types
 
+Higher inductive types are inductive types with quotient-like behaviour: with _equality constructors_,
+you can specify new equalities between your elements.
+One popular HIT is the interval, which consists of two endpoints and a path between them
+
+```
+data 𝕀 : Type where
+  𝟎 : 𝕀
+  𝟏 : 𝕀
+  seg : 𝟎 ≡ 𝟏
+```
+
+The eliminator for the interval requires the same kind of condition as quotient types:
+when eliminating an element of the interval with some function on an endpoint,
+the eliminator must treat both endpoints equally.
+On top of that, applying the eliminator to both sides of the segment should yield exactly the same proof that
+both endpoints are treated equally.
+
+```
+Γ ⊢ P : 𝕀 → Type
+Γ ⊢ b₀ : P 𝟎
+Γ ⊢ b₁ : P 𝟏
+Γ ⊢ s : b₀ ≅ b₁
+───────────────────────────────────── 𝕀-elim
+Γ ⊢ 𝕀-elim : P b₀ b₁ s : (i : 𝕀) → P i
+
+─────────────────────────── 𝕀-comp₀
+Γ ⊢ 𝕀-elim P b₀ b₁ s 𝟎 ⊳ b₀
+
+─────────────────────────── 𝕀-comp₁
+Γ ⊢ 𝕀-elim P b₀ b₁ s 𝟏 ⊳ b₁
+
+─────────────────────────────────── 𝕀-comp-seg
+Γ ⊢ apd P (𝕀-elim P b₀ b₁ s) seg ⊳ s
+```
+
+Again, use of heterogeneous equality can be replaced by a homogeneous one if we do the appropriate substitution;
+`s` would then have type `subst P seg b₀ ≡ b₁`.
+
 TODOs:
 * Give rules (?) for HITs
-* Give examples (loop, interval)
 * Give elimination principles for quotients defined as HITs
 
 ```

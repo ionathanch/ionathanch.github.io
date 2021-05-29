@@ -131,8 +131,8 @@ the target need not have the canonical `refl` form.
 Γ ⊢ b : A
 Γ ⊢ P : (y : A) → a ≡ y → Type
 Γ ⊢ e : (x : A) → (p : a ≡ x) → P x p
-──────────────────────────────────────── J-uniq
-Γ ⊢ J P (e a (refl a)) p ≈ e b p : P b p
+───────────────────────────────────── J-uniq
+Γ ⊢ J P (e a (refl a)) p ≈ e b p
 ```
 
 (Note that this rule is mostly only useful if `e` is a neutral form.) However, adding this rule is dangerous,
@@ -722,6 +722,12 @@ TODOs:
 
 ## Appendix A: Other Relevant Typing Rules
 
+Below are the typing rules for functions and a typing rule that uses convertibility to coerce a term to a another type.
+We assume that `Type` is well-behaved and causes no problems with consistency.
+Convertibility (`≈`) is defined to be the reflexive, symmetric, compatible closure of multi-step reduction (`⊳`) and
+whatever other uniqueness rules that are defined throughout.
+Convertibility is generally untyped and does not rely on typing judgements, except for J-uniq.
+
 ```
 Γ ⊢ a : A
 Γ ⊢ B : Type
@@ -747,8 +753,9 @@ TODOs:
 ──────────────────────────────────── λ-comp
 Γ ⊢ (λ (x : A) ⇒ e₁) e₂ ⊳ e₁[x ↦ e₂]
 
+Γ (x : A) ⊢ e₁ ≈ e₂ x 
 ───────────────────────── λ-uniq
-Γ ⊢ (λ (x : A) ⇒ f x) ⊳ f
+Γ ⊢ (λ (x : A) ⇒ e₁) ≈ e₂
 ```
 
 ## Appendix B: Level-Heterogeneous Equality

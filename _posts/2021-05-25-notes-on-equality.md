@@ -549,27 +549,27 @@ they are all propositionally equal.
 This can be done by _squashing_ the type and its term(s), and restricting manipulating the terms in ways that
 do not allow us to distinguish among them.
 Given some function `f` from `A` to an output type that only depends on the squashed input,
-we can "lift" that function to one that takes a squashed `∥A∥` as input instead.
+we can "lift" that function to one that takes a squashed `‖A‖` as input instead.
 
 ```
 Γ ⊢ A : Type
 ────────────── sq-form
-Γ ⊢ ∥A∥ : Type
+Γ ⊢ ‖A‖ : Type
 
 Γ ⊢ a : A
 ───────────── sq-intro
-Γ ⊢ |a| : ∥A∥
+Γ ⊢ |a| : ‖A‖
 
 Γ ⊢ a : A
 Γ ⊢ b : A
 ──────────────────────── sq-ax
 Γ ⊢ sqax a b : |a| ≡ |b|
 
-Γ ⊢ P : ∥A∥ → Type
+Γ ⊢ P : ‖A‖ → Type
 Γ ⊢ f : (x : A) → P |x|
 Γ ⊢ p : (x y : A) → f x ≅ f y
 ────────────────────────────── sq-elim
-Γ ⊢ unsq P p f : (x : ∥A∥) → P x
+Γ ⊢ unsq P p f : (x : ‖A‖) → P x
 
 ────────────────────── sq-comp
 Γ ⊢ unsq P f |a| ⊳ f a

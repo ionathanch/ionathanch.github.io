@@ -432,14 +432,14 @@ both sides of the resulting type are definitionally equal, and we expect that it
 If we allow using convertibility as a premise to reduction (which may not be possible in all type systems),
 we can add the following computation rule.
 If congruence carried all of the relevant types with it, as is the case with `cong'`,
-avoiding typing premises and typed convertibility is possible as well.
+avoiding typing premises is possible as well.
 
 ```
 Γ ⊢ p : a ≡ b
 Γ ⊢ a : A
 Γ ⊢ b : A
 Γ ⊢ f : A → B
-Γ ⊢ f a ≈ f b : B
+Γ ⊢ f a ≈ f b
 ───────────────────────── cong-comp'
 Γ ⊢ cong f p ⊳ refl (f a)
 

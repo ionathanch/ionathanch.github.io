@@ -701,13 +701,24 @@ unsq P p f ≔ Qelim˷ P (λ x y _ ⇒ p x y) f
 
 ## Higher Inductive Types
 
-TODOs
-* Give typing rules (?) for HITs
-* Define quotients in terms of HITs
+TODOs:
+* Give rules (?) for HITs
+* Give examples (loop, interval)
+* Give elimination principles for quotients defined as HITs
+
+```
+data _⧸_ (A : Type) (~ : A → A → Type) : Type where
+  [_]˷ : (a : A) → A⧸~
+  Qax : (a b : A) → a ~ b → [a]˷ ≡ [b]˷
+```
 
 ## Cubical Type Theory
 
-* No
+TODOs:
+* Introduce the interval, interval elements, paths
+* Show that paths can be used as a propositional equality
+* Prove funext using paths
+* Other fun properties of paths
 
 ## Appendix A: Other Relevant Typing Rules
 

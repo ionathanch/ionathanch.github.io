@@ -27,12 +27,15 @@ Under the Curry–Howard correspondence between propositions and types, this mea
 * [Congruence and Coercion](#congruence-and-coercion)
   * [More Computation for Congruence](#more-computation-for-congruence)
 * [Mid-Summary](#mid-summary)
-* [Extensional Equality and Univalence](#extensional-equality-and-univalence)
+* [Extensional Equality](#extensional-equality)
 * [Function Extensionality](#function-extensionality)
+* [Squash Types](#squash-types)
 * [Quotient Types](#quotient-types)
   * [Effectiveness](#effectiveness)
+  * [Squashes from Quotients](#squashes-from-quotients)
 * [Higher Inductive Types](#higher-inductive-types)
-* [Appendix: Level-Heterogeneous Equality](#appendix-level-heterogeneous-equality)
+* [Appendix A: Other Relevant Typing Rules](#appendix-a-other-relevant-typing-rules)
+* [Appendix B: Level-Heterogeneous Equality](#appendix-b-level-heterogeneous-equality)
 
 ## Inductively-Defined Equality
 
@@ -83,12 +86,12 @@ In a type theory without inductive data types, propositional equality can be def
 introduction, elimination, and computation rules.
 
 ```
-   Γ ⊢ a : A
-   Γ ⊢ b : A
+Γ ⊢ a : A
+Γ ⊢ b : A
 ──────────────── ≡-form
 Γ ⊢ a ≡ b : Type
 
-    Γ ⊢ a : A
+Γ ⊢ a : A
 ────────────────── ≡-intro
 Γ ⊢ refl a : a ≡ a
 
@@ -99,7 +102,7 @@ introduction, elimination, and computation rules.
 Γ ⊢ P : (y : A) → a ≡ y → Type
 Γ ⊢ d : P a (refl a)
 ────────────────────────────── J-elim
-     Γ ⊢ J P d p : P b p
+Γ ⊢ J P d p : P b p
 
 ────────────────────── J-comp
 Γ ⊢ J P d (refl a) ⊳ d
@@ -154,7 +157,7 @@ a ≈ l b p                   by reduction
 ```
 
 In short, given a propositional equality `a ≡ b`, we are able to derive a _definitional_ equality between `a` and `b`.
-This is equality reflection, making the type theory extensional, and is known to cause undecidable type checking.
+This is _equality reflection_, making the type theory extensional, and is known to cause undecidable type checking.
 
 ## The K Eliminator
 
@@ -213,12 +216,12 @@ The eliminator is then adjusted accordingly.
 Just as for the usual homogeneous equality with J, this could also be equivalently defined as a inductive type.
 
 ```
-   Γ ⊢ a : A
-   Γ ⊢ b : B
+Γ ⊢ a : A
+Γ ⊢ b : B
 ──────────────── ≅-form
 Γ ⊢ a ≅ b : Type
 
-     Γ ⊢ a : A
+Γ ⊢ a : A
 ─────────────────── ≅-intro
 Γ ⊢ refl* a : a ≅ a
 
@@ -228,7 +231,7 @@ Just as for the usual homogeneous equality with J, this could also be equivalent
 Γ ⊢ P : (Y : Type) → (y : Y) → a ≅ y → Type
 Γ ⊢ d : P A a (refl* a)
 ─────────────────────────────────────────── J*-elim
-          Γ ⊢ J* P d p : P B b p
+Γ ⊢ J* P d p : P B b p
 
 ─────────────────────── J*-comp
 Γ ⊢ J* P d (refl a) ⊳ d
@@ -314,7 +317,7 @@ id (pa : P a) : P a ≔ pa
 J Q id p : P a → P b
 ```
 
-Alternatively, we can define subst as the core eliminator for equality.
+Alternatively, we can define substitution as the core eliminator for equality.
 
 ```
 Γ ⊢ p : a ≡ b
@@ -350,7 +353,7 @@ subst Q p e p : P b p
 ```
 
 On the other hand, suppose we only have RIP or UIP with no K.
-We can then easily recover K with a single application of subst.
+We can then easily recover K with a single application of substitution.
 
 ```
 A : Type
@@ -491,19 +494,105 @@ P (y : A) : Type ≔ a ≡ y
 subst P q p : a ≡ c
 ```
 
-## Extensional Equality and Univalence
+## Extensional Equality
 
-* Give typing rules for equality reflection and univalence
-* Give example of contradiction if we have both
+TODO: Add blurb about extensional equality
+
+```
+Γ ⊢ a : A
+Γ ⊢ b : A
+Γ ⊢ p : a ≡ b
+───────────── ≡-reflect
+Γ ⊢ a ≈ b : A
+```
 
 ## Function Extensionality
 
-* Give typing rule for funext
-* Give derivation from equality reflection and η-convertibility
+There are often more equalities that we wish to be able to express than can be proven with just reflexivity and its eliminators.
+One of these is function extensionality, which equates two functions when they return the same output for each input.
+In other words, functions are then observationally equivalent.
+Without extensionality, functions are only provably equal when they are implemented in definitionally equal ways.
+
+```
+Γ ⊢ f : (x : A) → B x
+Γ ⊢ g : (x : A) → B x
+Γ ⊢ h : (x : A) → f x ≡ g x
+─────────────────────────── funext
+Γ ⊢ funext f g h : f ≡ g
+```
+
+Unfortunately, there's no satisfactory way of computing on the equality from function extensionality,
+because our eliminators only compute on reflexivity.
+In other words, adding function extensionality breaks _canonicity_, because the canonical proof of equality,
+reflexivity, is no longer the _only_ closed proof of equality.
+
+On the other hand, we can derive function extensionality from equality reflection using η-conversion of functions.
+Let `Γ = (f g : (x : A) → B x) (h : (x : A) → f x ≡ g x)`.
+The following derivation tree sketches out how a proof of `f ≡ g` can be derived using `h`.
+
+```
+         Γ ⊢ h : (x : A) → f x ≡ g x
+         ─────────────────────────── λ-elim
+         Γ (x : A) ⊢ h x : f x ≡ g x
+         ─────────────────────────── ≡-reflect
+            Γ (x : A) ⊢ f x ≈ g x
+───────────────────────────────────────────── λ-intro, λ-uniq
+Γ ⊢ f ≈ λ (x : A) ⇒ f x ≈ λ (x : A) ⇒ g x ≈ g
+───────────────────────────────────────────── ≡-intro, conv
+             Γ ⊢ refl f : f ≡ g
+```
+
+## Squash Types
+
+Sometimes we would like to treat proofs of a certain proposition as being irrelevant so that
+they are all propositionally equal.
+This can be done by _squashing_ the type and its term(s), and restricting manipulating the terms in ways that
+do not allow us to distinguish among them.
+Given some function `f` from `A` to an output type that only depends on the squashed input,
+we can "lift" that function to one that takes a squashed `∥A∥` as input instead.
+
+```
+Γ ⊢ A : Type
+────────────── sq-form
+Γ ⊢ ∥A∥ : Type
+
+Γ ⊢ a : A
+───────────── sq-intro
+Γ ⊢ |a| : ∥A∥
+
+Γ ⊢ a : A
+Γ ⊢ b : A
+──────────────────────── sq-ax
+Γ ⊢ sqax a b : |a| ≡ |b|
+
+Γ ⊢ P : ∥A∥ → Type
+Γ ⊢ f : (x : A) → P |x|
+Γ ⊢ p : (x y : A) → f x ≅ f y
+────────────────────────────── sq-elim
+Γ ⊢ unsq P p f : (x : ∥A∥) → P x
+
+────────────────────── sq-comp
+Γ ⊢ unsq P f |a| ⊳ f a
+```
+
+In addition to the usual formation, introduction, elimination, and computation rules, we also have an axiom that states
+that any two squashed values of the squashed type are equal.
+Notice that this also breaks canonicity of propositional equality.
+
+Because the function applied in the eliminator is dependent, the condition that it acts identically on all elements
+is a heterogeneous equality rather than a homogeneous one.
+However, because the return type of the function can only depend on the squashed value,
+and we know that the squashed values are all equal by `sqax`, we can alternatively replace `f x ≅ f y` by
+`subst P (sqax x y) (f x) ≡ f y`.
+On the other hand, since substitution does not reduce on `sqax`, if `P` is nondependent, the condition does not become
+`f x ≡ f y` as we would intuitively expect, not unless we have the extra computation rule for congruence.
 
 ## Quotient Types
 
-TODO: Blurb introducing and explaining quotient types
+Instead of treating _all_ terms of a type as equal, perhaps we would like to treat only _some_ of them as equal.
+Quotient types allow us to do so with a quotient relation `~`: two quotiented terms are equal if they are related.
+This is analogous to quotient sets, where an equivalence relation divides up the members of a set into equivalence classes.
+Like with squash types, the eliminator allows "lifting" a function `f` on `A` to a function on the quotient space `A⧸~`.
 
 ```
 Γ ⊢ A : Type
@@ -516,35 +605,27 @@ TODO: Blurb introducing and explaining quotient types
 ──────────────────── Q-intro
 Γ ⊢ [a]˷ : A⧸~
 
-Γ ⊢ a b : A
+Γ ⊢ a : A
+Γ ⊢ b : A
 Γ ⊢ ~ : A → A → Type
 ────────────────────────────────── Q-ax
 Γ ⊢ Qax˷ a b : a ~ b → [a]˷ ≡ [b]˷
 
-Γ ⊢ a : A⧸~
 Γ ⊢ P : A⧸~ → Type
 Γ ⊢ ~ : A → A → Type
 Γ ⊢ f : (x : A) → P [x]˷
 Γ ⊢ p : (x y : A) → (r : x ~ y) → f x ≅ f y
 ─────────────────────────────────────────── Q-elim
-Γ ⊢ Qelim˷ P p f a : P a
+Γ ⊢ Qelim˷ P p f : (x : A⧸~) → P x
 
 ─────────────────────────── Q-comp
 Γ ⊢ Qelim˷ P p f [a]˷ ⊳ f a
 ```
 
-Because the function applied in the eliminator could be a dependent function, the condition that it acts identically
-on related elements is a heterogeneous equality rather than a homogeneous one.
-However, we _know_ that the return types of the function must be equal, since they only depend on the quotiented elements,
-and quotients of related elements are equal by `Qax`.
-Therefore, we could alternatively replace `f x ≅ f y` by `subst P (Qax˷ x y r) (f x) ≡ f y`.
-
-When `P` is constant with respect to its argument, we expect that the condition should become `f x ≡ f y`.
-However, this does not hold, since substitution does not reduce on the equality from `Qax`.
-The problem arises from quotients destroying _canonicity_ of equality: with the existence of `Qax`,
-there are now closed proofs of equality that are not constructed by `refl`.
-This specific problem with a constant `P` can be circumvented by the additional computation rule for congruence,
-but the larger problem of noncanonicity still exists.
+Also like with squash types, `Qax` can yield a noncanonical closed proof of equality.
+We can also replace `f x ≅ f y` by `subst P (Qax˷ x y r) (f x) ≡ f y` in the condition of the eliminator
+just as was done for squash types, with the same problem of substitution not reducing on `Qax`
+unless we have the extra computation rule for congruence.
 
 ### Effectiveness
 
@@ -606,8 +687,21 @@ lemma₂ : a ~ a ≡ b ~ a ≔ cong P̂ p
 pe.~sym (coe lemma₂ (pe.~refl a)) : a ~ b
 ```
 
+### Squashes from Quotients
+
+Squashes can be seen as a special case of quotients where the quotient relation is trivially true.
+
+```
+a ~ b ≔ Unit
+∥A∥ ≔ A/~
+|a| ≔ [a]˷
+sqax a b ≔ Qax˷ a b unit
+unsq P p f ≔ Qelim˷ P (λ x y _ ⇒ p x y) f
+```
+
 ## Higher Inductive Types
 
+TODOs
 * Give typing rules (?) for HITs
 * Define quotients in terms of HITs
 
@@ -615,7 +709,38 @@ pe.~sym (coe lemma₂ (pe.~refl a)) : a ~ b
 
 * No
 
-## Appendix: Level-Heterogeneous Equality
+## Appendix A: Other Relevant Typing Rules
+
+```
+Γ ⊢ a : A
+Γ ⊢ B : Type
+Γ ⊢ A ≈ B
+──────────── conv
+Γ ⊢ a : B
+
+Γ ⊢ A : Type
+Γ (x : A) ⊢ B : Type
+──────────────────────── λ-form
+Γ ⊢ (x : A) → B : Type
+
+Γ ⊢ A : Type
+Γ (x : A) ⊢ e : B
+───────────────────────────────── λ-intro
+Γ ⊢ λ (x : A) ⇒ e : (x : A) → B
+
+Γ ⊢ e₁ : (x : A) → B
+Γ ⊢ e₂ : A
+───────────────────── λ-elim
+Γ ⊢ e₁ e₂ : B[x ↦ e₂]
+
+──────────────────────────────────── λ-comp
+Γ ⊢ (λ (x : A) ⇒ e₁) e₂ ⊳ e₁[x ↦ e₂]
+
+───────────────────────── λ-uniq
+Γ ⊢ (λ (x : A) ⇒ f x) ⊳ f
+```
+
+## Appendix B: Level-Heterogeneous Equality
 
 This is a generalization of heterogeneous equality to be heterogeneous in the universe level as well.
 

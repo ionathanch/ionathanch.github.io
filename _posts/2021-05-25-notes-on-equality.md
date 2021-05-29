@@ -602,7 +602,6 @@ P (x : A) : Type ≔ x ~ a
 Q (_ : A⧸~) : Type ≔ Type
 P̂ (x : A⧸~): Type ≔ Qelim˷ Q (lemma₁ A ~ pe a) P x
 lemma₂ : a ~ a ≡ b ~ a ≔ cong P̂ p
-id (T : Type) : Type ≔ T
 --------------------------------------------------
 pe.~sym (coe lemma₂ (pe.~refl a)) : a ~ b
 ```

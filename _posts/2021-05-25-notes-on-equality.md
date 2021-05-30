@@ -464,8 +464,6 @@ Q (y : A) (p : a ≡ y) : Type ≔ subst P p (f a) ≡ f y
 J Q (refl (f a)) p : subst P p (f a) ≡ f b
 ```
 
-TODO: Can J be proven from `subst` and `apd` alone?
-
 ### More Computation for Congruence
 
 Notice that congruence only computes on reflexivity.
@@ -553,7 +551,7 @@ TODO: Add blurb about extensional equality
 
 There are often more equalities that we wish to be able to express than can be proven with just reflexivity and its eliminators.
 One of these is function extensionality, which equates two functions when they return the same output for each input.
-In other words, functions are then observationally equivalent.
+In other words, functions are then pointwise or observationally equal.
 Without extensionality, functions are only provably equal when they are implemented in definitionally equal ways.
 
 ```
@@ -583,6 +581,20 @@ The following derivation tree sketches out how a proof of `f ≡ g` can be deriv
 Γ ⊢ f ≈ λ (x : A) ⇒ f x ≈ λ (x : A) ⇒ g x ≈ g
 ───────────────────────────────────────────── ≡-intro, conv
              Γ ⊢ refl f : f ≡ g
+```
+
+The converse of function extensionality, that equal functions are pointwise equal, can easily be proven by substitution.
+
+```
+A : Type
+B : A → Type
+f g : (x : A) → B x
+p : f ≡ g
+────────────────────────────────────────────────── happly
+P (g : (x : A) → B x) : Type ≔ (x : A) → f x ≡ g x
+d (x : A) : f x ≡ f x ≔ refl (f x)
+--------------------------------------------------
+subst P p d : (x : A) → f x ≡ g x
 ```
 
 ## Squash Types

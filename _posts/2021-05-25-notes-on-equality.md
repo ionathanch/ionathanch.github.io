@@ -7,9 +7,6 @@ tags:
   - type theory
 ---
 
-Propositional equality is a notion of equality on terms as a proposition in the theory.
-Under the Curry–Howard correspondence between propositions and types, this means that equality is a type.
-
 <!--more-->
 
 ## Table of Contents

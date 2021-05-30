@@ -35,6 +35,8 @@ Under the Curry–Howard correspondence between propositions and types, this mea
   * [Effectiveness](#effectiveness)
   * [Squashes from Quotients](#squashes-from-quotients)
 * [Higher Inductive Types](#higher-inductive-types)
+  * [The Interval and Function Extensionality](#the-interval-and-function-extensionality)
+  * [Quotients as a HIT](#quotients-as-a-hit)
 * [Appendix A: Other Relevant Typing Rules](#appendix-a-other-relevant-typing-rules)
 * [Appendix B: Level-Heterogeneous Equality](#appendix-b-level-heterogeneous-equality)
 
@@ -765,7 +767,7 @@ both endpoints are treated equally.
 Γ ⊢ b₁ : P 𝟏
 Γ ⊢ s : b₀ ≅ b₁
 ───────────────────────────────────── 𝕀-elim
-Γ ⊢ 𝕀-elim : P b₀ b₁ s : (i : 𝕀) → P i
+Γ ⊢ 𝕀-elim P b₀ b₁ s : (i : 𝕀) → P i
 
 ─────────────────────────── 𝕀-comp₀
 Γ ⊢ 𝕀-elim P b₀ b₁ s 𝟎 ⊳ b₀
@@ -780,14 +782,59 @@ both endpoints are treated equally.
 Again, use of heterogeneous equality can be replaced by a homogeneous one if we do the appropriate substitution;
 `s` would then have type `subst P seg b₀ ≡ b₁`.
 
-TODOs:
-* Give rules (?) for HITs
-* Give elimination principles for quotients defined as HITs
+Functions on higher inductive types can also be defined by pattern matching on all constructors,
+including on the equality constructors.
+Just as a function `f` defined by pattern matching on the data constructors describes how `f` acts on each of them,
+pattern matching on the equality constructors describes how applying `f` on both sides of the equality yields an equality.
+For instance, defining the interval eliminator with pattern matching below, the type of `s` must be `𝕀-elim' 𝟎 ≅ 𝕀-elim' 𝟏`,
+or `b₀ ≅ b₁` (or the homogeneous alternative if desired).
+The application `𝕀-elim' seg` should be thought of as a shorthand for `apd P 𝕀-elim' seg`.
+
+```
+𝕀-elim' : (i : 𝕀) → P i
+𝕀-elim' 𝟎 ≔ b₀
+𝕀-elim' 𝟏 ≔ b₁
+𝕀-elim' seg ≔ s
+```
+
+### The Interval and Function Extensionality
+
+Curiously, just by defining the interval type, we are able to prove function extensionality.
+
+```
+A : Type
+B : A → Type
+f : (x : A) → B x
+g : (x : A) → B x
+h : (x : A) → f x ≡ g x
+──────────────────────────────────────────────────────────────── funext
+k (i : 𝕀) (x : A) : B x ≔ 𝕀-elim (λ _ ⇒ B x) (f x) (g x) (h x) i
+----------------------------------------------------------------
+cong k seg : f ≡ g
+```
+
+The resulting type is `λ (x : A) ⇒ f x ≡ λ (x : A) ⇒ f x` by reduction of the interval eliminator,
+but the uniqueness rule for functions will get us the final desired type.
+
+### Quotients as a HIT
+
+Quotient types can be implemented as a higher inductive type where the equality induced by the quotient relation
+is an equality constructor.
 
 ```
 data _⧸_ (A : Type) (~ : A → A → Type) : Type where
   [_]˷ : (a : A) → A⧸~
-  Qax : (a b : A) → a ~ b → [a]˷ ≡ [b]˷
+  Qax˷ : (a b : A) → a ~ b → [a]˷ ≡ [b]˷
+```
+
+The eliminator for quotients also requires that the function being defined behaves identically
+on all equalities constructed by `Qax`, with the additional information that equal elements are related.
+We define by pattern matching the eliminator that corresponds to `Qelim˷ P p f [a]˷`.
+
+```
+Q-elim' : ∀ {A ~} → (a : A⧸~) → P a
+Q-elim' [a]˷ ≔ f a
+Q-elim' (Qax a b r) ≔ p a b r
 ```
 
 ## Cubical Type Theory

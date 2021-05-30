@@ -19,8 +19,8 @@ tags:
 * [Heterogeneous Equality](#heterogeneous-equality)
   * [UIP from J*](#uip-from-j)
   * [J and K from J*](#j-and-k-from-j)
-* [Substitution/Transport](#substitutiontransport)
-  * [J and K from Substitution](#j-and-k-from-substitution)
+* [Substitution and Contractibility of Singletons](#substitution-and-contractibility-of-singletons)
+  * [J and K by Substitution](#j-and-k-by-substitution)
 * [Congruence and Coercion](#congruence-and-coercion)
   * [Congruence with Dependent Functions](#congruence-with-dependent-functions)
   * [More Computation for Congruence](#more-computation-for-congruence)
@@ -298,11 +298,17 @@ p : a ≅ b
 J* ? d p : P b p
 ```
 
-## Substitution/Transport
+## Substitution and Contractibility of Singletons
 
-The idea behind substitution (or in the homotopic metaphor, transport) is that given some equality between `a` and `b`,
-within some proposition `P`, we can substitute `a` for `b` (correspondingly, given a path between `a` and `b`,
-we can transport `P` from `a` to `b`).
+_This section takes material from [this discussion](https://twitter.com/plt_abbie/status/1399076508845719552)._
+
+The J eliminator can be thought of as the induction principle for equality,
+where the motive depends on the equality being eliminated.
+We can split the induction principle into a _recursion principle_, substitution, whose motive does not depend on the equality,
+and a _uniqueness principle_, the contractibility of singletons.
+
+The idea behind substitution is that given some equality between `a` and `b`, within some proposition `P`,
+we can substitute `a` for `b`.
 As in the last section, we can derive this from the J eliminator.
 
 ```
@@ -317,7 +323,20 @@ id (pa : P a) : P a ≔ pa
 J Q id p : P a → P b
 ```
 
-Alternatively, we can define substitution as the core eliminator for equality.
+A singleton is a type with (propositionally provably) only one inhabitant.
+Contractibility then states that the only proof of singletonness is reflexivity.
+
+```
+A : Type
+a : A
+p : (b : A) × (a ≡ b)
+─────────────────────────────────────────────────── cos'
+P (y : A) (q : a ≡ y) : Type ≔ (a, refl a) ≡ (y, q)
+---------------------------------------------------
+J P (refl (a, refl a)) (snd p) : (a, refl a) ≡ p
+```
+
+Alternatively, we can define these as the built-in eliminators for equality.
 
 ```
 Γ ⊢ p : a ≡ b
@@ -328,16 +347,38 @@ Alternatively, we can define substitution as the core eliminator for equality.
 
 ──────────────────────────── subst-comp
 Γ ⊢ subst P (refl a) pa ⊳ pa
+
+Γ ⊢ p : (b : A) × (a ≡ b)
+Γ ⊢ a : A
+───────────────────────── cos-elim
+Γ ⊢ cos p : (a, refl a) ≡ p
+
+────────────────────────────────────── cos-comp
+Γ ⊢ cos (a, refl a) ⊳ refl (a, refl a)
 ```
 
-### J and K from Substitution
+### J and K by Substitution
 
-We can derive all of the nice properties of equality from subst as we do from J
-(such as symmetry, transitivity, and congruence), but we cannot derive J itself.
-However, with the help of UIP (either as an axiom or through K), we can.
-The idea is that using RIP, if we have an equality `p : a ≡ a`,
-we can substitute from `P a (refl a)` to `P a p`,
-and then we can substitute from there to `P b p` via `p`.
+We can derive all of the nice properties of equality from substitution and `cos` as we do from J
+(such as symmetry, transitivity, and congruence), as well as J itself.
+The idea is that given `P a (refl a)`, we can substitute across `cos (a, p)` to obtain a `P a p`,
+then substitute once more across `p` to obtain `P b p`.
+
+```
+A : Type
+a b : A
+P : (y : A) → a ≡ y → Type
+d : P a (refl a)
+p : a ≡ b
+───────────────────────────────────────────────── J'
+Q (y : A) : Type ≔ (p : a ≡ y) → P y p
+R (y : A) × (p : a ≡ y) : Type ≔ P y p
+e (p : a ≡ a) : P a p ≔ subst R (cos (a, p)) d
+-------------------------------------------------
+subst Q p e p : P b p
+```
+
+Alternatively, if we have RIP, we can substitute across that to get `P a p` from `P a (refl a)`.
 
 ```
 A : Type
@@ -352,7 +393,7 @@ e (p : a ≡ a) : P a p ≔ subst (P a) (RIP A a p) d
 subst Q p e p : P b p
 ```
 
-On the other hand, suppose we only have RIP or UIP with no K.
+Suppose now that we only have RIP or UIP with no K.
 We can then easily recover K with a single application of substitution.
 
 ```
@@ -447,7 +488,8 @@ Instead of calling it dependent congruence, we'll call it `apd` in the HoTT trad
 Γ ⊢ apd P f (refl a) ⊳ refl (f a)
 ```
 
-Unlike congruence, `apd` can only be proven from J, not substitution alone.
+We can also prove `apd` directly from J.
+Since substitution and `cos` prove J, this means that `apd` could also be proven that way.
 
 ```
 A : Type
@@ -497,12 +539,12 @@ Below summarizes the various relationships among J, K, substitution, and RIP/UIP
 If you have the left side of the turnstile, then you may derive the right side.
 
 ```
-J          ⊢ subst
+J          ⊢ subst, cos
 K          ⊢ RIP
 RIP, J     ⊢ UIP
 UIP        ⊢ RIP
-RIP, subst ⊢ J, K
-K,   subst ⊢ J
+subst, cos ⊢ J
+subst, RIP ⊢ K
 J*         ⊢ RIP*, UIP*, subst*
 J*         ⊬ J, K
 subst      ⊢ coe, cong

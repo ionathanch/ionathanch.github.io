@@ -898,7 +898,9 @@ TODOs:
 
 ## Appendix A: Other Relevant Typing Rules
 
-Below are the typing rules for functions and a typing rule that uses convertibility to coerce a term to a another type.
+Below are the typing rules for dependent functions and pairs,
+and a typing rule that uses convertibility to coerce a term to a another type.
+We omit the type annotation on the pair introductory form when clear from context.
 We assume that `Type` is well-behaved and causes no problems with consistency.
 Convertibility (`≈`) is defined to be the reflexive, symmetric, compatible closure of multi-step reduction (`⊳`) and
 whatever other uniqueness rules that are defined throughout.
@@ -913,12 +915,12 @@ Convertibility is generally untyped and does not rely on typing judgements, exce
 
 Γ ⊢ A : Type
 Γ (x : A) ⊢ B : Type
-──────────────────────── λ-form
+────────────────────── λ-form
 Γ ⊢ (x : A) → B : Type
 
 Γ ⊢ A : Type
 Γ (x : A) ⊢ e : B
-───────────────────────────────── λ-intro
+─────────────────────────────── λ-intro
 Γ ⊢ λ (x : A) ⇒ e : (x : A) → B
 
 Γ ⊢ e₁ : (x : A) → B
@@ -932,6 +934,34 @@ Convertibility is generally untyped and does not rely on typing judgements, exce
 Γ (x : A) ⊢ e₁ ≈ e₂ x 
 ───────────────────────── λ-uniq
 Γ ⊢ (λ (x : A) ⇒ e₁) ≈ e₂
+
+Γ ⊢ A : Type
+Γ (x : A) ⊢ B : Type
+────────────────────── ×-form
+Γ ⊢ (x : A) × B : Type
+
+Γ ⊢ (x : A) × B : Type
+Γ ⊢ a : A
+Γ ⊢ b : B[x ↦ a]
+─────────────────────────────────────── ×-intro
+Γ ⊢ (a, b) as (x : A) × B : (x : A) × B
+
+Γ ⊢ p : (x : A) × B
+─────────────────── ×-elim₁
+Γ ⊢ fst p : A
+
+Γ ⊢ p : (x : A) × B
+──────────────────────── ×-elim₂
+Γ ⊢ snd p : B[x ↦ fst p]
+
+────────────────── ×-comp₁
+Γ ⊢ fst (a, b) ⊳ a
+
+────────────────── ×-comp₂
+Γ ⊢ snd (a, b) ⊳ b
+
+────────────────────── ×-uniq
+Γ ⊢ (fst p, snd p) ≈ p
 ```
 
 ## Appendix B: Level-Heterogeneous Equality

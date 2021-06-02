@@ -27,7 +27,7 @@ tags:
 * [Mid-Summary](#mid-summary)
 * [Extensional Equality](#extensional-equality)
 * [Function Extensionality](#function-extensionality)
-* [Squash Types](#squash-types)
+* [Propositional Truncation/Squash Types](#propositional-truncationsquash-types)
 * [Quotient Types](#quotient-types)
   * [Effectiveness](#effectiveness)
   * [Squashes from Quotients](#squashes-from-quotients)
@@ -120,6 +120,8 @@ J' : (A : Type) → (a b : A) →
 ```
 
 ### Uniqueness Rule for J
+
+_This section is adapted from the [nLab article](https://ncatlab.org/nlab/show/identity+type#EtaConversion)._
 
 Some constructs also have an η-conversion or uniqueness rule; for equality,
 this resembles a computation rule where the branch is a function application and
@@ -358,6 +360,8 @@ Alternatively, we can define these as the built-in eliminators for equality.
 ```
 
 ### J and K by Substitution
+
+_The following proof is adapted from Martin Hofmann's dissertation, [Extensional concepts in intensional type theory](http://www.lfcs.inf.ed.ac.uk/reports/95/ECS-LFCS-95-327/)._
 
 We can derive all of the nice properties of equality from substitution and `cos` as we do from J
 (such as symmetry, transitivity, and congruence), as well as J itself.
@@ -636,11 +640,11 @@ d (x : A) : f x ≡ f x ≔ refl (f x)
 subst P p d : (x : A) → f x ≡ g x
 ```
 
-## Squash Types
+## Propositional Truncation/Squash Types
 
 Sometimes we would like to treat proofs of a certain proposition as being irrelevant so that
 they are all propositionally equal.
-This can be done by _squashing_ the type and its term(s), and restricting manipulating the terms in ways that
+This can be done by _truncating_ or _squashing_ the type and its term(s), and restricting manipulating the terms in ways that
 do not allow us to distinguish among them.
 Given some function `f` from `A` to an output type that only depends on the squashed input,
 we can "lift" that function to one that takes a squashed `‖A‖` as input instead.
@@ -683,6 +687,8 @@ On the other hand, since substitution does not reduce on `sqax`, if `P` is nonde
 
 ## Quotient Types
 
+_This section adapts Martin Hofmann's presentation in [A simple model for quotient types](https://link.springer.com/chapter/10.1007/BFb0014055)._
+
 Instead of treating _all_ terms of a type as equal, perhaps we would like to treat only _some_ of them as equal.
 Quotient types allow us to do so with a quotient relation `~`: two quotiented terms are equal if they are related.
 This is analogous to quotient sets, where an equivalence relation divides up the members of a set into equivalence classes.
@@ -722,6 +728,8 @@ just as was done for squash types, with the same problem of substitution not red
 unless we have the extra computation rule for congruence.
 
 ### Effectiveness
+
+_The follow proof is from Nuo Li's Bachelor's thesis, [Quotient Types in Type Theory](http://eprints.nottingham.ac.uk/28941/)._
 
 An important property that quotient types can have is _effectiveness_:
 the only elements belonging to an equivalence class of a quotiented element with respect to propositional equality
@@ -885,7 +893,7 @@ We define by pattern matching the eliminator that corresponds to `Qelim˷ P p f 
 ```
 Q-elim' : ∀ {A ~} → (a : A⧸~) → P a
 Q-elim' [a]˷ ≔ f a
-Q-elim' (Qax a b r) ≔ p a b r
+Q-elim' (Qax˷ a b r) ≔ p a b r
 ```
 
 ## Cubical Type Theory

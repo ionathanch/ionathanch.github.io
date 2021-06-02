@@ -23,7 +23,7 @@ tags:
   * [J and K by Substitution](#j-and-k-by-substitution)
 * [Congruence and Coercion](#congruence-and-coercion)
   * [Congruence with Dependent Functions](#congruence-with-dependent-functions)
-  * [More Computation for Congruence](#more-computation-for-congruence)
+  * [Regularity](#regularity)
 * [Mid-Summary](#mid-summary)
 * [Extensional Equality](#extensional-equality)
 * [Function Extensionality](#function-extensionality)
@@ -507,15 +507,17 @@ Q (y : A) (p : a ≡ y) : Type ≔ subst P p (f a) ≡ f y
 J Q (refl (f a)) p : subst P p (f a) ≡ f b
 ```
 
-### More Computation for Congruence
+### Regularity
 
-Notice that congruence only computes on reflexivity.
-We may want to also compute congruence when `f` is constant with respect to its argument:
-both sides of the resulting type are definitionally equal, and we expect that it computes to a reflexivity.
-If we allow using convertibility as a premise to reduction (which may not be possible in all type systems),
-we can add the following computation rule.
-If congruence carried all of the relevant types with it, as is the case with `cong'`,
-avoiding typing premises is possible as well.
+Notice that congruence and coercion compute only on reflexivity.
+We may want to also compute congruence when `f` is constant with respect to its argument,
+making both sides of its type definitionally equal.
+Similarly, we may want to also compute coercion when both sides of the type of `p` are definitional equal,
+regardless of whether `p` itself is reflexivity or not.
+(Of course, with UIP, `p` would be propositionally equal to reflexivity.)
+We can then add _regularity_ rules allowing them to compute this way.
+If applied to the variants of coercion and congruence that carried all of the relevant types with them,
+as is the case with `cong'` and `coe'`, we can avoid type checking in the premises as well.
 
 ```
 Γ ⊢ p : a ≡ b
@@ -523,15 +525,25 @@ avoiding typing premises is possible as well.
 Γ ⊢ b : A
 Γ ⊢ f : A → B
 Γ ⊢ f a ≈ f b
-───────────────────────── cong-comp'
+───────────────────────── cong-reg
 Γ ⊢ cong f p ⊳ refl (f a)
 
 Γ ⊢ f a ≈ f b
-────────────────────────────────── cong'-comp'
+────────────────────────────────── cong'-reg
 Γ ⊢ cong' A B a b f p ⊳ refl (f a)
+
+Γ ⊢ p : A ≡ B
+Γ ⊢ a : A
+Γ ⊢ A ≈ B
+─────────────── coe-reg
+Γ ⊢ coe p a ⊳ a
+
+Γ ⊢ A ≈ B
+─────────────────── coe'-reg
+Γ ⊢ coe A B p a ⊳ a
 ```
 
-If substitution is defined by coercion and congruence, then substitution will also compute
+If substitution is defined by coercion and congruence, then `subst P p` on an equality `p : a ≡ b` will also compute
 when the motive `P` is constant with respect to `a` and `b`.
 Furthermore, J defined using substition will compute this way as well.
 Note that this is orthogonal to UIP: congruence applied to an equality `p : a ≡ a` not (yet) definitionally equal to
@@ -898,11 +910,57 @@ Q-elim' (Qax˷ a b r) ≔ p a b r
 
 ## Cubical Type Theory
 
+```
+───────── 𝕀-𝟎
+Γ ⊢ 𝟎 : 𝕀
+
+───────── 𝕀-𝟏
+Γ ⊢ 𝟏 : 𝕀
+
+Γ ⊢ A : 𝕀 → Type
+Γ ⊢ a : A 𝟎
+Γ ⊢ b : A 𝟏
+────────────────────── path-form
+Γ ⊢ pathd A a b : Type
+
+Γ (i : 𝕀) ⊢ a : A
+───────────────────────────────────────────── path-intro
+Γ ⊢ λi ⇒ a : pathd (λi ⇒ A) a[i ↦ 𝟎] a[i ↦ 𝟏]
+
+Γ ⊢ r : 𝕀
+Γ ⊢ p : pathd A a b
+─────────────────── path-elim
+Γ ⊢ p r : A r
+
+───────────────────────── path-comp₀
+Γ ⊢ (λi ⇒ a) 𝟎 ⊳ a[i ↦ 𝟎]
+
+───────────────────────── path-comp₁
+Γ ⊢ (λi ⇒ a) 𝟏 ⊳ a[i ↦ 𝟏]
+
+Γ (i : 𝕀) ⊢ e₁ ≈ e₂ i 
+───────────────────── path-uniq
+Γ ⊢ λi ⇒ e₁ ≈ e₂
+
+Γ ⊢ i : 𝕀
+Γ ⊢ j : 𝕀
+Γ ⊢ A : 𝕀 → Type
+Γ ⊢ a : A i
+───────────────────────── coe
+Γ ⊢ coe [i ⇝ j] A a : A j
+
+─────────────────────── coe-comp
+Γ ⊢ coe [i ⇝ i] A a ⊳ a
+
+Γ ⊢ A i ≈ A j
+─────────────────────── coe-reg
+Γ ⊢ coe [i ⇝ j] A a ⊳ a
+```
+
 TODOs:
-* Introduce the interval, interval elements, paths
-* Show that paths can be used as a propositional equality
-* Prove funext using paths
-* Other fun properties of paths
+* Give the typing rules for composition
+* Derive homogenous paths and composition from the dependent/heterogenous ones
+* Prove properties of equality (reflexivity, symmetry, transitivity, congruence, substitution, J, funext)
 
 ## Appendix A: Other Relevant Typing Rules
 
@@ -940,8 +998,8 @@ Convertibility is generally untyped and does not rely on typing judgements, exce
 Γ ⊢ (λ (x : A) ⇒ e₁) e₂ ⊳ e₁[x ↦ e₂]
 
 Γ (x : A) ⊢ e₁ ≈ e₂ x 
-───────────────────────── λ-uniq
-Γ ⊢ (λ (x : A) ⇒ e₁) ≈ e₂
+─────────────────────── λ-uniq
+Γ ⊢ λ (x : A) ⇒ e₁ ≈ e₂
 
 Γ ⊢ A : Type
 Γ (x : A) ⊢ B : Type

@@ -133,8 +133,8 @@ the target need not have the canonical `refl` form.
 Γ ⊢ b : A
 Γ ⊢ P : (y : A) → a ≡ y → Type
 Γ ⊢ e : (x : A) → (p : a ≡ x) → P x p
-───────────────────────────────────── J-uniq
-Γ ⊢ J P (e a (refl a)) p ≈ e b p
+──────────────────────────────────────── J-uniq
+Γ ⊢ J P (e a (refl a)) p ≈ e b p : P b p
 ```
 
 (Note that this rule is mostly only useful if `e` is a neutral form.) However, adding this rule is dangerous,
@@ -155,7 +155,7 @@ a ≈ l b p                   by reduction
   ≈ J P a p                 by reduction
   ≈ J P (r a (refl a)) p    by reduction
   ≈ r b p                   by uniq
-  ≈ b                       by reduction
+  ≈ b : A                   by reduction
 ```
 
 In short, given a propositional equality `a ≡ b`, we are able to derive a _definitional_ equality between `a` and `b`.
@@ -525,8 +525,8 @@ as is the case with `cong'` and `coe'`, we can avoid type checking in the premis
 Γ ⊢ b : A
 Γ ⊢ f : A → B
 Γ ⊢ f a ≈ f b
-───────────────────────── cong-reg
-Γ ⊢ cong f p ⊳ refl (f a)
+───────────────────────────────────── cong-reg
+Γ ⊢ cong f p ⊳ refl (f a) : f a ≡ f b
 
 Γ ⊢ f a ≈ f b
 ────────────────────────────────── cong'-reg
@@ -535,8 +535,8 @@ as is the case with `cong'` and `coe'`, we can avoid type checking in the premis
 Γ ⊢ p : A ≡ B
 Γ ⊢ a : A
 Γ ⊢ A ≈ B
-─────────────── coe-reg
-Γ ⊢ coe p a ⊳ a
+─────────────────── coe-reg
+Γ ⊢ coe p a ⊳ a : B
 
 Γ ⊢ A ≈ B
 ─────────────────── coe'-reg
@@ -936,15 +936,25 @@ Q-elim' (Qax˷ a b r) ≔ p a b r
 ─────────────────── path-elim
 Γ ⊢ p r : A r
 
-───────────────────────── path-comp₀
-Γ ⊢ (Λi. a) 𝟎 ⊳ a[i ↦ 𝟎]
+Γ (i : 𝕀) ⊢ a : A
+──────────────────────────────────── path-comp₀
+Γ ⊢ (Λi. a) 𝟎 ⊳ a[i ↦ 𝟎] : A[i ↦ 𝟎]
 
-───────────────────────── path-comp₁
-Γ ⊢ (Λi. a) 𝟏 ⊳ a[i ↦ 𝟏]
+Γ (i : 𝕀) ⊢ a : A
+─────────────────────────────────── path-comp₁
+Γ ⊢ (Λi. a) 𝟏 ⊳ a[i ↦ 𝟏] : A[i ↦ 𝟏]
 
-Γ (i : 𝕀) ⊢ e₁ ≈ e₂ i 
-───────────────────── path-uniq
-Γ ⊢ (Λi. e₁) ≈ e₂
+Γ ⊢ p : pathd A a b
+─────────────────── path-uniq₀
+Γ ⊢ p 𝟎 ⊳ a : A 𝟎
+
+Γ ⊢ p : pathd A a b
+─────────────────── path-uniq₁
+Γ ⊢ p 𝟏 ⊳ b : A 𝟏
+
+Γ (i : 𝕀) ⊢ e₁ ≈ e₂ i : A i
+─────────────────────────────── path-uniq
+Γ ⊢ (Λi. e₁) ≈ e₂ : pathd A a b
 
 Γ ⊢ i : 𝕀
 Γ ⊢ j : 𝕀
@@ -976,9 +986,7 @@ f : (i : 𝕀) → (x : A i) → P i x
 p : pathd A a b
 ──────────────────────────────────────────────────── apd*
 (Λi. f i (p i)) : pathd (λi ⇒ P i (p i)) (f a) (f b)
-```
 
-```
 A : 𝕀 → Type
 a : A 𝟎
 b : A 𝟏
@@ -998,9 +1006,6 @@ h : (x : A) → pathd (λ_ ⇒ B x) (f x) (g x)
 (Λi. (h x) i) : pathd (λ_ ⇒ (x : A) → B x) f g
 ```
 
-The following do not type check, since paths don't reduce to their endpoints even when applied to 𝟎 or 𝟏 unless
-the path itself is canonically an abstraction.
-
 ```
 A : 𝕀 → Type
 a : A 𝟎
@@ -1013,13 +1018,19 @@ P (i : 𝕀) (y : A i) : Type ≔ pathd (λj ⇒ A' i j) y a
 --------------------------------------------------------------
 coe [𝟎 ⇝ 𝟏] (Λi. P i (p i)) (Λ_. a) : pathd (λj ⇒ A' 𝟏 j) b a
 
-A : Type
-a b : A
-p : pathd (λ_ ⇒ A) a b
-─────────────────────────────────────────────────────── sym'
-P (y : A) : Type ≔ pathd (λ ⇒ A) y a
--------------------------------------------------------
-coe [𝟎 ⇝ 𝟏] (Λi. P (p i)) (Λ_. a) : pathd (λ_ ⇒ A) b a
+A B : 𝕀 → Type
+a : A 𝟎
+b : A 𝟏 ≈ B 𝟎
+c : B 𝟏
+p : pathd A a b
+q : pathd B b c
+──────────────────────────────────────────────────────── trans*
+P (i : 𝕀) (y : B i) : Type ≔ pathd (λj ⇒ ? i j) a y
+--------------------------------------------------------
+coe [𝟎 ⇝ 𝟏] (Λi. P i (q i)) p : pathd (λj ⇒ A' 𝟏 j) a c
+
+? =  A 𝟎  B 𝟏          ↑
+     A 𝟎  A 𝟏 ≈ B 𝟎    i j →
 
 A : Type
 a b c : A
@@ -1031,11 +1042,25 @@ P (y : A) : Type ≔ pathd (λ_ ⇒ A) a y
 coe [𝟎 ⇝ 𝟏] (Λi. P (q i)) p : pathd (λ_ ⇒ A) a c
 ```
 
+```
+A : 𝕀 → Type
+a : A 𝟎
+b : A 𝟏
+p : pathd A a b
+───────────────────────────────────────────────────────────────────────────────────── cos*
+Q (y : Type) : Type ≔ pathd (λ_ ⇒ Type) (A 𝟎) y
+A' (i : 𝕀) : Q (A i) ≔ coe [𝟎 ⇝ i] (λi ⇒ Q (A i)) (Λ_. A 𝟎)
+-------------------------------------------------------------------------------------
+Λi. ⟨p i, Λj. ? i j⟩ : pathd (λi ⇒ (x : A i) × pathd (λj ⇒ A' i j) a x) ⟨a, Λ_. a⟩ ⟨b, p⟩
+
+? = 𝟎  𝟏    ↑
+    𝟎  𝟎    i j →
+```
+
 TODOs:
-* Something about coherences
 * Give the typing rules for homogeneous composition
 * Derive heterogeneous composition from coe + hcomp
-* Prove properties of equality (symmetry, transitivity, contractibility of singletons, J)
+* Prove properties of equality (transitivity, contractibility of singletons, J)
 * Add descriptive text
 
 ## Appendix A: Other Relevant Typing Rules
@@ -1044,9 +1069,6 @@ Below are the typing rules for dependent functions and pairs,
 and a typing rule that uses convertibility to coerce a term to a another type.
 We omit the type annotation on the pair introductory form when clear from context.
 We assume that `Type` is well-behaved and causes no problems with consistency.
-Convertibility (`≈`) is defined to be the reflexive, symmetric, compatible closure of multi-step reduction (`⊳`) and
-whatever other uniqueness rules that are defined throughout.
-Convertibility is generally untyped and does not rely on typing judgements, except for J-uniq.
 
 ```
 Γ ⊢ a : A
@@ -1104,6 +1126,22 @@ Convertibility is generally untyped and does not rely on typing judgements, exce
 
 ────────────────────── ×-uniq
 Γ ⊢ ⟨fst p, snd p⟩ ≈ p
+```
+
+Convertibility (`≈`) is defined to be the reflexive, symmetric, compatible closure of multi-step reduction (`⊳`) and
+whatever other uniqueness rules that are defined throughout.
+Convertibility is generally untyped and does not rely on typing judgements and is untyped.
+When convertibility is typed, the type is an input, whereas when reduction is typed, it is an output.
+Then in the general convertibility rule, we check convertibility of the types as well.
+
+```
+Γ ⊢ e₁ ⊳* e : A₁
+Γ ⊢ e₂ ⊳* e : A₂
+Γ ⊢ A : Type
+Γ ⊢ A ≈ A₁ : Type
+Γ ⊢ A ≈ A₂ : Type
+───────────────── ≈-⊳*
+Γ ⊢ e₁ ≈ e₂ : A
 ```
 
 ## Appendix B: Level-Heterogeneous Equality

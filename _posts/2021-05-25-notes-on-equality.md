@@ -34,6 +34,11 @@ tags:
 * [Higher Inductive Types](#higher-inductive-types)
   * [The Interval and Function Extensionality](#the-interval-and-function-extensionality)
   * [Quotients as a HIT](#quotients-as-a-hit)
+* [Cubical Type Theory](#cubical-type-theory)
+  * [Coercion](#coercion)
+  * [De Morgan Operators](#de-morgan-operators)
+  * [Composition](#composition)
+  * [Variants of Cubical Type Theory](#variants-of-cubical-type-theory)
 * [Appendix A: Other Relevant Typing Rules](#appendix-a-other-relevant-typing-rules)
 * [Appendix B: Level-Heterogeneous Equality](#appendix-b-level-heterogeneous-equality)
 
@@ -361,7 +366,7 @@ Alternatively, we can define these as the built-in eliminators for equality.
 
 ### J and K by Substitution
 
-_The following proof is adapted from Martin Hofmann's dissertation, [Extensional concepts in intensional type theory](http://www.lfcs.inf.ed.ac.uk/reports/95/ECS-LFCS-95-327/)._
+_The following proof is adapted from Martin Hofmann's dissertation, [Extensional Concepts in Intensional Iype Iheory](http://www.lfcs.inf.ed.ac.uk/reports/95/ECS-LFCS-95-327/)._
 
 We can derive all of the nice properties of equality from substitution and `cos` as we do from J
 (such as symmetry, transitivity, and congruence), as well as J itself.
@@ -910,6 +915,20 @@ Q-elim' (Qax˷ a b r) ≔ p a b r
 
 ## Cubical Type Theory
 
+_Most of this material is adapted from [Naïve Cubical Type Theory](https://arxiv.org/abs/1911.05844)
+and [Cubical Methods in HoTT and UF](https://staff.math.su.se/anders.mortberg/papers/cubicalmethods.pdf).
+Please note that this section is still under construction._
+
+In cubical type theories, the interval is taken as a primitive pretype.
+The notion of propositional equality is encoded as a _path_ from an interval element into some type,
+and two inhabitants of the type are equal if there is such a path between them.
+Note that we allow the type of the endpoints of paths to vary along the path; in other words,
+we have a _dependent_ path corresponding to a _heterogeneous_ equality.
+Note also that the introduction form for paths, the interval abstraction, resemble functions, but are distinct from them:
+`(Λi. a)` is a path from `a[i ↦ 𝟎]` to `a[i ↦ 𝟏]`, whereas `(λi ⇒ a)` is a function.
+We use typed conversion and reduction so that paths applied to the interval endpoints can reduce to the path endpoints
+despite not being in the canonical interval abstraction form.
+
 ```
 (i : 𝕀) ∊ Γ
 ─────────── 𝕀-var
@@ -937,11 +956,11 @@ Q-elim' (Qax˷ a b r) ≔ p a b r
 Γ ⊢ p r : A r
 
 Γ (i : 𝕀) ⊢ a : A
-──────────────────────────────────── path-comp₀
+──────────────────────────────────── path-end₀
 Γ ⊢ (Λi. a) 𝟎 ⊳ a[i ↦ 𝟎] : A[i ↦ 𝟎]
 
 Γ (i : 𝕀) ⊢ a : A
-─────────────────────────────────── path-comp₁
+─────────────────────────────────── path-end₁
 Γ ⊢ (Λi. a) 𝟏 ⊳ a[i ↦ 𝟏] : A[i ↦ 𝟏]
 
 Γ ⊢ p : pathd A a b
@@ -955,7 +974,46 @@ Q-elim' (Qax˷ a b r) ≔ p a b r
 Γ (i : 𝕀) ⊢ e₁ ≈ e₂ i : A i
 ─────────────────────────────── path-uniq
 Γ ⊢ (Λi. e₁) ≈ e₂ : pathd A a b
+```
 
+With these rules alone, we are already able to prove a few properties of equality we would expect to hold:
+reflexivity and (dependent, heterogeneous) congruence.
+Just as with the interval HIT, we can also prove function extensionality.
+
+```
+A : Type
+a : A
+──────────────────────────── refl*
+(Λ_. a) : pathd (λ_ ⇒ A) a a
+
+A : 𝕀 → Type
+a : A 𝟎
+b : A 𝟏
+P : (i : 𝕀) → A i → Type
+f : (i : 𝕀) → (x : A i) → P i x
+p : pathd A a b
+──────────────────────────────────────────────────── apd*
+(Λi. f i (p i)) : pathd (λi ⇒ P i (p i)) (f a) (f b)
+
+A : Type
+B : A → Type
+f : (x : A) → B x
+g : (x : A) → B x
+h : (x : A) → pathd (λ_ ⇒ B x) (f x) (g x)
+────────────────────────────────────────────── funext'
+(Λi. (h x) i) : pathd (λ_ ⇒ (x : A) → B x) f g
+```
+
+### Coercion
+
+However, this is not enough: we cannot prove coercion or substitution.
+Since substitution can be proven from coercion and congruence, we take coercion as an additional primitive form.
+It takes an element of some type at some interval element and gives an element of that type at a different interval element,
+and reduces when the interval elements are the same.
+Additionally, it reduces if the type does not change between the two interval elements,
+similar to the regularity rule for coercions.
+
+```
 Γ ⊢ i : 𝕀
 Γ ⊢ j : 𝕀
 Γ ⊢ A : 𝕀 → Type
@@ -970,23 +1028,10 @@ Q-elim' (Qax˷ a b r) ≔ p a b r
 Γ ⊢ coe [i ⇝ j] A a ⊳ a
 ```
 
-```
-A : Type
-a : A
-──────────────────────────── refl*
-(Λ_. a) : pathd (λ_ ⇒ A) a a
-```
+Now we are able to prove some more properties:
+heterogeneous substitution, heterogeneous symmetry, and homogeneous transitivity.
 
 ```
-A : 𝕀 → Type
-a : A 𝟎
-b : A 𝟏
-P : (i : 𝕀) → A i → Type
-f : (i : 𝕀) → (x : A i) → P i x
-p : pathd A a b
-──────────────────────────────────────────────────── apd*
-(Λi. f i (p i)) : pathd (λi ⇒ P i (p i)) (f a) (f b)
-
 A : 𝕀 → Type
 a : A 𝟎
 b : A 𝟏
@@ -994,43 +1039,17 @@ P : (i : 𝕀) → A i → Type
 p : pathd A a b
 ──────────────────────────────────────────── subst*
 coe [𝟎 ⇝ 𝟏] (Λi. P i (p i)) : P 𝟎 a → P 𝟏 b
-```
 
-```
-A : Type
-B : A → Type
-f : (x : A) → B x
-g : (x : A) → B x
-h : (x : A) → pathd (λ_ ⇒ B x) (f x) (g x)
-────────────────────────────────────────────── funext'
-(Λi. (h x) i) : pathd (λ_ ⇒ (x : A) → B x) f g
-```
-
-```
 A : 𝕀 → Type
 a : A 𝟎
 b : A 𝟏
 p : pathd A a b
-────────────────────────────────────────────────────────────── sym*
-Q (y : Type) : Type ≔ pathd (λ_ ⇒ Type) y (A 𝟎)
-A' (i : 𝕀) : Q (A i) ≔ coe [𝟎 ⇝ i] (λi ⇒ Q (A i)) (Λ_. A 𝟎)
-P (i : 𝕀) (y : A i) : Type ≔ pathd (λj ⇒ A' i j) y a
---------------------------------------------------------------
-coe [𝟎 ⇝ 𝟏] (Λi. P i (p i)) (Λ_. a) : pathd (λj ⇒ A' 𝟏 j) b a
-
-A B : 𝕀 → Type
-a : A 𝟎
-b : A 𝟏 ≈ B 𝟎
-c : B 𝟏
-p : pathd A a b
-q : pathd B b c
-──────────────────────────────────────────────────────── trans*
-P (i : 𝕀) (y : B i) : Type ≔ pathd (λj ⇒ ? i j) a y
---------------------------------------------------------
-coe [𝟎 ⇝ 𝟏] (Λi. P i (q i)) p : pathd (λj ⇒ A' 𝟏 j) a c
-
-? =  A 𝟎  B 𝟏          ↑
-     A 𝟎  A 𝟏 ≈ B 𝟎    i j →
+──────────────────────────────────────────────── sym*
+Q (i : 𝕀) : Type ≔ pathd (λ_ ⇒ Type) (A i) (A 𝟎)
+A' (i : 𝕀) : Q i ≔ coe [𝟎 ⇝ i] Q (Λ_. A 𝟎)
+P (i : 𝕀) : Type ≔ pathd (A' i) (p i) a
+------------------------------------------------
+coe [𝟎 ⇝ 𝟏] P (Λ_. a) : pathd (A' 𝟏) b a
 
 A : Type
 a b c : A
@@ -1042,26 +1061,122 @@ P (y : A) : Type ≔ pathd (λ_ ⇒ A) a y
 coe [𝟎 ⇝ 𝟏] (Λi. P (q i)) p : pathd (λ_ ⇒ A) a c
 ```
 
+### De Morgan Operators
+
+Recall that to recover the J eliminator, we need both substitution and contractibility of singletons.
+We can attempt to prove the contractibility, but we run into a missing piece.
+
 ```
 A : 𝕀 → Type
 a : A 𝟎
 b : A 𝟏
 p : pathd A a b
-───────────────────────────────────────────────────────────────────────────────────── cos*
-Q (y : Type) : Type ≔ pathd (λ_ ⇒ Type) (A 𝟎) y
-A' (i : 𝕀) : Q (A i) ≔ coe [𝟎 ⇝ i] (λi ⇒ Q (A i)) (Λ_. A 𝟎)
--------------------------------------------------------------------------------------
-Λi. ⟨p i, Λj. ? i j⟩ : pathd (λi ⇒ (x : A i) × pathd (λj ⇒ A' i j) a x) ⟨a, Λ_. a⟩ ⟨b, p⟩
-
-? = 𝟎  𝟏    ↑
-    𝟎  𝟎    i j →
+────────────────────────────────────────────────────────────────────────────────────── cos*
+Q (i : 𝕀) : Type ≔ pathd (λ_ ⇒ Type) (A 𝟎) (A i)
+A' (i : 𝕀) : Q i ≔ coe [𝟎 ⇝ i] Q (Λ_. A 𝟎)
+--------------------------------------------------------------------------------------
+Λi. ⟨p i, Λj. p (i ∧ j)⟩ : pathd (λi ⇒ (x : A i) × pathd (A' i) a x) ⟨a, Λ_. a⟩ ⟨b, p⟩
 ```
 
-TODOs:
-* Give the typing rules for homogeneous composition
-* Derive heterogeneous composition from coe + hcomp
-* Prove properties of equality (transitivity, contractibility of singletons, J)
-* Add descriptive text
+It appears that we need some sort of operator between interval elements, denoted `∧` above,
+that gives `𝟏` when `i = 𝟏 = j`, and `𝟎` otherwise.
+We can add it as a primitive operator for interval elements, called the _meet_,
+as well as a similar operator `∨`, the _join_, and the unary operator `¬`, the _involution_.
+Then the interval forms a De Morgan algebra, and this is known as _De Morgan cubical type theory_.
+
+```
+Γ ⊢ i : 𝕀
+Γ ⊢ j : 𝕀
+───────────── 𝕀-meet
+Γ ⊢ i ∧ j : 𝕀
+
+Γ ⊢ i : 𝕀
+Γ ⊢ j : 𝕀
+───────────── 𝕀-join
+Γ ⊢ i ∧ j : 𝕀
+
+Γ ⊢ i : 𝕀
+────────── 𝕀-inv
+Γ ⊢ ¬i : 𝕀
+
+────────────── 𝕀-meet-comp₀     ────────────── 𝕀-join-comp₁
+Γ ⊢ 𝟎 ∧ j ⊳ 𝟎                  Γ ⊢ i ∧ 𝟏 ⊳ 𝟏
+
+────────────── 𝕀-meet-comp₁     ────────────── 𝕀-join-comp₀
+Γ ⊢ 𝟏 ∧ j ⊳ j                  Γ ⊢ i ∧ 𝟎 ⊳ i
+
+─────────── 𝕀-inv₀              ─────────── 𝕀-inv₁
+Γ ⊢ ¬𝟎 ⊳ 𝟏                     Γ ⊢ ¬𝟏 ⊳ 𝟎
+
+──────────────────────         ──────────────────────
+Γ ⊢ ¬(i ∧ j) ≈ ¬i ∨ ¬j         Γ ⊢ ¬(i ∨ j) ≈ ¬i ∨ ¬j
+```
+
+With substitution and contractibility of singletons, we are now able to derive the (heterogeneous) J eliminator.
+
+```
+A : 𝕀 → Type
+a : A 𝟎
+b : A 𝟏
+P : (i : 𝕀) → (y : A i) → pathd A a y → Type
+d : P 𝟎 a (Λ_. a)
+p : pathd A a b
+───────────────────────────────────────────────────────────────────────── J*'
+Q (i : 𝕀) (y : A i) : Type ≔ (p : pathd (λj ⇒ A (i ∧ j)) a y) → P i y p
+R (_ : 𝕀) (y : A 𝟎) × (p : pathd (λ_ ⇒ A 𝟎) a y) : Type ≔ P 𝟎 y p
+e (p : path (λ_ ⇒ A 𝟎) a a) : P 𝟎 a p ≔ subst R (cos* (λ_ ⇒ A 𝟎) a a p) d
+--------------------------------------------------------------------------
+subst A a b Q p e p : P 𝟏 b p
+```
+
+The presence of this additional structure also provides a simpler proof of symmetry.
+
+```
+A : 𝕀 → Type
+a : A 𝟎
+b : A 𝟏
+p : pathd A a b
+───────────────────────────────────────────────── sym*
+P (i : 𝕀) : Type ≔ pathd (λj ⇒ A (i ∧ ¬j)) (p i) a
+-------------------------------------------------
+coe [𝟎 ⇝ 𝟏] P (Λ_. a) : pathd (λj ⇒ A ¬j) b a
+```
+
+### Composition
+
+We can also attempt to prove a heterogeneous version of transitivity.
+We are given two paths, `p` and `q`, whose endpoints types are `A` and `B`, coinciding at `A 𝟏 ≈ B 𝟎`.
+However, we run into a similar but distinct problem as before.
+
+```
+A B : 𝕀 → Type
+a : A 𝟎
+b : A 𝟏 ≈ B 𝟎
+c : B 𝟏
+p : pathd A a b
+q : pathd B b c
+───────────────────────────────────────────────── trans*
+P (i : 𝕀) : Type ≔ pathd (λj ⇒ ? A B i j) a (q i)
+-------------------------------------------------
+coe [𝟎 ⇝ 𝟏] P p : pathd (λj ⇒ ? A B 𝟏 j) a c
+```
+
+The missing path, `? p q i j`, should behave as follows:
+* If `i = 𝟎`, then return `A 𝟎`.
+* If `i = 𝟏, j = 𝟎`, then return `A 𝟏`, i.e. `B 𝟎`.
+* If `i = 𝟏 = j`, then return `B 𝟏`.
+
+This time, it is not the interval elements that we need to somehow combine, but rather `A` and `B`.
+To do this, we need _Kan composition_, which intuitively "closes" an open n-cube of paths.
+This is beyond the scope of this post and will not be discussed.
+
+### Variants of Cubical Type Theory
+
+So far, a De Morgan cubical type theory has been presented.
+An alternate presentation derives the interval operators from either heterogeneous composition alone
+or homogeneous composition with coercion, usually referred to as _Cartesian cubical type theory_.
+See [Unifying Cubical Models of Univalent Type Theory](https://drops.dagstuhl.de/opus/volltexte/2020/11657/)
+for further details on the different kinds of cubical type theories and their connections.
 
 ## Appendix A: Other Relevant Typing Rules
 

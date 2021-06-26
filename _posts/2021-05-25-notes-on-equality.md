@@ -889,7 +889,7 @@ k (i : 𝕀) (x : A) : B x ≔ 𝕀-elim (λ _ ⇒ B x) (f x) (g x) (h x) i
 cong k seg : f ≡ g
 ```
 
-The resulting type is `λ (x : A) ⇒ f x ≡ λ (x : A) ⇒ f x` by reduction of the interval eliminator,
+The resulting type is `λ (x : A) ⇒ f x ≡ λ (x : A) ⇒ g x` by reduction of the interval eliminator,
 but the uniqueness rule for functions will get us the final desired type.
 
 ### Quotients as a HIT

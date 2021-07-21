@@ -366,7 +366,7 @@ Alternatively, we can define these as the built-in eliminators for equality.
 
 ### J and K by Substitution
 
-_The following proof is adapted from Martin Hofmann's dissertation, [Extensional Concepts in Intensional Iype Iheory](http://www.lfcs.inf.ed.ac.uk/reports/95/ECS-LFCS-95-327/)._
+_The following proof is adapted from Martin Hofmann's dissertation, [Extensional Concepts in Intensional Type Theory](http://www.lfcs.inf.ed.ac.uk/reports/95/ECS-LFCS-95-327/)._
 
 We can derive all of the nice properties of equality from substitution and `cos` as we do from J
 (such as symmetry, transitivity, and congruence), as well as J itself.
@@ -597,7 +597,13 @@ subst P q p : a ≡ c
 
 ## Extensional Equality
 
+_The following is also lifted from Hofmann's [Extensional Concepts in Intensional Type Theory](http://www.lfcs.inf.ed.ac.uk/reports/95/ECS-LFCS-95-327/)._
+
 TODO: Add blurb about extensional equality
+
+Extensional equality is characterized by the combination of two rules:
+equality reflection, where a propositional equality yields a definitional one,
+and a definitional form of UIP.
 
 ```
 Γ ⊢ a : A
@@ -605,7 +611,36 @@ TODO: Add blurb about extensional equality
 Γ ⊢ p : a ≡ b
 ───────────── ≡-reflect
 Γ ⊢ a ≈ b : A
+
+Γ ⊢ a : A
+Γ ⊢ b : A
+Γ ⊢ q : a ≡ b
+────────────────────── ≡-RIP
+Γ ⊢ refl a ≈ q : a ≡ b
 ```
+
+In ≡-RIP, the type of `refl a` correctly converts to `a ≡ b` via reflection of `p` itself.
+Then with reflection and RIP, we can derive contractibility of singletons,
+while coercion and congruence requires only reflection, and therefore the J eliminator can be derived as well.
+On the other hand, if we already had the J eliminator, we can derive RIP via equality reflection.
+(Thanks to [@plt_abbie](https://twitter.com/plt_abbie/status/1417984187857084416) for pointing this out.)
+
+```
+A : Type
+a b : A
+q : a ≡ b
+───────────────────────────────────────── RIP''
+P (b : A) (p : a ≡ b) : Type ≔ refl a ≡ p
+-----------------------------------------
+J P (refl (refl a)) q : refl a ≡ q
+```
+
+In the type of the body of `P`, `refl a` has type `a ≡ b` by reflection of `p`,
+and the application of J is well-typed by reflection of `q`.
+Since J is derivable from the combination of coercion, congruence, and contractibility of singletons,
+and the first two are derivable from reflection,
+the missing piece is really only contractibility of singletons,
+which in essence yields a form of uniqueness of identity proofs anyway.
 
 ## Function Extensionality
 

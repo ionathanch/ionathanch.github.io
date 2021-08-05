@@ -38,6 +38,9 @@ data Nat [α] : Set where
 
 This says that `Nat` takes some size parameter `α`, and to construct a `Nat` of size `α`,
 we must provide a smaller size `β`, and in the case of the `succ`, a `Nat` of that size as well.
+(Here, the size parameter `α` is in fact an implicit size argument to the constructors;
+when I want to write them explicitly I will put them in braces `{}`,
+as opposed to regular explicit size arguments, which are in brackets `[]`.)
 For instance, letting `∘` be some arbitrary size, we have that
 
 ```
@@ -259,8 +262,9 @@ L {?+1} [?] (λn: ∃α. Nat [α] ⇒ let 〈β, x〉 := n in natToOrd [β] x)
 First of all, what should the size that goes in the hole `?` be?
 The function argument of `L` potentially returns a different size for each result,
 rather than a fixed, common size for all of them.
-Second of all, the body of the function suggests that it would be possible to "leak" the size out of an existential,
-if we want it to be well-typed.
+Second of all, for the let expression to be well-typed,
+we need to be able to project only the size out of `n`,
+which means that sizes might now involve arbitrary terms beyond the size algebra.
 
 ```
 (natToOrd: ∀α. Nat [α] → Ord [α])(n: ∃α. Nat [α]) ⊢ n : ∃α. Nat [α]
@@ -269,105 +273,157 @@ if we want it to be well-typed.
 (natToOrd: ∀α. Nat [α] → Ord [α])(n: ∃α. Nat [α]) ⊢ let 〈β, x〉 := n in natToOrd [β] x : Ord [fst n]
 ```
 
-In other words, `fst n`, the first projection of the existential pair,
-is now a size expression, and since it is also a regular term,
-size expressions are not restricted to the original size algebra and might be any term.
-This does not bode well for the practicality of size inference as mentioned.
+## Choose your Fighter
 
-(_You can skip to the [next section](#pick-your-poison-infinity-or-axiom) now if you like.
-The next two subsections aren't yet very polished._)
-
-## A Tangled Tango of Terms and Sizes
-
-If we do accept arbitrary terms producing sizes, treating the second issue as a nonproblem,
-we might be able to solve the first issue.
-The idea is that we borrow from the ordinals and allow a way to define a size as the limit of a function returning sizes.
-Then we are able to define the ordinal ω.
+Given that ω is expressible with unsized inductives, it should also be expressible with sized inductives.
+What we have is a function from naturals to ordinals, and consequently a function from full naturals to full ordinals.
+What we need is some size we can pass to `L`, as well as a function from full naturals to ordinals of that size.
+In other words, we need the following function:
 
 ```
-let f (n: ∃α. Nat [α]) := let 〈β, x〉 := n in natToOrd [β] x
-    g (n: ∃α. Nat [α]) := let 〈β, x〉 := n in β
-in  L {(lim (∃α. Nat [α]) g)+1} [lim (∃α. Nat [α]) g] f
+C' : (∃α. Nat [α] → ∃β. Ord [β]) → ∃β. (∃α. Nat [α] → Ord [β])
 ```
 
-Rather than `lim` taking a function from full naturals, it takes a function from some arbitrary type.
-This allows us to generalize the `lim` size operator to more general inductive types than just ordinals.
-Furthermore, the above suggests that for any `(a : A)` and a function `f` from `A` to a size, `f a < lim A f`,
-which is the behaviour we expect from a supremum operator.
-
-Given that terms are involved in the order on sizes too,
-definitionally checking whether one size is smaller than another becomes greatly complicated.
-The worst case scenario would require users to provide entire proofs of sizes being smaller than another.
-The whole purpose of sizes types is to determine these things without the help of the user,
-because otherwise they would just use their own termination measures,
-which would take the same amount of effort.
-But it gets worse!
-
-## A Tangled Tango of Sizes and Levels
-
-At this point, sizes are beginning to be treated like terms, and the notion of size itself becomes a type.
-We could _literally_ define size as an inductive type itself (unsized, of course).
+More generally, for some inductive type `X` that might have a general recursive argument of the form `(a: A) → X a`,
+we need to similarly be able to bring out the existential from inside the function to outside.
+(We let `ℓ` be an arbitrary universe level, since the argument `A` could live in any universe.)
 
 ```
-data Size {ℓ} : Set (ℓ+1) where
+C : {A: Set ℓ} → {X: ∀α. A → Set ℓ} → ((a: A) → ∃α. X [α] a) → ∃α. (a: A) → X [α] a
+```
+
+You might notice that this is in fact a form of the axiom of choice specialized to existential quantification over sizes.
+The general statement of the axiom is as follows:
+
+```
+AC : {A: Set ℓ} → {B: A → Set ℓ} → {X: (a: A) → B a → Set ℓ} →
+     ((a: A) → (b : B a) × X a b) → (f: (a: A) → B a) × ((a: A) → X a (f a))
+```
+
+We could stop here and accept `C` as a noncomputing axiom.
+This would break canonicity for existential pairs, since `C` can yield a closed neutral term that isn't a pair.
+However, if projecting the elements out of the pair is allowed, then the axiom is computational.
+For the general axiom of choice, this is implemented as
+
+```
+AC g = 〈λa: A ⇒ fst (g a), λa: A ⇒ snd (g a)〉
+```
+
+By analogy, `C` should be implemented as
+
+```
+C g = 〈λa: A → fst (g a), λa: A → snd (g a)〉
+```
+
+but this doesn't type check: `λa: A → fst (g a)` is a function from `A` to a size,
+whereas we expect the first argument to be merely a size.
+Taking inspiration from the ordinals, we could add an operator that constructs the _limit_ of a function to sizes.
+That is, given a function `f` from some `A` to a size, we have the size expression `lim A f`.
+Then we are able to complete the implementation of `C`.
+
+```
+C g = 〈lim A (λa: A → fst (g a)), λa: A → snd (g a)〉
+```
+
+Finally, we can define the limit ordinal ω, perhaps with a few more steps than desired.
+
+```
+ω : Ord [lim (∃α. Nat [α]) (λn: ∃α. Nat [α] ⇒ fst n)]
+ω = let 〈β, x〉 := C (λn: ∃α. Nat [α] ⇒ 〈fst n, natToOrd [fst n] (snd n)〉)
+    in L [β] x
+```
+
+# At the Limits of Sizes
+
+We now essentially have a new constructor for sizes.
+This means we also have to figure out where it fits in the ordering of sizes.
+By convention, we define `r < s` to be `r+1 ≤ s`,
+and we can conclude `r+1 ≤ s+1` if `r ≤ s` holds.
+Furthermore, `α+1 ≤ s` holds if `α < s` is assumed in the environment,
+such as in the body of `∀α < s. τ`.
+
+As a limit size, `lim A f` should be the supremum of all of the sizes returned by `f`,
+just as `L g` is the supremum of all of the ordinals returned by `g`.
+Then firstly, being an upper bound,
+if we have some size `s` smaller than any size returned by `f`,
+it must also be smaller than `lim A f` itself.
+
+```
+Γ ⊢ a : A
+Γ ⊢ s ≤ f a
+---------------
+Γ ⊢ s ≤ lim A f
+```
+
+Secondly, being a _least_ upper bound, if every size returned by `f` is smaller than some `s`,
+it must be that `lim A f` itself is also smaller than `s`.
+In other words, there cannot be a size in between the sizes from `f` and `lim A f`.
+
+```
+For every Γ ⊢ a : A,
+Γ ⊢ f a ≤ s
+--------------------
+Γ ⊢ lim A f ≤ s
+```
+
+Unfortunately, this likely makes checking the size order undecidable.
+For the first rule, the checker needs to somehow summon the correct `a` out of thin air;
+for the second rule, the checker needs to somehow verify the premise for _every_ possible `a`.
+
+## Sizes are Too Big
+
+Given that we've been freely using `fst` and `snd` on existential size pairs,
+it seems that we should promote sizes to being proper terms.
+(Incidentally, in Agda they are.)
+Assuming we have some type `Size`, we can write down the typing rules for the introduction forms.
+(Here, `s+1 ≡ suc s`.)
+
+```
+Γ ⊢ s : Size
+--------------
+Γ ⊢ suc s : Size
+
+Γ ⊢ A : Set ℓ
+Γ ⊢ f : A → Size
+------------------
+Γ ⊢ lim A f : Size
+```
+
+Notice that we have an unbound universe level ℓ.
+This suggests that we need to pass ℓ as an argument to either `lim` itself or to `Size`.
+Since we'd like to treat sizes uniformly and be able to pass them around without worrying about the level,
+we'll adopt the former solution.
+
+If we think of `Size` as an inductive type in Agda, this forces us to put it in `Setω`.
+In other words, `Size` in Agda would look like this:
+
+```
+open import Agda.Primitive
+data Size : Setω where
   suc : Size → Size
-  lim : (A : Set ℓ) → (A → Size) → Size
+  lim : {ℓ : Level} → {A : Set ℓ} → (A → Size) → Size
 ```
 
-A problem becomes immediately apparent: the universe level that a size lives in is one larger than that of the type the `lim` operator.
-This means that if we want to define sized naturals using `Size` as a parameter, for instance,
-it would have to live in a universe larger than the one it really _should_ live in.
-Letting `ln` being the `n`th universe level, we have
+This is a problem because inductive types contain a size as a parameter,
+meaning that they, too, all need to live in `Setω`.
+Take the naturals, for example: morally, they _should_ be in `Set`,
+but again if defining them in Agda (and borrowing some notation for sizes), we have
 
 ```
-data Nat (s: Size {l0}) : Set l1 where
-  zero : ∀(β: Size {l0}) < s. Nat [s]
-  succ : ∀(β: Size {l0}) < s. Nat [β] → Nat [s]
+data Nat (α : Size) : Setω where
+  zero : (β : Size< α) → Nat [α]
+  succ : (β : Size< α) → Nat [β] → Nat [α]
 ```
 
-Even when we restrict the sizes involved in `Nat` to universe level `l0`, the type of `Nat` itself has to be in level `l1`.
-So if we have a `lim` operator, putting `Nat` in the bottomost universe `Set` where it belongs becomes somewhat suspect.
-We could have an _impredicative_ bottommost universe, so that `Size` itself can live in `Set` regardless of the type in `lim`,
-but it's unclear whether this would be sound,
-and whether the usual restrictions on eliminating types in an impredicative Set are too restrictive.
-
-# Pick Your Poison: Infinity or Axiom
-
-Let's go back a few steps and forget about the `lim` operator on sizes.
-The problem we wish to solve is to somehow obtain the appropriate size from a function that might return inductives with a myriad of sizes.
-In other words, we want some sort of function with the following type signature:
+The problem would be solved if we could put `Size` in `Set` instead.
+In Agda, this requires `Set` to be _impredicative_, in a sense,
+which when combined with large elimination of types in `Set` in general would be inconsistent.
+It's yet unclear to me whether only allowing `Size` to be in `Set` as a primitive formation rule would be consistent.
 
 ```
-cast : {A: Set ℓ} → {T: ∀α. Set ℓ} → (A → ∃α. T [α]) → ∃α. (A → T [α])
+--------------
+Γ ⊢ Size : Set
 ```
-
-This lets us define that pesky ordinal ω, as expected, although with far more code.
-
-```
-let 〈β, f〉 := cast (λn: ∃α. Nat [α] ⇒ let 〈γ, x〉 := n in 〈γ, natToOrd [γ] x〉)
-in  L [β] f
-```
-
-Now hear me out: what if we made `cast` a noncomputing axiom?
-I've compiled a list of pros and cons for your convenience:
-
-<u>CONS</u>
-* Breaks canonicity of existential size quantifications
-* Doesn't compute
-* Makes constructive type theorists sad
-
-<u>PROS</u>
-* Literally solves every single problem that sized types has
-* This is an exaggeration, but you have to admit it comes close
-
-It certainly feels like this axiom could have computational behaviour by using the `lim` operator.
-But one thing about sizes that I feel should be reiterated again is that they describe a _relative_ difference in sizes,
-not a concrete _absolute_ size of a particular inductive.
-Therefore, it shouldn't matter what the size that the `cast` axiom appears to summon out of thin air actually _is_,
-as long as we can be sure that every inductive type for which we allow a `cast`ing definitely _does_ have a size—and surely they do,
-for an inductive whose inhabitants we can write down is a finite inductive.
-However, it's unclear to me what effect a `cast` axiom, or even existential size quantification,
-would have on how sizes are inferred and solved for in practice in a proof assistant.
 
 # Summary
 
@@ -376,6 +432,7 @@ would have on how sizes are inferred and solved for in practice in a proof assis
 * An inductive with an "infinite" size is really one with _some_ size,
   so maybe we can replace it with existential size quantification
 * This works for simple inductive types, but not for general inductive types, unless:
-  * We complicate the size algebra by adding an operator to find a "limit" size; or
-  * We add an axiom to avoid needing to compute exact sizes
-* Having a consistent, useable dependent sized type system is still an open problem
+  * We add a noncomputing form of the axiom of choice, which would break canonicity; or
+  * We add a limit operator for sizes, which likely breaks decidability of size orders,
+    and causes problems to do with the universe level of sizes
+* Having a consistent, reasonable, and useable sized dependent type system is still an open problem

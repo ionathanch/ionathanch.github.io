@@ -79,7 +79,7 @@ Then we can define a `div` function using `monus`.
 fix div [α] [β] (n : Nat [α]) (m : Nat [β]) : Nat [α] :=
   case n of
     zero [γ] ⇒ zero {α} [γ]
-    succ [γ] k ⇒ succ {α} [γ] (div [γ] [β] (minus [γ] [β] k m) m)
+    succ [γ] k ⇒ succ {α} [γ] (div [γ] [β] (monus [γ] [β] k m) m)
 ```
 
 In the case expression, we're given a size variable `γ` that the type system knows is smaller than

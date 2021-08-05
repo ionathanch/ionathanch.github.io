@@ -186,7 +186,7 @@ and destructing it by `let 〈α, x〉 := p in ...`.
 ```
 fix plus [α] [β] (n : Nat [α]) (m : Nat [β]) : ∃δ. Nat [δ] :=
   case n of
-    zero [γ] ⇒ 〈α, zero {α} [γ]〉
+    zero [γ] ⇒ 〈β, m〉
     succ [γ] k ⇒
       let 〈δ, x〉 := plus [γ] [β] k m
       in  〈δ+1, succ {δ+1} [δ] x〉

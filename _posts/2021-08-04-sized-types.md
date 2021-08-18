@@ -312,17 +312,17 @@ AC g = 〈λa: A ⇒ fst (g a), λa: A ⇒ snd (g a)〉
 By analogy, `C` should be implemented as
 
 ```
-C g = 〈λa: A → fst (g a), λa: A → snd (g a)〉
+C g = 〈λa: A ⇒ fst (g a), λa: A ⇒ snd (g a)〉
 ```
 
-but this doesn't type check: `λa: A → fst (g a)` is a function from `A` to a size,
+but this doesn't type check: `λa: A ⇒ fst (g a)` is a function from `A` to a size,
 whereas we expect the first argument to be merely a size.
 Taking inspiration from the ordinals, we could add an operator that constructs the _limit_ of a function to sizes.
 That is, given a function `f` from some `A` to a size, we have the size expression `lim A f`.
 Then we are able to complete the implementation of `C`.
 
 ```
-C g = 〈lim A (λa: A → fst (g a)), λa: A → snd (g a)〉
+C g = 〈lim A (λa: A ⇒ fst (g a)), λa: A ⇒ snd (g a)〉
 ```
 
 Finally, we can define the limit ordinal ω, perhaps with a few more steps than desired.

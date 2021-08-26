@@ -263,7 +263,7 @@ but we can't inspect sizes like that in Agda.
 ## Step 4: Prove ∞ < ∞ and Derive ⊥
 
 The problem with saying that sizes are wellfounded with respect to the size order is that they are not!
-We have the infinitely-descending chaing `... ∞ < ∞ < ∞`.
+We have the infinitely-descending chain `... ∞ < ∞ < ∞`.
 The fact that `∞` is *not* accessible can be proven by structural induction on the accessibility relation,
 without the help of sized termination checking.
 

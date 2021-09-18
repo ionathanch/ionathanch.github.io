@@ -11,7 +11,7 @@ I worked with Prof. [William J. Bowman](https://www.williamjbowman.com/index.htm
 
 ## Experience
 
-I have been a graduate TA for two courses at UBC: **CPSC 311** (_Definition of Programing Languages_) in 2020WT1, where students learn about various features of PLs and write interpreters for them, and **CPSC 312** (_Functional and Logic Programming_) in 2020WT2, where students get some hands-on experience using Haskell and Prolog. I have also been a student volunteer at POPL 2020, ICFP 2020, and POPL 2021, as well as an attendee at PLISS 2019, and I will be attending OPLSS this June!
+I have been a graduate TA for two courses at UBC: **CPSC 311** (_Definition of Programing Languages_) in 2020WT1 and 2021WT1, where students learn about various features of PLs and write interpreters for them, and **CPSC 312** (_Functional and Logic Programming_) in 2020WT2, where students get some hands-on experience using Haskell and Prolog. I have also been a student volunteer at POPL 2020, ICFP 2020, and POPL 2021, as well as an attendee at PLISS 2019 and OPLSS 2021.
 
 ## Fun Facts
 * I played the clarinet in UBC's [Thunderbird Marching Band](https://www.thunderbirdband.ca/) from 2014 to 2019 (and then the pandemic hit)

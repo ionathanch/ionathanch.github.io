@@ -101,6 +101,15 @@ Attended [PLISS 2019](https://pliss2019.github.io/) (Second International Progra
 
 **Department of Computer Science**, UBC, *Vancouver, BC, Canada*
 <br/>
+Teaching Assistant <small>([CPSC 311: Definition of Programming Languages](https://www.students.cs.ubc.ca/~cs-311/2021W1/))</small>
+<br/>
+*September – December 2021*
+* Held weekly tutorial sessions and office hours
+* Set up autograding for and graded assignments and exams
+* Invigilated midterm and final exams
+
+**Department of Computer Science**, UBC, *Vancouver, BC, Canada*
+<br/>
 Teaching Assistant <small>([CPSC 312: Functional and Logic Programming](https://www.cs.ubc.ca/~poole/cs312/2021/))</small>
 <br/>
 *January – April 2021*

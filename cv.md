@@ -51,6 +51,8 @@ Jonathan Chan and William J. Bowman
 
 # Cool PL Things
 
+Gave an informal [SPL](https://spl.cs.ubc.ca/)-internal technical talk on my work on a syntactic model for a sized dependent type theory. [[slides](/assets/pdfs/sized-types-syntactic-model.pdf)]
+
 Attended [OPLSS 2021](https://www.cs.uoregon.edu/research/summerschool/summer21/) (19th Oregon Programming Languages Summer School) in cybrespace.
 
 Student volunteer at [POPL 2021](https://popl21.sigplan.org/) (48th etc.) in cyberspace.

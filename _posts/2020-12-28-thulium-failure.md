@@ -228,7 +228,7 @@ So far, all of my Docker-related files are in `/srv/docker/`, while other sites 
 ```bash
 $ borg init --encryption keyfile /backup/borg # Initializes a Borg repo and stores the keyfile in ~/.config/borg
 $ touch ~/borg-exclude # Create a Borg exclusion patterns file (empty, for now)
-$ borg create --stats --exclude-from ~/borg-exclude /backup/borg::$(date +'%FT%T') /srv # Create the initial backup
+$ borg create -svp --exclude-from ~/borg-exclude /backup/borg::$(date +'%FT%T') /srv # Create the initial backup
 $ borg list # Check that the backup was actually created
 ```
 

@@ -63,3 +63,15 @@ li ul {
 .jcxz::after {
   content: "cs.ubc.ca";
 }
+
+details {
+  margin-top: -20px;
+  margin-bottom: 20px;
+  a {
+    cursor: pointer;
+  }
+  blockquote {
+    font-size: smaller;
+    text-align: justify;
+  }
+}

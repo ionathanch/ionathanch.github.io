@@ -51,7 +51,16 @@ Jonathan Chan and William J. Bowman
 
 # Cool PL Things
 
-Gave an informal [SPL](https://spl.cs.ubc.ca/)-internal technical talk on my work on a syntactic model for a sized dependent type theory. [[slides](/assets/pdfs/sized-types-syntactic-model.pdf)]
+<span id="sized-model"></span>
+Gave an informal SPL-internal technical talk on ongoing work on a syntactic model for a sized dependent type theory.
+<details>
+  <summary>[<a>Abstract</a>] [<a href="/assets/pdfs/sized-types-syntactic-model.pdf">Slides</a>]</summary>
+  <blockquote>
+  Dependent type theories used in modern proof assistants usually require termination of recursive functions for logical consistency. In Coq, for instance, termination checking is done using a syntactic guard predicate, but it is delicate and restrictive, preventing users from writing some obviously-terminating functions. A more robust type-based alternative for termination checking is sized types, where inductive types are annotated with sizes, and recursive functions are guaranteed to terminate if recursive calls occur on inductives with smaller sizes.
+  <br>
+  We have been working on proving the consistency of a (higher-order, inflationary) sized dependent type system via a type-preserving translation (that is, a syntactic model) to extensional CIC, which is known to be consistent. However, we've encountered a few problems along the way that threaten the viability of such a translation. In this talk, I give an overview of how this translation works, and the unsolved problems of a) the infinite size in our type system and b) universe levels in our model.
+  </blockquote>
+</details>
 
 Attended [OPLSS 2021](https://www.cs.uoregon.edu/research/summerschool/summer21/) (19th Oregon Programming Languages Summer School) in cybrespace.
 

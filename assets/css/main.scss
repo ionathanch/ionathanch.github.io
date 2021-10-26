@@ -33,6 +33,11 @@
 
   img {
     border-radius: 0;
+    display: block;
+    margin: 0 auto 1rem;
+    @media (max-width: $large-breakpoint) {
+      width: 90%;
+    }
   }
 
   .image-caption {

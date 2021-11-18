@@ -29,7 +29,7 @@ Using the classic example of the naturals, we can augment its inductive definiti
 ```
 data Nat : Set where
   zero : Nat
-  succ : Nat
+  succ : Nat → Nat
 
 data Nat [α] : Set where
   zero : ∀β < α. Nat [α]

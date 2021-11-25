@@ -43,7 +43,7 @@ U = ∀ (X : Set) → (℘ (℘ X) → X) → ℘ (℘ X)
 σ s = s U τ
 ```
 
-The complete proof can be found in the [Appendix](#type-in-type-proof),
+The complete proof can be found at [Hurkens.html](/assets/agda/Hurkens.html),
 but we'll focus on just these definitions for the remainder of this post.
 
 ## Strong Impredicative Pairs
@@ -130,7 +130,7 @@ U = Lower (∀ (X : Set) → (℘ (℘ X) → X) → ℘ (℘ X))
 σ s = raise s U τ
 ```
 
-Again, the complete proof can be found in the [Appendix](#lowerraise-proof).
+Again, the complete proof can be found at [HurkensLower.html](/assets/agda/HurkensLower.html).
 One final thing to note is that impredicativity (with respect to function types) of `Set` isn't used either;
 all of this code type checks in Agda, whose universe `Set` is not impredicative.
 This means that impredicativity with respect to pair types alone is sufficient for inconsistency.
@@ -303,165 +303,39 @@ x₀ : Bad
 x₀ = f P₀
 ```
 
-From here, we can prove `P₀ x₀ ↔ ¬ P₀ x₀`. The rest of the proof can be found in the [Appendix](#positivity-and-impredicativity).
+From here, we can prove `P₀ x₀ ↔ ¬ P₀ x₀`. The rest of the proof can be found at [Positivity.html](/assets/agda/Positivity.html).
 
-## Appendix
+## Source Files
 
-### Type in Type Proof
+<p></p>
+<details>
+  <summary>Hurkens' paradox using type-in-type: <a href="/assets/agda/Hurkens.html">Hurkens.html</a></summary>
+  <iframe id="h" src="/assets/agda/Hurkens.html" width="100%"></iframe>
+</details>
+<p></p>
+<details>
+  <summary>Hurkens' paradox using <code>Lower</code>: <a href="/assets/agda/HurkensLower.html">HurkensLower.html</a></summary>
+  <iframe src="/assets/agda/HurkensLower.html" width="100%"></iframe>
+</details>
+<p></p>
+<details>
+  <summary>Russell's paradox using a positive inductive type and impredicative pairs: <a href="/assets/agda/Positivity.html">Positivity.html</a></summary>
+  <iframe src="/assets/agda/Positivity.html" width="100%"></iframe>
+</details>
 
-```
-{-# OPTIONS --type-in-type #-}
-
-data ⊥ : Set where
-
-℘ : ∀ {ℓ} → Set ℓ → Set _
-℘ {ℓ} S = S → Set
-
-U : Set
-U = ∀ (X : Set) → (℘ (℘ X) → X) → ℘ (℘ X)
-
-{- If using two impredicative universe layers instead of type-in-type:
-U : Set₁
-U = ∀ (X : Set₁) → (℘ (℘ X) → X) → ℘ (℘ X)
--}
-
-τ : ℘ (℘ U) → U
-τ t = λ X f p → t (λ x → p (f (x X f)))
-
-σ : U → ℘ (℘ U)
-σ s = s U τ
-
-Δ : ℘ U
-Δ y = ∀ p → σ y p → p (τ (σ y)) → ⊥
-
-Ω : U 
-Ω = τ (λ p → (∀ x → σ x p → p x))
-
-R : ∀ p → (∀ x → σ x p → p x) → p Ω
-R _ 𝟙 = 𝟙 Ω (λ x → 𝟙 (τ (σ x)))
-
-M : ∀ x → σ x Δ → Δ x
-M _ 𝟚 𝟛 = 𝟛 Δ 𝟚 (λ p → 𝟛 (λ y → p (τ (σ y))))
-
-L : (∀ p → (∀ x → σ x p → p x) → p Ω) → ⊥
-L 𝟘 = 𝟘 Δ M (λ p → 𝟘 (λ y → p (τ (σ y))))
-
-false : ⊥
-false = L R
-```
-
-### Lower/Raise Proof
-
-```
-{-# OPTIONS --rewriting #-}
-
-{- Lower can be a record if using type-in-type or allowing large eliminations:
-{-# OPTIONS --type-in-type #-}
-record Lower (A : Set₁) : Set where
-  constructor lower
-  field raise : A
-open Lower
--}
-
-postulate
-  _≡_ : ∀ {A : Set₁} → A → A → Set
-  Lower : (A : Set₁) → Set
-  lower : ∀ {A} → A → Lower A
-  raise : ∀ {A} → Lower A → A
-  beta : ∀ {A} {a : A} → raise (lower a) ≡ a
-
-{-# BUILTIN REWRITE _≡_ #-}
-{-# REWRITE beta #-}
-
-data ⊥ : Set where
-
-℘ : ∀ {ℓ} → Set ℓ → Set _
-℘ {ℓ} S = S → Set
-
-U : Set
-U = Lower (∀ (X : Set) → (℘ (℘ X) → X) → ℘ (℘ X))
-
-τ : ℘ (℘ U) → U
-τ t = lower (λ X f p → t (λ x → p (f (raise x X f))))
-
-σ : U → ℘ (℘ U)
-σ s = raise s U τ
-
-Δ : ℘ U
-Δ y = Lower (∀ p → σ y p → p (τ (σ y))) → ⊥
-
-Ω : U 
-Ω = τ (λ p → (∀ x → σ x p → p x))
-
-R : ∀ p → (∀ x → σ x p → p x) → p Ω
-R _ 𝟙 = 𝟙 Ω (λ x → 𝟙 (τ (σ x)))
-
-M : ∀ x → σ x Δ → Δ x
-M _ 𝟚 𝟛 =
-  let 𝟛 = raise 𝟛
-  in 𝟛 Δ 𝟚 (lower (λ p → 𝟛 (λ y → p (τ (σ y)))))
-
-L : (∀ p → (∀ x → σ x p → p x) → p Ω) → ⊥
-L 𝟘 = 𝟘 Δ M (lower (λ p → 𝟘 (λ y → p (τ (σ y)))))
-
-false : ⊥
-false = L R
-```
-
-### Positivity and Impredicativity
-
-```
-{-# OPTIONS --type-in-type #-}
-
-open import Data.Product
-
-data ⊥ : Set where
-
-data _≡_ {ℓ} {A : Set ℓ} (a : A) : A → Set where
-  refl : a ≡ a
-
-subst : ∀ {ℓ ℓ′} {A : Set ℓ} {a b : A} → (P : A → Set ℓ′) → (p : a ≡ b) → P a → P b
-subst _ refl pa = pa
-
-¬_ : ∀ {ℓ} → Set ℓ → Set ℓ
-¬ A = A → ⊥
-
-℘ : ∀ {ℓ} → Set ℓ → Set _
-℘ {ℓ} S = S → Set
-
-{-# NO_POSITIVITY_CHECK #-}
-record Bad : Set₁ where
-  constructor mkBad
-  field bad : ℘ (℘ Bad)
-
-f : ℘ Bad → Bad
-f p = mkBad (_≡ p)
-
-fInj : ∀ {p q} → f p ≡ f q → p ≡ q
-fInj {p} fp≡fq = subst (λ p≡ → p≡ p) (badInj fp≡fq) refl
-  where
-  badInj : ∀ {a b} → mkBad a ≡ mkBad b → a ≡ b
-  badInj refl = refl
-
--- type-in-type is for here onwards
-P₀ : ℘ Bad
-P₀ x = Σ[ P ∈ ℘ Bad ] x ≡ f P × ¬ (P x)
-
-x₀ : Bad
-x₀ = f P₀
-
-P₀x₀→¬P₀x₀ : P₀ x₀ → ¬ P₀ x₀
-P₀x₀→¬P₀x₀ (P , x₀≡fP , ¬Px₀) P₀x₀ = ¬Px₀ (subst (λ P → P x₀) (fInj x₀≡fP) P₀x₀)
-
-¬P₀x₀→P₀x₀ : ¬ P₀ x₀ → P₀ x₀
-¬P₀x₀→P₀x₀ ¬P₀x₀ = P₀ , refl , ¬P₀x₀
-
-¬P₀x₀ : ¬ P₀ x₀
-¬P₀x₀ P₀x₀ = P₀x₀→¬P₀x₀ P₀x₀ P₀x₀
-
-false : ⊥
-false = ¬P₀x₀ (¬P₀x₀→P₀x₀ ¬P₀x₀)
-```
+<script>
+  let details = document.querySelectorAll("details");
+  details.forEach((detail) => {
+    detail.hasBeenExpanded = false;
+    detail.addEventListener("toggle", () => {
+      if (!detail.hasBeenExpanded) {
+        detail.hasBeenExpanded = true;
+        let iframe = detail.getElementsByTagName("iframe")[0];
+        iframe.style.height = iframe.contentDocument.body.scrollHeight + 30 + "px";
+      }
+    });
+  });
+</script>
 
 ## References
 

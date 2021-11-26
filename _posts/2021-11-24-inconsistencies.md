@@ -310,7 +310,7 @@ From here, we can prove `P₀ x₀ ↔ ¬ P₀ x₀`. The rest of the proof can 
 <p></p>
 <details>
   <summary>Hurkens' paradox using type-in-type: <a href="/assets/agda/Hurkens.html">Hurkens.html</a></summary>
-  <iframe id="h" src="/assets/agda/Hurkens.html" width="100%"></iframe>
+  <iframe src="/assets/agda/Hurkens.html" width="100%"></iframe>
 </details>
 <p></p>
 <details>
@@ -331,7 +331,7 @@ From here, we can prove `P₀ x₀ ↔ ¬ P₀ x₀`. The rest of the proof can 
       if (!detail.hasBeenExpanded) {
         detail.hasBeenExpanded = true;
         let iframe = detail.getElementsByTagName("iframe")[0];
-        iframe.style.height = iframe.contentDocument.body.scrollHeight + 30 + "px";
+        iframe.height = iframe.contentDocument.body.scrollHeight + 30 + "px";
       }
     });
   });

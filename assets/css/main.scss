@@ -80,3 +80,9 @@ details {
     text-align: justify;
   }
 }
+
+/* https://github.com/w3c/csswg-drafts/issues/1771
+iframe {
+  height: max-content;
+}
+*/

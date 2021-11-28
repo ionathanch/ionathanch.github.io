@@ -15,13 +15,15 @@ And sometimes it's the *interaction* among the features rather than the features
 
 <!--more-->
 
+## Hurken's Paradox
+
 As it turns out, a lot of the inconsistencies can surface as proofs of what's known as Hurkens' paradox [[1](#1)],
 which is a simplification of Girard's paradox [[2](#2)],
 which itself is a type-theoretical formulation of the set-theoretical Burali–Forti's paradox [[3](#3)].
 I won't claim to deeply understand how any of these paradoxes work,
 but I'll present various formulations of Hurkens' paradox in the context of the most well-known inconsistent features.
 
-## Type in Type
+### Type in Type
 
 The most common mechanization of Hurkens' paradox you can find online is using type-in-type,
 where the type of the universe `Type` has `Type` itself as its type,
@@ -46,7 +48,50 @@ U = ∀ (X : Set) → (℘ (℘ X) → X) → ℘ (℘ X)
 The complete proof can be found at [Hurkens.html](/assets/agda/Hurkens.html),
 but we'll focus on just these definitions for the remainder of this post.
 
-## Strong Impredicative Pairs
+### Two Impredicative Universe Layers
+
+Hurkens' original construction of the paradox was done in System U⁻, where there are _two_ impredicative universes,
+there named `*` and `□`.
+We'll call ours `Set` and `Set₁`, with the following typing rules for function types featuring impredicativity.
+
+```
+Γ ⊢ A : 𝒰
+Γ, x: A ⊢ B : Set
+────────────────── Π-Set
+Γ ⊢ Πx: A. B : Set
+
+Γ ⊢ A : 𝒰
+Γ, x: A ⊢ B : Set₁
+─────────────────── Π-Set₁
+Γ ⊢ Πx: A. B : Set₁
+```
+
+Going back to the type-in-type proof, consider now `℘ (℘ X)`.
+By definition, this is `(X → Set) → Set`; since `Set : Set₁`, by Π-Set₁,
+the term has type `Set₁`, regardless of what the type of `X` is.
+Then `U = ∀ X → (℘ (℘ X) → X) → ℘ (℘ X)` has type `Set₁` as well.
+Because later when defining `σ : U → ℘ (℘ U)`, given a term `s : U`, we want to apply it to `U`,
+the type of `X` should have the same type as `U` for `σ` to type check.
+The remainder of the proof of inconsistency is unchanged, as it doesn't involve any explicit universes,
+although we also have the possibility of lowering the return type of `℘`.
+An impredicative `Set₁` above a predicative `Set` may be inconsistent as well,
+since we never make use of the impredicativity of `Set` itself.
+
+```
+℘ : ∀ {ℓ} → Set ℓ → Set₁
+℘ {ℓ} S = S → Set
+
+U : Set₁
+U = ∀ (X : Set₁) → (℘ (℘ X) → X) → ℘ (℘ X)
+```
+
+Note well that having two impredicative universe layers is _not_ the same thing as having two parallel impredicative universes.
+For example, by turning on `-impredicative-set` in Coq, we'd have an impredicative `Prop` and an impredicative `Set`,
+but they are in a sense parallel universes: the type of `Prop` is `Type`, not `Set`.
+The proof wouldn't go through in this case, since it relies on the type of the return type of `℘` being impredicative as well.
+With cumulativity, `Prop` is a subtype of `Set`, but this has no influence for our puposes.
+
+### Strong Impredicative Pairs
 
 A _strong (dependent) pair_ is a pair from which we can project its components.
 An _impredicative pair_ in some impredicative universe `𝒰` is a pair that lives in `𝒰` when either of its components live in `𝒰`,
@@ -133,9 +178,9 @@ U = Lower (∀ (X : Set) → (℘ (℘ X) → X) → ℘ (℘ X))
 Again, the complete proof can be found at [HurkensLower.html](/assets/agda/HurkensLower.html).
 One final thing to note is that impredicativity (with respect to function types) of `Set` isn't used either;
 all of this code type checks in Agda, whose universe `Set` is not impredicative.
-This means that impredicativity with respect to pair types alone is sufficient for inconsistency.
+This means that impredicativity with respect to strong pair types alone is sufficient for inconsistency.
 
-## Unrestricted Large Elimination of Impredicative Universes
+### Unrestricted Large Elimination of Impredicative Universes
 
 In contrast to strong pairs, weak (impredicative) pairs don't have first and second projections.
 Instead, to use a pair, one binds its components in the body of some expression
@@ -183,51 +228,20 @@ which is exactly what characterizes the weak impredicative pair.
 On the other hand, allowing unrestricted large elimination lets us define not only strong impredicative pairs,
 but also `Lower` (and the projection `raise`), both as inductive types.
 
-## Two Impredicative Universe Layers
-
-Hurkens' original construction of the paradox was done in System U⁻, where there are _two_ impredicative universes,
-there named `*` and `□`.
-We'll call ours `Set` and `Set₁`, with the following typing rules for function types.
+While impredicative functions can Church-encode weak impredicative pairs, they can't encode strong ones.
 
 ```
-Γ ⊢ A : 𝒰
-Γ, x: A ⊢ B : Set
-────────────────── Π-Set
-Γ ⊢ Πx: A. B : Set
-
-Γ ⊢ A : 𝒰
-Γ, x: A ⊢ B : Set₁
-─────────────────── Π-Set₁
-Γ ⊢ Πx: A. B : Set₁
+Σx: A. B ≝ (P : Set) → ((x : A) → B → P) → P
 ```
 
-Going back to the type-in-type proof, consider now `℘ (℘ X)`.
-By definition, this is `(X → Set) → Set`; since `Set : Set₁`, by Π-Set₁,
-the term has type `Set₁`, regardless of what the type of `X` is.
-Then `U = ∀ X → (℘ (℘ X) → X) → ℘ (℘ X)` has type `Set₁` as well.
-Because later when defining `σ : U → ℘ (℘ U)`, given a term `s : U`, we want to apply it to `U`,
-the type of `X` should have the same type as `U` for `σ` to type check.
-The remainder of the proof of inconsistency is unchanged, as it doesn't involve any explicit universes,
-although we also have the possibility of lowering the return type of `℘`.
+If `Set` is impredicative then the pair type itself lives in `Set`,
+but if `A` lives in a larger universe, then it can't be projected out of the pair,
+which requires setting `P` as `A`.
 
-```
-℘ : ∀ {ℓ} → Set ℓ → Set₁
-℘ {ℓ} S = S → Set
+## Other Paradoxes
 
-U : Set₁
-U = ∀ (X : Set₁) → (℘ (℘ X) → X) → ℘ (℘ X)
-```
-
-Note well that having two impredicative universe layers is _not_ the same thing as having two parallel impredicative universes.
-For example, by turning on `-impredicative-set` in Coq, we'd have an impredicative `Prop` and an impredicative `Set`,
-but they are in a sense parallel universes: the type of `Prop` is `Type`, not `Set`.
-The proof wouldn't go through in this case, since it relies on the type of the return type of `℘` being impredicative as well.
-With cumulativity, `Prop` is a subtype of `Set`, but this has no influence for our puposes.
-
-## Bonus: Other Inconsistencies
-
-There's a variety of other features that yield inconsistencies while having nothing to do with Girard's paradox,
-and some of them are comparatively simple.
+There's a variety of other features that yield inconsistencies in other ways,
+some of them resembling the set-theoretical Russell's paradox.
 
 ### Negative Inductive Types
 
@@ -265,7 +279,7 @@ A positive inductive type is one where the inductive type appears to the left of
 If it's restricted to appear to the left of _no_ arrows (0 is an even number), it's a _strictly_ positive inductive type.
 Strict positivity is the usual condition imposed on all inductive types in Coq.
 If instead we allow positive inductive types in general, when combined with an impredicative universe (we'll use `Set` again),
-we can define another inconsistency corresponding to Russell's paradox.
+we can define an inconsistency corresponding to Russell's paradox.
 
 ```
 {-# NO_POSITIVITY_CHECK #-}
@@ -305,6 +319,94 @@ x₀ = f P₀
 
 From here, we can prove `P₀ x₀ ↔ ¬ P₀ x₀`. The rest of the proof can be found at [Positivity.html](/assets/agda/Positivity.html).
 
+### Impredicativity + Excluded Middle + Large Elimination
+
+Another type-theoretic encoding of Russell's paradox is Berardi's paradox [[6](#6)].
+It begins with a retraction, which looks like half an isomorphism.
+
+```
+record _◁_ {ℓ} (A B : Set ℓ) : Set ℓ where
+  constructor _,_,_
+  field
+    ϕ : A → B
+    ψ : B → A
+    retract : ψ ∘ ϕ ≡ id
+open _◁_
+```
+
+We can easily prove `A ⊲ B → A ⊲ B` by identity.
+If we postulate the axiom of choice, then we can push the universal quantification over `A ⊲ B` into the existential quantification of `A ⊲ B`,
+yielding a `ϕ` and a `ψ` such that `ψ ∘ ϕ ≡ id` only when given some proof of `A ⊲ B`.
+However, a retraction of powersets can be stipulated out of thin air using only the axiom of excluded middle.
+
+```
+record _◁′_ {ℓ} (A B : Set ℓ) : Set ℓ where
+  constructor _,_,_
+  field
+    ϕ : A → B
+    ψ : B → A
+    retract : A ◁ B → ψ ∘ ϕ ≡ id
+open _◁′_
+
+postulate
+  EM : ∀ {ℓ} (A : Set ℓ) → A ⊎ (¬ A)
+
+t : ∀ {ℓ} (A B : Set ℓ) → ℘ A ◁′ ℘ B
+t A B with EM (℘ A ◁ ℘ B)
+... | inj₁  ℘A◁℘B =
+      let ϕ , ψ , retract = ℘A◁℘B
+      in ϕ , ψ , λ _ → retract
+... | inj₂ ¬℘A◁℘B =
+      (λ _ _ → ⊥) , (λ _ _ → ⊥) , λ ℘A◁℘B → ⊥-elim (¬℘A◁℘B ℘A◁℘B)
+
+```
+
+This time defining `U` to be `∀ X → ℘ X`, we can show that `℘ U` is a retract of `U`.
+Here, we need an impredicative `Set` so that `U` can also live in `Set` and so that `U` quantifies over itself as well.
+Note that we project the equality out of the record while the record is impredicative,
+so putting `_≡_` in `Set` as well will help us avoid large eliminations for now.
+
+```
+projᵤ : U → ℘ U
+projᵤ u = u U
+
+injᵤ : ℘ U → U
+injᵤ f X =
+  let _ , ψ , _ = t X U
+      ϕ , _ , _ = t U U
+  in ψ (ϕ f)
+
+projᵤ∘injᵤ : projᵤ ∘ injᵤ ≡ id
+projᵤ∘injᵤ = retract (t U U) (id , id , refl)
+```
+
+Now onto Russell's paradox.
+Defining `_∈_` to be `projᵤ` and letting `r ≝ injᵤ (λ u → ¬ u ∈ u)`,
+we can show a curious inconsistent statement.
+
+```
+r∈r≡r∉r : r ∈ r ≡ (¬ r ∈ r)
+r∈r≡r∉r = cong (λ f → f (λ u → ¬ u ∈ u) r) projᵤ∘injᵤ
+```
+
+To actually derive an inconsistency, we can derive functions `r ∈ r → (¬ r ∈ r)` and `(¬ r ∈ r) → r ∈ r` using substitution,
+then prove falsehood the same way we did for negative inductive types.
+However, the predicate in the substitution is `Set → Set`, which itself has type `Set₁`,
+so these final steps do require unrestricted large elimination.
+The complete proof can be found at [Berardi.html](/assets/agda/Berardi.html).
+
+## Summary
+
+The combinations of features that yield inconsistencies are:
+
+* Type-in-type: `· ⊢ Set : Set`
+* Impredicative `Set` and `Set₁` where `· ⊢ Set : Set₁`
+* Strong impredicative pairs
+* Impredicative inductive types + unrestricted large elimination
+* Negative inductive types
+* Non-strictly-positive inductive types + impredicativity
+* Impredicativity + excluded middle + unrestricted large elimination
+
 ## Source Files
 
 <p></p>
@@ -321,6 +423,10 @@ From here, we can prove `P₀ x₀ ↔ ¬ P₀ x₀`. The rest of the proof can 
 <details>
   <summary>Russell's paradox using a positive inductive type and impredicative pairs: <a href="/assets/agda/Positivity.html">Positivity.html</a></summary>
   <iframe src="/assets/agda/Positivity.html" width="100%"></iframe>
+</details>
+<details>
+  <summary>Berardi's paradox using impredicativity, excluded middle, and large elimination: <a href="/assets/agda/Berardi.html">Berardi.html</a></summary>
+  <iframe src="/assets/agda/Berardi.html" width="100%"></iframe>
 </details>
 
 <script>
@@ -341,10 +447,12 @@ From here, we can prove `P₀ x₀ ↔ ¬ P₀ x₀`. The rest of the proof can 
 
 [<a name="1">1</a>] Hurkens, Antonius J. C. (1995). _A Simplification of Girard's Paradox_. doi:[10.1007/BFb0014058](https://doi.org/10.1007/BFb0014058).
 <br/>
-[<a name="2">2</a>] Coquand, Thierry. (1986). _An Analysis of Girard's Paradox_. https://hal.inria.fr/inria-00076023.
+[<a name="2">2</a>] Coquand, Thierry. (1986). _An Analysis of Girard's Paradox_. [https://hal.inria.fr/inria-00076023](https://hal.inria.fr/inria-00076023).
 <br/>
 [<a name="3">3</a>] Burali–Forti, Cesare. (1897). _Una questione sui numeri transfini_. doi:[10.1007/BF03015911](https://doi.org/10.1007/BF03015911).
 <br/>
 [<a name="4">4</a>] Gilbert, Gaëtan; Cockx, Jesper; Sozeau, Matthieu; Tabareau, Nicolas. (2019). _Definitional Proof-Irrelevance without K_. doi:[10.1145/3290316](https://doi.org/10.1145/3290316).
 <br/>
-[<a name="5">5</a>] Coquand, Theirry; Paulin, Christine. _Inductively defined types_. doi:[10.1007/3-540-52335-9_47](https://doi.org/10.1007/3-540-52335-9_47).
+[<a name="5">5</a>] Coquand, Theirry; Paulin, Christine. _Inductively defined types_. doi:[10.1007/3-540-52335-9\_47](https://doi.org/10.1007/3-540-52335-9_47).
+<br/>
+[<a name="6">6</a>] Barbanera, Franco; Berardi, Stefano. _Proof-irrelevance out of excluded middle and choice in the calculus of constructions_. doi:[10.1017/S0956796800001829](https://doi.org/10.1017/S0956796800001829)

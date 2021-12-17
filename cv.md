@@ -13,13 +13,19 @@ sidebar_link: true
 
 **University of British Columbia**, *Vancouver, BC, Canada*
 <br/>
-MSc. in Computer Science, present
+MSc. in Computer Science, 2022
+<br/>
+Advised by [William J. Bowman](https://www.williamjbowman.com/)
 
 **University of British Columbia**, *Vancouver, BC, Canada*
 <br/>
 BSc. Combined Honours in Computer Science and Physics, May 2020
+<br/>
+*Practical Sized Typing for Coq* (advised by [William J. Bowman](https://www.williamjbowman.com/))
+<br/>
+[[Thesis](https://dx.doi.org/10.14288/1.0406074)] [[GitHub](https://github.com/ionathanch/coq/tree/dev)] [[Proposal](/assets/pdfs/bsc-proposal.pdf)]
 
-# Drafts, Publications, and Theses
+# Drafts and Publications
 
 **Is Sized Typing for Coq Practical?**
 <br/>
@@ -27,25 +33,17 @@ Jonathan Chan, Yufeng "Michael" Li, and William J. Bowman
 <br/>
 *Submitted to the [Journal of Functional Programming](https://www.cambridge.org/core/journals/journal-of-functional-programming) in December 2021*
 <br/>
-[[arXiv](https://arxiv.org/abs/1912.xxxxx)] [[GitHub](https://github.com/ionathanch/coq/releases/tag/V8.12%2Bsized-jfp)] [[Artifact](https://doi.org/10.5281/zenodo.5661975)]
+[[arXiv](https://arxiv.org/abs/1912.05601)] [[GitHub](https://github.com/ionathanch/coq/releases/tag/V8.12%2Bsized-jfp)] [[Artifact](https://doi.org/10.5281/zenodo.5661975)]
 
 **Towards a Syntactic Model of Sized Dependent Types**
 <br/>
 Jonathan Chan
 <br/>
-*To appear at the [Student Research Competition](https://popl22.sigplan.org/track/POPL-2022-student-research-competition) @ POPL 2022*
+*To appear at the [Student Research Competition](https://popl22.sigplan.org/track/POPL-2022-student-research-competition) @ [POPL 2022](https://popl22.sigplan.org/)*
 <br/>
-[[Abstract](/assets/pdfs/src2022-abstract.pdf)] [[Poster](#)]
+[[Abstract](/assets/pdfs/src2022-abstract.pdf)] [[Slides](/assets/pdfs/sized-types-syntactic-model.pdf)] [[Video](#)]
 
-**Practical Sized Typing for Coq**
-<br/>
-Undergraduate honours thesis advised by [William J. Bowman](https://www.williamjbowman.com/)
-<br/>
-*Submitted to UBC in December 2019*
-<br/>
-[[Thesis](/assets/pdfs/bsc-thesis.pdf)] [[GitHub](https://github.com/ionathanch/coq/tree/dev)] [[Proposal](/assets/pdfs/bsc-proposal.pdf)]
-
-# Unpublications
+# Nonpublications
 
 **Practical Sized Typing for Coq**, *rejected from [POPL 2021](https://popl21.sigplan.org/track/POPL-2021-research-papers)*
 <br/>
@@ -53,44 +51,19 @@ Jonathan Chan, Yufeng "Michael" Li, and William J. Bowman
 <br/>
 [[Manuscript](/assets/pdfs/pstc-popl2021.pdf)] [[GitHub](https://github.com/ionathanch/coq/releases/tag/V8.12%2Bsized)] [[Artifact](https://doi.org/10.5281/zenodo.3937941)]
 
-**Practical Sized Typing for Coq**, *manuscript*
-<br/>
-Jonathan Chan and William J. Bowman
-<br/>
-[[arXiv](https://arxiv.org/abs/1912.05601)]
-
 **Practical Sized Typing for Coq**, *rejected from [CPP 2020](https://popl20.sigplan.org/home/CPP-2020)*
 <br/>
 Jonathan Chan and William J. Bowman
 <br/>
 [[Manuscript](/assets/pdfs/pstc-cpp2020.pdf)] [[GitHub](https://github.com/ionathanch/coq/releases/tag/v0.1.0)] [[Artifact](https://doi.org/10.5281/zenodo.3516517)]
 
-# Cool PL Things
+# Schools and Conferences
 
-Will be a student volunteer at [POPL 2022](https://popl21.sigplan.org/) (49th etc.) in Philadelphia, Pennsylvania, USA.
-
-<span id="sized-model"></span>
-Gave an informal SPL-internal technical talk on ongoing work on a syntactic model for a sized dependent type theory.
-<details>
-  <summary>[<a>Abstract</a>] [<a href="/assets/pdfs/sized-types-syntactic-model.pdf">Slides</a>]</summary>
-  <blockquote>
-  Dependent type theories used in modern proof assistants usually require termination of recursive functions for logical consistency. In Coq, for instance, termination checking is done using a syntactic guard predicate, but it is delicate and restrictive, preventing users from writing some obviously-terminating functions. A more robust type-based alternative for termination checking is sized types, where inductive types are annotated with sizes, and recursive functions are guaranteed to terminate if recursive calls occur on inductives with smaller sizes.
-  <br>
-  I have been working on proving the consistency of a (higher-order, inflationary) sized dependent type system via a type-preserving translation (that is, a syntactic model) to extensional CIC, which is known to be consistent. However, I've encountered a few problems along the way that threaten the viability of such a translation. In this talk, I give an overview of how this translation works, and the unsolved problems of a) the infinite size in our type system and b) universe levels in our model.
-  </blockquote>
-</details>
-
-Attended [OPLSS 2021](https://www.cs.uoregon.edu/research/summerschool/summer21/) (19th Oregon Programming Languages Summer School) in cybrespace.
-
-Student volunteer at [POPL 2021](https://popl21.sigplan.org/) (48th etc.) in cyberspace.
-
-Secondary administrator and moderator (with [Hazel](https://knightsofthelambdacalcul.us/)) for [types.pl](https://types.pl/) <small>(est. 23 October 2020)</small>, a small, leftist Mastodon instance for PL enthusiasts, researchers, and friends.
-
-Student volunteer at [ICFP 2020](https://icfp20.sigplan.org/) (25th ACM SIGPLAN International Conference on Functional Programming) in cyberspace.
-
-Student volunteer at [POPL 2020](https://popl20.sigplan.org/) (47th ACM SIGPLAN Symposium on Principles of Programming Languages) in New Orleans, Louisiana, USA.
-
-Attended [PLISS 2019](https://pliss2019.github.io/) (Second International Programming Language Implementation Summer School) in Bertinoro, Italy.
+* [OPLSS 2021](https://www.cs.uoregon.edu/research/summerschool/summer21/) <small>(virtual)</small> — *Attendee*
+* [POPL 2021](https://popl21.sigplan.org/) <small>(virtual)</small> — *Student volunteer*
+* [ICFP 2020](https://icfp20.sigplan.org/) <small>(virtual)</small> — *Student volunteer*
+* [POPL 2020](https://popl20.sigplan.org/) <small>(New Orleans, Louisiana, USA)</small> — *Student volunteer* 
+* [PLISS 2019](https://pliss2019.github.io/) <small>(Bertinoro, Italy)</small> — *Attendee*
 
 # Scholarships and Awards
 
@@ -160,6 +133,12 @@ Teaching Assistant <small>([CPSC 303: Numerical Approximation and Discretization
 <br/>
 *January – April 2020*
 * Graded weekly assignments and held weekly office hours
+
+**[types.pl](https://types.pl)**, *Mastodon instance*
+<br/>
+Secondary Administrator and Moderator (with [Hazel](https://knightsofthelambdacalcul.us/))
+<br/>
+*23 October 2020 – present*
 
 **Digital Health Innovation Lab**, BC Children's Hospital, *Vancouver, BC, Canada*
 <br/>

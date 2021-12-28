@@ -45,6 +45,10 @@ Jonathan Chan
 
 # Nonpublications
 
+**Silence of the Vowels**, *presented as a [UDLS @ UBC](https://www.cs.ubc.ca/~udls)*
+<br/>
+[[Abstract](https://www.cs.ubc.ca/~udls/showTalk.php/2021-10-22)] [[PDF Slides](/assets/pdfs/silence-of-the-vowels.pdf)] [[Google Slides](https://docs.google.com/presentation/d/1u6xm3sfCZPGUpSFotxbgBRPE-NBxJrjmTvuSAfUprw4/edit?usp=sharing)]
+
 **Practical Sized Typing for Coq**, *rejected from [POPL 2021](https://popl21.sigplan.org/track/POPL-2021-research-papers)*
 <br/>
 Jonathan Chan, Yufeng "Michael" Li, and William J. Bowman

@@ -3,19 +3,17 @@ layout: page
 title: About
 ---
 
-Hello! My name is Jonathan (sometimes Jon; **never** with an _h_). I am a Master's student in the [Software Practices Lab](https://spl.cs.ubc.ca/) at UBC. My research interests include dependent types, proof assistants, type theory, compilers, and mathematical logic.
+Hello! My name is <span title="or ionchy (virtually)">Jonathan (legally) or Jon (informally)</span>. I am a Master's student in the [Software Practices Lab](https://spl.cs.ubc.ca/) at UBC. My research interests include dependent types, proof assistants, type theory, compilers, and mathematical logic.
+
+If you're here from clicking a link on one of my Statements of Purpose, hi! 👋
 
 ## Research
 
-I worked with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on my undergraduate thesis on sized types, which is a type-based method of checking termination of recursive functions on (co)inductive data. An implementation in Coq's kernel can be found on [GitHub](https://github.com/ionathanch/coq/tree/dev). I continue to work with him as a Master's student on type-preserving closure conversion of recursive functions, which will also make use of sized types.
+I am working with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on two projects, both of which are about sized types, a type-based method of checking termination of recursive functions. The first, [Is Sized Typing for Coq Practical?](https://arxiv.org/abs/1912.05601), explores the viability of an implementation of fully-inferred sized types in Coq's kernel in terms of performance and metatheory, and the second, [Towards a Syntatic Model of Sized Dependent Types](/assets/pdfs/src2022-abstract.pdf), seeks to prove the logical consistency of a different sized type theory by compiling to a type theory that is known to be consistent.
 
 ## Experience
 
 I have been a graduate TA for two courses at UBC: **CPSC 311** (_Definition of Programing Languages_) in 2020WT1 and 2021WT1, where students learn about various features of PLs and write interpreters for them, and **CPSC 312** (_Functional and Logic Programming_) in 2020WT2, where students get some hands-on experience using Haskell and Prolog. I have also been a student volunteer at POPL 2020, ICFP 2020, and POPL 2021, as well as an attendee at PLISS 2019 and OPLSS 2021.
-
-## Fun Facts
-* I played the clarinet in UBC's [Thunderbird Marching Band](https://www.thunderbirdband.ca/) from 2014 to 2019 (and then the pandemic hit)
-* Sometimes I bake, sometimes I eat ice cream, and sometimes I take [pictures](https://www.instagram.com/ionchyeats/) of my food
 
 <hr>
 
@@ -35,7 +33,13 @@ I have been a graduate TA for two courses at UBC: **CPSC 311** (_Definition of P
     class="badge"
     alt="Mastodon button @ionchy@types.pl"
 />](https://types.pl/@ionchy)
+[<img src="https://img.shields.io/badge/@ionchyeats%20-%2367433A.svg?&style=for-the-badge&logo=Instagram&logoColor=%23E3DACE"
+    class="badge"
+    alt="Instagram button @ionchyeats"
+/>](https://www.instagram.com/ionchyeats)
+<!--
 [<img src="https://img.shields.io/badge/@ionathan%20-%23FF6F21.svg?&style=for-the-badge&logo=keybase&logoColor=white"
     class="badge"
     alt="Keybase button @ionathan"
 />](https://keybase.io/ionathan)
+-->

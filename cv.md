@@ -41,7 +41,7 @@ Jonathan Chan
 <br/>
 *To appear at the [Student Research Competition](https://popl22.sigplan.org/track/POPL-2022-student-research-competition) @ [POPL 2022](https://popl22.sigplan.org/)*
 <br/>
-[[Abstract](/assets/pdfs/src2022-abstract.pdf)] [[Slides](/assets/pdfs/sized-types-syntactic-model.pdf)] [[Video](#)]
+[[Abstract](/assets/pdfs/src2022-abstract.pdf)] [[Video](https://youtu.be/OKgVF2IS_dU)] [[Slides](/assets/pdfs/src2022-slides.pdf)] [[Slides (draft)](/assets/pdfs/sized-types-syntactic-model.pdf)]
 
 # Nonpublications
 

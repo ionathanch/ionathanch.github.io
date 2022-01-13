@@ -3,24 +3,24 @@ Require Import Coq.Unicode.Utf8_core.
 
 Reserved Notation "r ≤ s" (at level 70, no associativity).
 
-Inductive Size : Type :=
-| suc : Size → Size
-| lim : ∀ {A : Type}, (A → Size) → Size.
+Inductive Ord : Type :=
+| suc : Ord → Ord
+| lim : ∀ {A : Type}, (A → Ord) → Ord.
 
-Inductive Leq : Size → Size → Prop :=
+Inductive Leq : Ord → Ord → Prop :=
 | mono     : ∀ {r s}, r ≤ s → suc r ≤ suc s
 | cocone   : ∀ {s A f}, (∃ (a : A), s ≤ f a) → s ≤ lim f
 | limiting : ∀ {s A f}, (∀ (a : A), f a ≤ s) → lim f ≤ s
 where "r ≤ s" := (Leq r s).
 
-Definition Lt (r s : Size) : Prop := suc r ≤ s.
+Definition Lt (r s : Ord) : Prop := suc r ≤ s.
 Notation "r < s" := (Lt r s).
 
 (* Admitted for brevity. *)
-Property reflLeq (s : Size) : s ≤ s. Admitted.
-Property transLeq {r s t : Size} (rs : r ≤ s) (st : s ≤ t) : r ≤ t. Admitted.
+Property reflLeq (s : Ord) : s ≤ s. Admitted.
+Property transLeq {r s t : Ord} (rs : r ≤ s) (st : s ≤ t) : r ≤ t. Admitted.
 
-Inductive Acc (s : Size) : Prop :=
+Inductive Acc (s : Ord) : Prop :=
 | acc : (∀ r, r < s → Acc r) → Acc s.
 
 Lemma accLeq : ∀ r s, r ≤ s → Acc s → Acc r.
@@ -30,7 +30,7 @@ Proof.
   exact (acc r (λ t tr, p t (transLeq tr rs))).
 Qed.
 
-Theorem accSize : ∀ s, Acc s.
+Theorem accOrd : ∀ s, Acc s.
 Proof.
   intros s.
   induction s as [s IH | A f IH].

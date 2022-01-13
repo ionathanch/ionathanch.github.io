@@ -1,12 +1,4 @@
----
-layout: post
-title: "How to Use Sized Types?<br/>Let Me Count the Ways"
-tab_title: "How to Use Sized Types? Let Me Count the Ways"
-excerpt_separator: "<!--more-->"
-tags:
-  - sized types
-  - type theory
----
+# How to Use Sized Types? Let Me Count the Ways
 
 <!--
 This is a temporary fix while GitHub Pages' syntax highlighter, Rouge,
@@ -37,8 +29,10 @@ We'll be looking at adding sized types to a mutually-defined tree/forest inducti
 A tree parametrized by `A` contains an `A` and a forest,
 while a forest consists of a bunch of trees.
 
-```haskell
+```agda
 {-# OPTIONS --sized-types #-}
+
+module Sized where
 
 open import Size
 
@@ -88,7 +82,7 @@ but make the sizes in the constructors' types implicit,
 since those can usually be inferred when the sizes are present in the function signatures.
 Applied to trees and forests, this is what we get.
 
-```haskell
+```agda
 module SuccSizedForestry where
   data Tree {A : Set} : Size → Set
   data Forest {A : Set} : Size → Set
@@ -103,7 +97,7 @@ module SuccSizedForestry where
 
 The traversal function is easy: just add the sizes in the type, and type checking will do the rest.
 
-```haskell
+```agda
   traverse : ∀ {s} → (∀ {r} → Tree {A} r → Tree {A} r) → Forest {A} s → Forest {A} s
   traverse f leaf = leaf
   traverse f (cons tree rest) with f tree
@@ -136,7 +130,7 @@ the size of the constructed term should have a size larger than whichever is lar
 and `↑ (s₁ ⊔ˢ s₂)` and `(↑ s₁) ⊔ˢ (↑ s₂)` are equivalent.
 I've chosen the former below.
 
-```haskell
+```agda
 module SupSizedForestry where
   data Tree {A : Set} : Size → Set
   data Forest {A : Set} : Size → Set
@@ -153,7 +147,7 @@ module SupSizedForestry where
 However, the traversal doesn't pass termination checking.
 I've specified some of the sizes explicitly for clarity.
 
-```haskell
+```agda
   traverse : ∀ {s} → (∀ {r} → Tree {A} r → Tree {A} r) → Forest {A} s → Forest {A} s
   traverse f leaf = leaf
   traverse f (cons tree forest) with f tree
@@ -182,7 +176,7 @@ Then just as in the first option, every recursive argument must have a smaller s
 These are called inflationary sized types because they correspond to inflationary fixed points in the metatheory,
 but I prefer to simply think of them as *bounded* sized types.
 
-```haskell
+```agda
 module BoundedSizedForestry where
   data Tree {A : Set} (s : Size) : Set
   data Forest {A : Set} (s : Size) : Set
@@ -198,7 +192,7 @@ module BoundedSizedForestry where
 Then the traversal is exactly the same as in the first option,
 and passes termination checking without any further effort.
 
-```haskell
+```agda
   traverse : ∀ {s} → (∀ {r} → Tree {A} r → Tree {A} r) → Forest {A} s → Forest {A} s
   traverse f leaf = leaf
   traverse f (cons tree rest) with f tree
@@ -224,7 +218,7 @@ thus yielding a contradiction in the presence of `∞`.
 Agda already has an order on sizes via `Size<`, but this is hard to manipulate.
 We can instead define an inductive type that reflects this order.
 
-```haskell
+```agda
 module False where
 
   open import Data.Empty
@@ -240,7 +234,7 @@ if every smaller size is accessible, then `s` itself is accessible.
 Agda's standard library has an accessibility relation parametrized over an arbitrary order,
 but I'll redefine it explicitly for sizes for clarity.
 
-```haskell
+```agda
   data Acc (s : Size) : Set where
     acc : (∀ {r} → r < s → Acc r) → Acc s
 ```
@@ -250,24 +244,24 @@ but I'll redefine it explicitly for sizes for clarity.
 Now we can state wellfoundedness of sizes, which is simply that every size is accessible.
 If this is true, then surely there should be no infinitely-descending chain `... s₃ < s₂ < s₁`.
 
-```haskell
+```agda
   wf : ∀ s → Acc s
   wf s = acc (λ {(lt .s r) → wf r})
 ```
 
 This proof appears to rely on the fact that the type of `r` gets unified with `Size< s` when matching on `r < s`.
 Then termination checking passes because `wf` is called on a smaller size.
-Conventionally, this kind of proof is structurally-decreasing based on case analysis of the thing that's accessible,
+Conventionally, this kind of proof is structurally-decreasing based on case analysis of thing that's accessible,
 but we can't inspect sizes like that in Agda.
 
 ## Step 4: Prove ∞ < ∞ and Derive ⊥
 
 The problem with saying that sizes are wellfounded with respect to the size order is that they are not!
-We have the infinitely-descending chain `... ∞ < ∞ < ∞`.
+We have the infinitely-descending chaing `... ∞ < ∞ < ∞`.
 The fact that `∞` is *not* accessible can be proven by structural induction on the accessibility relation,
 without the help of sized termination checking.
 
-```haskell
+```agda
   ¬wf∞ : Acc ∞ → ⊥
   ¬wf∞ (acc p) = ¬wf∞ (p (lt ∞ ∞))
 ```
@@ -275,7 +269,7 @@ without the help of sized termination checking.
 Finally, we prove falsehood from this and the contradictory fact that `∞` is wellfounded
 because we've just proven that *all* sizes are wellfounded.
 
-```haskell
+```agda
   ng : ⊥
   ng = ¬wf∞ (wf ∞)
 ```

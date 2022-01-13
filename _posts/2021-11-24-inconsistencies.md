@@ -395,6 +395,119 @@ However, the predicate in the substitution is `Set → Set`, which itself has ty
 so these final steps do require unrestricted large elimination.
 The complete proof can be found at [Berardi.html](/assets/agda/Berardi.html).
 
+### Unrestricted Large Elimination (again)
+
+Having impredicative inductive types that can be eliminated to large types can yield an inconsistency
+without having to go through Hurkens' paradox.
+To me, at least, this inconsistency is a lot more comprehensible.
+This time, we use an impredicative representation of the ordinals [[7](#7)],
+prove that they are well-founded with respect to some reasonable order on them,
+then prove a falsehood by providing an ordinal that is obviously *not* well-founded.
+This representation can be type checked using Agda's `NO_UNIVERSE_CHECK` pragma,
+and normally it would live in `Set₁` due to one constructor argument type living in `Set₁`.
+
+```
+{-# NO_UNIVERSE_CHECK #-}
+data Ord : Set where
+  ↑_ : Ord → Ord
+  ⊔_ : {A : Set} → (A → Ord) → Ord
+
+data _≤_ : Ord → Ord → Set where
+  ↑s≤↑s : ∀ {r s} → r ≤ s → ↑ r ≤ ↑ s
+  s≤⊔f  : ∀ {A} {s} f (a : A) → s ≤ f a → s ≤ ⊔ f
+  ⊔f≤s  : ∀ {A} {s} f → (∀ (a : A) → f a ≤ s) → ⊔ f ≤ s
+```
+
+An ordinal is either a successor ordinal, or a limit ordinal.
+(The zero ordinal could be defined as a limit ordinal.)
+Intuitively, a limit ordinal `⊔ f` is the supremum of all the ordinals returned by `f`.
+This is demonstrated by the last two constructors of the preorder on ordinals:
+`s≤⊔f` states that `⊔ f` is an upper bound of all the ordinals of `f`,
+while `⊔f≤s` states that it is the *least* upper bound.
+Finally, `↑s≤↑s` is simply the monotonicity of taking the successor of an ordinal with respect to the preorder.
+It's possible to show that `≤` is indeed a preorder by proving its reflexivity and transitivity.
+
+```
+s≤s : ∀ {s : Ord} → s ≤ s
+s≤s≤s : ∀ {r s t : Ord} → r ≤ s → s ≤ t → r ≤ t
+```
+
+From the preorder we define a corresponding strict order.
+
+```
+_<_ : Ord → Ord → Set
+r < s = ↑ r ≤ s
+```
+
+In a moment, we'll see that `<` can be proven to be *wellfounded*,
+which is equivalent to saying that in that there are no infinite descending chains.
+Obviously, for there to be no such chains, `<` must at minimum be irreflexive — but it's not!
+There is an ordinal that is strictly less than itself,
+which we'll call the "infinite" ordinal,
+defined as the limit ordinal of *all* ordinals,
+which is possible due to the impredicativity of `Ord`.
+
+```
+∞ : Ord
+∞ = ⊔ (λ s → s)
+
+∞<∞ : ∞ < ∞
+∞<∞ = s≤⊔f (λ s → s) (↑ ∞) s≤s
+```
+
+To show wellfoundedness, we use an *accessibility predicate*,
+whose construction for some ordinal `s` relies on showing that all smaller ordinals are also accessible.
+Finally, wellfoundness is defined as a proof that *all* ordinals are accessible,
+using a lemma to extract accessibility of all smaller or equal ordinals.
+
+```
+record Acc (s : Ord) : Set where
+  inductive
+  pattern
+  constructor acc
+  field
+    acc< : (∀ r → r < s → Acc r)
+
+accessible : ∀ (s : Ord) → Acc s
+accessible (↑ s) = acc (λ { r (↑s≤↑s r≤s) → acc (λ t t<r → (accessible s).acc< t (s≤s≤s t<r r≤s)) })
+accessible (⊔ f) = acc (λ { r (s≤⊔f f a r<fa) → (accessible (f a)).acc< r r<fa })
+```
+
+But wait, we needed impredicativity *and* large elimination.
+Where is the large elimination?
+
+It turns out that it's hidden within Agda's pattern-matching mechanism.
+Notice that in the limit case of `accessible`, we only need to handle the `s≤⊔f` case,
+since this is the only case that could possibly apply when the left side is a successor and the right is an ordinal.
+However, if you were to write this in plain CIC for instance,
+you'd need to first explicitly show that the order could not be either of the other two constructors,
+requiring showing that the successor and limit ordinals are provably distinct
+(which itself needs large elimination, although this is permissible as an axiom),
+then due to the proof architecture show that if two limit ordinals are equal, then their components are equal.
+This is known as *injectivity of constructors*.
+Expressing this property for ordinals requires large elimination,
+since the first (implicit) argument of limit ordinals are in `Set`.
+
+You can see how it works explicitly by writing the same proof in Coq,
+where the above steps correspond to inversion followed by dependent destruction,
+then printing out the full term.
+The `s≤⊔f` subcase of the `⊔ f` case alone spans 50 lines!
+
+In any case, we proceed to actually deriving the inconsistency, which is easy:
+show that `∞` is in fact *not* accessible using `∞<∞`,
+then derive falsehood directly.
+
+```
+¬accessible∞ : Acc ∞ → ⊥
+¬accessible∞ (acc p) = ¬accessible∞ (p ∞ ∞<∞)
+
+ng : ⊥
+ng = ¬accessible∞ (accessible ∞)
+```
+
+The complete Agda proof can be found at [Ordinals.html](/assets/agda/Ordinals.html),
+while a partial Coq proof of accessibility of ordinals can be found at [Ordinals.html](/assets/coq/Ordinals.html).
+
 ## Summary
 
 The combinations of features that yield inconsistencies are:
@@ -406,6 +519,7 @@ The combinations of features that yield inconsistencies are:
 * Negative inductive types
 * Non-strictly-positive inductive types + impredicativity
 * Impredicativity + excluded middle + unrestricted large elimination
+* Impredicative inductive types + unrestricted large elimination (again)
 
 ## Source Files
 
@@ -428,6 +542,14 @@ The combinations of features that yield inconsistencies are:
   <summary>Berardi's paradox using impredicativity, excluded middle, and large elimination: <a href="/assets/agda/Berardi.html">Berardi.html</a></summary>
   <iframe src="/assets/agda/Berardi.html" width="100%"></iframe>
 </details>
+<details>
+  <summary>Nonwellfoundedness of impredicative ordinals: <a href="/assets/agda/Ordinals.html">Ordinals.html</a></summary>
+  <iframe src="/assets/agda/Ordinals.html" width="100%"></iframe>
+</details>
+<details>
+  <summary>Accessibility of ordinals: <a href="/assets/coq/Ordinals.html">Ordinals.html</a></summary>
+  <iframe src="/assets/coq/Ordinals.html" width="100%"></iframe>
+</details>
 
 <script>
   let details = document.querySelectorAll("details");
@@ -437,22 +559,32 @@ The combinations of features that yield inconsistencies are:
       if (!detail.hasBeenExpanded) {
         detail.hasBeenExpanded = true;
         let iframe = detail.getElementsByTagName("iframe")[0];
-        iframe.height = iframe.contentDocument.body.scrollHeight + 30 + "px";
+        let offset = iframe.src.includes("agda") ? 28 : 4; // Experimentally determined
+        iframe.height = iframe.contentDocument.body.scrollHeight + offset + "px";
       }
     });
   });
 </script>
 
+<style>
+#references + p {
+  text-align: left;
+  font-size: smaller;
+}
+</style>
+
 ## References
 
-[<a name="1">1</a>] Hurkens, Antonius J. C. (1995). _A Simplification of Girard's Paradox_. doi:[10.1007/BFb0014058](https://doi.org/10.1007/BFb0014058).
+[<a name="1">1</a>] Hurkens, Antonius J. C. (TLCA 1995). _A Simplification of Girard's Paradox_. ᴅᴏɪ:[10.1007/BFb0014058](https://doi.org/10.1007/BFb0014058).
 <br/>
-[<a name="2">2</a>] Coquand, Thierry. (1986). _An Analysis of Girard's Paradox_. [https://hal.inria.fr/inria-00076023](https://hal.inria.fr/inria-00076023).
+[<a name="2">2</a>] Coquand, Thierry. (INRIA 1986). _An Analysis of Girard's Paradox_. [https://hal.inria.fr/inria-00076023](https://hal.inria.fr/inria-00076023).
 <br/>
-[<a name="3">3</a>] Burali–Forti, Cesare. (1897). _Una questione sui numeri transfini_. doi:[10.1007/BF03015911](https://doi.org/10.1007/BF03015911).
+[<a name="3">3</a>] Burali–Forti, Cesare. (RCMP 1897). _Una questione sui numeri transfini_. ᴅᴏɪ:[10.1007/BF03015911](https://doi.org/10.1007/BF03015911).
 <br/>
-[<a name="4">4</a>] Gilbert, Gaëtan; Cockx, Jesper; Sozeau, Matthieu; Tabareau, Nicolas. (2019). _Definitional Proof-Irrelevance without K_. doi:[10.1145/3290316](https://doi.org/10.1145/3290316).
+[<a name="4">4</a>] Gilbert, Gaëtan; Cockx, Jesper; Sozeau, Matthieu; Tabareau, Nicolas. (POPL 2019). _Definitional Proof-Irrelevance without K_. ᴅᴏɪ:[10.1145/3290316](https://doi.org/10.1145/3290316).
 <br/>
-[<a name="5">5</a>] Coquand, Theirry; Paulin, Christine. _Inductively defined types_. doi:[10.1007/3-540-52335-9\_47](https://doi.org/10.1007/3-540-52335-9_47).
+[<a name="5">5</a>] Coquand, Theirry; Paulin, Christine. (COLOG 1988). _Inductively defined types_. ᴅᴏɪ:[10.1007/3-540-52335-9\_47](https://doi.org/10.1007/3-540-52335-9_47).
 <br/>
-[<a name="6">6</a>] Barbanera, Franco; Berardi, Stefano. _Proof-irrelevance out of excluded middle and choice in the calculus of constructions_. doi:[10.1017/S0956796800001829](https://doi.org/10.1017/S0956796800001829)
+[<a name="6">6</a>] Barbanera, Franco; Berardi, Stefano. (JFP 1996). _Proof-irrelevance out of excluded middle and choice in the calculus of constructions_. ᴅᴏɪ:[10.1017/S0956796800001829](https://doi.org/10.1017/S0956796800001829).
+<br/>
+[<a name="7">7</a>] Pfenning, Frank; Christine, Paulin-Mohring. (MFPS 1989). _Inductively defined types in the Calculus of Constructions_. ᴅᴏɪ:[10.1007/BFb0040259](https://doi.org/10.1007/BFb0040259).

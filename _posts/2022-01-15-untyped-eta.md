@@ -343,4 +343,5 @@ with additional congruence rules, and neglecting transitivity as usual.
 ## References
 
 [<a name="1">1</a>] McBride, Conor. (9 January 2015). _universe hierarchies_. ᴜʀʟ:[https://pigworker.wordpress.com/2015/01/09/universe-hierarchies/](https://pigworker.wordpress.com/2015/01/09/universe-hierarchies/).
+<br/>
 [<a name="2">2</a>] Oury, Nicolas. (TPHOLs 2005). _Extensionality in the Calculus of Constructions_. ᴅᴏɪ:[10.1007/11541868_18](https://doi.org/10.1007/11541868_18).

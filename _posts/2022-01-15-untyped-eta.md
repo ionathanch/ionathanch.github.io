@@ -1,11 +1,12 @@
 ---
 layout: post
-title: "Notes on Untyped η-Conversion"
+title: "Notes on Untyped Conversion"
 excerpt_separator: "<!--more-->"
 tags:
   - type theory
   - conversion
   - eta conversion
+  - equality reflection
 ---
 
 <!--
@@ -86,7 +87,7 @@ e₁ ≈ e₃
 
 ## Cumulativity + η
 
-Dually to β, let's now add η, but suppose we had cumulativity
+Dually to β, let's now add η-equivalence, but suppose we had cumulativity
 (or more generally, *any* subtyping relation).
 Then η-contraction is no good, since it "breaks" subject reduction
 (i.e. the preservation of a term's type as it reduces).
@@ -95,8 +96,7 @@ By η-contraction, we would have `λx: σ. f x ⊳ f`,
 but the LHS has type `σ → ρ` while the RHS has `τ → ρ`.
 This might be fine if `τ → ρ ≤ σ → ρ`,
 but <span style="border-bottom: 1px dotted #000" title="*cough* Coq *cough*">some type theories</span>
-have [invariant function type domains](https://pigworker.wordpress.com/2015/01/09/universe-hierarchies/)
-rather than contravariant ones.
+have invariant function type domains rather than contravariant ones [1].
 Interestingly, conversion remains transitive if you still have confluence with η-contraction,
 which I think you do.
 (Another exercise for the reader.)
@@ -143,6 +143,63 @@ It seems like transitivity *might* hold without explicitly adding it as a rule,
 again by confluence, but this time requiring induction on derivation heights rather than structural induction,
 and first showing that the derivation of any symmetric conversion has the same height.
 
+## Multiple ηs
+
+Suppose we were in a setting with multiple syntactic functions,
+for instance the Calculus of Constructions or System F,
+where abstraction by and application of a type differs from ordinary term abstractions and applications.
+
+```
+Γ, x: σ ⊢ e: τ               Γ, α: ⋆ ⊢ e : τ
+───────────────────────      ─────────────────
+Γ ⊢ λx: σ. e : Πx: σ. τ      Γ ⊢ Λα. e : ∀α. τ
+
+Γ ⊢ e : Πx: σ. τ             Γ ⊢ e : ∀α. τ
+Γ ⊢ e' : σ                   Γ ⊢ σ : ⋆
+────────────────────         ────────────────────
+Γ ⊢ e e' : τ[x ↦ e']         Γ ⊢ e [σ] : τ[α ↦ σ]
+
+(λx: τ. e) e' ⊳ e[x ↦ e']    (Λα. e) [σ] ⊳ e[α ↦ σ]
+```
+
+If both of these functions had η-conversion rules, transitivity wouldn't hold,
+especially for open terms.
+Specifically, the conversions `λx: τ. f x ≈ f` and `f ≈ Λα. f [α]` are both derivable
+(despite being ill-typed when considered simultaneously, since conversion is untyped),
+but `λx: τ. f x ≈ Λα. f [α]` is impossible to derive.
+
+## Equality Reflection + η
+
+In Oury's Extensional Calculus of Constructions [[2](#2)],
+equality reflection is added to untyped conversion
+(`≡` denoting the equality *type*).
+
+```
+Γ ⊢ p: x ≡ y
+──────────── ≈-reflect
+Γ ⊢ x ≈ y
+```
+
+Difficulties arise from the fact that ill-typed terms can still be convertible,
+but equality reflection on works on well-typed terms:
+you cannot simultaneously have congruence and transitivity of conversion,
+since it allows you to derive an inconsistency.
+In particular, using an ill-typed proof of `⊤ ≡ ⊥`
+(where `⊤` is trivially inhabited by `∗` and `⊥` is uninhabited),
+you can convert from `⊤` to `⊥`.
+
+```
+· ⊢ ⊤ ≈ (λp: ⊤ ≡ ⊥. ⊤) refl    (by β-reduction)
+      ≈ (λp: ⊤ ≡ ⊥. ⊥) refl    (by ≈-cong and ≈-reflect on (p: ⊤ ≡ ⊥) ⊢ p: ⊤ ≡ ⊥)
+      ≈ ⊥                      (by β-reduction)
+```
+
+Note the ill-typedness of the application:
+`refl` is clearly not a proof of `⊤ ≡ ⊥`.
+Evidently this leads to a contradiction,
+since you could then convert the type of `∗` from `⊤` to `⊥`.
+
+<!--
 ## Choose your Own Adventure
 
 1. Use typed conversion. Don't use untyped conversion.
@@ -152,6 +209,7 @@ and first showing that the derivation of any symmetric conversion has the same h
   <br/><small>(Disclaimer: There may be other reasons this is unfine that I'm unaware of.)</small>
 3. Add η-conversion (the second kind), add congruence, and ~~hope~~ show that transitivity holds.
   <br/><small>(Final exercise for the reader.)</small>
+-->
 
 ## Addendum: What does Coq *actually* do?
 
@@ -281,3 +339,8 @@ e₁ ≈ e₂
 I'm assuming η-conversion rules would then be added to conversion,
 with additional congruence rules, and neglecting transitivity as usual.
 -->
+
+## References
+
+[<a name="1">1</a>] McBride, Conor. (9 January 2015). _universe hierarchies_. ᴜʀʟ:[https://pigworker.wordpress.com/2015/01/09/universe-hierarchies/](https://pigworker.wordpress.com/2015/01/09/universe-hierarchies/).
+[<a name="2">2</a>] Oury, Nicolas. (TPHOLs 2005). _Extensionality in the Calculus of Constructions_. ᴅᴏɪ:[10.1007/11541868_18](https://doi.org/10.1007/11541868_18).

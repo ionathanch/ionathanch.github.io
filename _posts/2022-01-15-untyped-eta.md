@@ -180,11 +180,11 @@ equality reflection is added to untyped conversion
 Γ ⊢ x ≈ y
 ```
 
-Difficulties arise from the fact that ill-typed terms can still be convertible,
-but equality reflection on works on well-typed terms:
-you cannot simultaneously have congruence and transitivity of conversion,
+There's a clash between the fact that ill-typed terms can still be convertible,
+and that equality reflection only makes sense when everything is well-typed.
+In particular, you cannot simultaneously have congruence and transitivity of conversion,
 since it allows you to derive an inconsistency.
-In particular, using an ill-typed proof of `⊤ ≡ ⊥`
+Concretely, using an ill-typed proof of `⊤ ≡ ⊥`
 (where `⊤` is trivially inhabited by `∗` and `⊥` is uninhabited),
 you can convert from `⊤` to `⊥`.
 

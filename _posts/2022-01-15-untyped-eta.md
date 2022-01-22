@@ -87,19 +87,13 @@ e₁ ≈ e₃
 
 ## Cumulativity + η
 
-Dually to β, let's now add η-equivalence, but suppose we had cumulativity
+Dually to β, let's now add η-contraction, but suppose we had cumulativity
 (or more generally, *any* subtyping relation).
-Then η-contraction is no good, since it "breaks" subject reduction
-(i.e. the preservation of a term's type as it reduces).
-Suppose we had types `ρ, σ, τ`, `σ ≤ τ`, and `f: τ → ρ`.
-By η-contraction, we would have `λx: σ. f x ⊳ f`,
-but the LHS has type `σ → ρ` while the RHS has `τ → ρ`.
-This might be fine if `τ → ρ ≤ σ → ρ`,
-but <span style="border-bottom: 1px dotted #000" title="*cough* Coq *cough*">some type theories</span>
-have invariant function type domains rather than contravariant ones [1].
-Interestingly, conversion remains transitive if you still have confluence with η-contraction,
-which I think you do.
-(Another exercise for the reader.)
+Then η-contraction is no good, since it breaks confluence.
+Supposing we had types `σ ≤ τ`, `λx: σ. (λy: τ. f y) x` could either β-reduce to `λx: σ. f x`,
+or η-contract with congruence to `λy: τ. f y`, but these are no longer α-equivalent due to the type annotation.
+Breaking confluence then means breaking transitivity of conversion as well.
+η-contraction then isn't an option with Church-style type-annotated intrinsically-typed terms.
 
 What about η-expansion?
 If you had a neutral term typed as a function, you may expand it once.

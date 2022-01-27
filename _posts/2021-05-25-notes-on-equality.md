@@ -307,7 +307,7 @@ J* ? d p : P b p
 
 ## Substitution and Contractibility of Singletons
 
-_This section takes material from [this discussion](https://twitter.com/plt_abbie/status/1399076508845719552)._
+_This section takes material from [this discussion](https://twitter.com/plt_amy/status/1399076508845719552)._
 
 The J eliminator can be thought of as the induction principle for equality,
 where the motive depends on the equality being eliminated.
@@ -623,7 +623,7 @@ In ≡-RIP, the type of `refl a` correctly converts to `a ≡ b` via reflection 
 Then with reflection and RIP, we can derive contractibility of singletons,
 while coercion and congruence requires only reflection, and therefore the J eliminator can be derived as well.
 On the other hand, if we already had the J eliminator, we can derive RIP via equality reflection.
-(Thanks to [@plt_abbie](https://twitter.com/plt_abbie/status/1417984187857084416) for pointing this out.)
+(Thanks to [@plt_amy](https://twitter.com/plt_amy/status/1417984187857084416) for pointing this out.)
 
 ```
 A : Type

@@ -39,15 +39,15 @@ Jonathan Chan, Yufeng "Michael" Li, and William J. Bowman
 <br/>
 Jonathan Chan
 <br/>
-*Finalist at the [Student Research Competition](https://popl22.sigplan.org/track/POPL-2022-student-research-competition) @ [POPL 2022](https://popl22.sigplan.org/)*
+*3<sup>rd</sup> place finalist at the [Student Research Competition](https://popl22.sigplan.org/track/POPL-2022-student-research-competition) @ [POPL 2022](https://popl22.sigplan.org/)*
 <br/>
 [[Abstract](/assets/pdfs/src2022-abstract.pdf)] [[Video + Slides](https://popl22.sigplan.org/details/POPL-2022-student-research-competition/1/Towards-a-Syntactic-Model-of-Sized-Dependent-Types)] [[Slides (draft)](/assets/pdfs/sized-types-syntactic-model.pdf)]
 
 # Nonpublications
 
-**Silence of the Vowels**, *presented as a [UDLS @ UBC](https://www.cs.ubc.ca/~udls)*
+**Silence of the Vowels**, *presented at the [UDLS @ UBC](https://www.cs.ubc.ca/~udls)*
 <br/>
-[[Abstract](https://www.cs.ubc.ca/~udls/showTalk.php/2021-10-22)] [[PDF Slides](/assets/pdfs/silence-of-the-vowels.pdf)] [[Google Slides](https://docs.google.com/presentation/d/1u6xm3sfCZPGUpSFotxbgBRPE-NBxJrjmTvuSAfUprw4/edit?usp=sharing)]
+[[Abstract](https://www.cs.ubc.ca/~udls/showTalk.php/2021-10-22)] [[Slides](/assets/pdfs/silence-of-the-vowels.pdf)]
 
 **Practical Sized Typing for Coq**, *rejected from [POPL 2021](https://popl21.sigplan.org/track/POPL-2021-research-papers)*
 <br/>

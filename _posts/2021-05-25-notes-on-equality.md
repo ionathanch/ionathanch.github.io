@@ -5,6 +5,8 @@ excerpt_separator: "<!--more-->"
 tags:
   - equality
   - type theory
+categories:
+  - Notes
 ---
 
 <!--more-->

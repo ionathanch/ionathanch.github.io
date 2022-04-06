@@ -10,13 +10,15 @@ Most of these changes are marked with a comment indicating where the original wa
 * Removed related posts with blank `_includes/related_posts.html`
 * `_includes/custon-icon-links.html` contains an icon
 * `_includes/custom-head.html` adds LaTeX support via KaTeX using `katex: true`
+* `_includes/font-includes.html` removes loaded font from Hydeout theme
 * NEW: `_includes/image.html` provides an `include` that adds image captions below images
 * NEW: `blog/index.html` is a page containing blog posts, with a list of categories copied from `_layouts/category.html`
 * NEW: `category/index.html` is a hidden placeholder page with a list of categories copied from above
+* NEW: `assets/css/fonts.scss` loads fonts if not present locally
 * Moved pagination buttons to below page content in `_layouts/index.html`
 * Added option to display longer page title than in the sidebar to `_layouts/page.html` using `long_title`
 * Added option to display alternate tab title to `_includes/head.html` using `tab_title`
-* Added image caption styling, made title font smaller, and widened column in `assets/css/main.scss`
+* Added image caption styling, custom fonts, and widened column in `assets/css/main.scss`
 
 ## Special assets
 * Sidebar profile picture: Add the relative path of the image to `_config.yml` under `profile`

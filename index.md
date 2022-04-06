@@ -5,8 +5,6 @@ title: About
 
 Hello! My name is <span title="or ionchy (virtually)">Jonathan (legally) or Jon (informally)</span>. I am a Master's student in the [Software Practices Lab](https://spl.cs.ubc.ca/) at UBC. My research interests include dependent types, proof assistants, type theory, compilers, and mathematical logic.
 
-If you're here from clicking a link on one of my Statements of Purpose, hi! 👋
-
 ## Research
 
 I am working with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on two projects, both of which are about sized types, a type-based method of checking termination of recursive functions. The first, [Is Sized Typing for Coq Practical?](https://arxiv.org/abs/1912.05601), explores the viability of an implementation of fully-inferred sized types in Coq's kernel in terms of performance and metatheory, and the second, [Towards a Syntatic Model of Sized Dependent Types](/assets/pdfs/src2022-abstract.pdf), seeks to prove the logical consistency of a different sized type theory by compiling to a type theory that is known to be consistent.

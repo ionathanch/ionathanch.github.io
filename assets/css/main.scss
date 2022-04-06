@@ -2,18 +2,18 @@
 ---
 
 @import "hydeout";
+@import "./fonts.css";
 
 #sidebar {
   &, .home & {
+    width: 19rem;
     .site-title {
+      font-family: Roboto Slab, serif;
       font-size: 2rem;
     }
-    width: 19rem;
-
     @media (max-width: $large-breakpoint) {
       width: 100%;
     }
-
     .favicon {
       width: 30px;
       margin: 0.3rem 0 1rem;
@@ -22,9 +22,24 @@
 }
 
 #profile {
+  border-radius: 0;
   @media (max-width: $large-breakpoint) {
     width: 40%;
     margin: 0 30% 1rem;
+  }
+}
+
+body {
+  font-family: Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, sans-serif;
+}
+
+code {
+  font-family: Julia Mono, Consolas, Courier New, Courier, monospace;
+}
+
+.container {
+  @media (min-width: $large-breakpoint) {
+    margin-left: 19rem;
   }
 }
 

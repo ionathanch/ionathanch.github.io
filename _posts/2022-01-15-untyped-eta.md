@@ -7,6 +7,8 @@ tags:
   - conversion
   - eta conversion
   - equality reflection
+categories:
+  - Notes
 ---
 
 <!--

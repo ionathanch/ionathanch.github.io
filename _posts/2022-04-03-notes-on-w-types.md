@@ -7,6 +7,8 @@ tags:
   - well-founded trees
   - inductive types
   - type theory
+categories:
+  - Notes
 ---
 
 <!--more-->
@@ -16,15 +18,15 @@ tags:
 * [Well-Founded Trees](#well-founded-trees)
   * [Example: Ordinals with a twist](#example-ordinals-with-a-twist)
 * [Indexed Well-Founded Trees](#indexed-well-founded-trees)
-  * [Example: Mutual inductives - even and odd naturals](#example-mutual-inductives---even-and-odd-naturals)
-  * [Example: Nonuniformly parametrized inductive - accessibility predicate](#example-nonuniformly-parametrized-inductive---accessibility-predicate)
-  * [Example: Nonuniformly parametrized inductive - perfect trees](#example-nonuniformly-parametrized-inductive---perfect-trees)
+  * [Example: Mutual inductives — even and odd naturals](#example-mutual-inductives--even-and-odd-naturals)
+  * [Example: Nonuniformly parametrized inductive — accessibility predicate](#example-nonuniformly-parametrized-inductive--accessibility-predicate)
+  * [Example: Nonuniformly parametrized inductive — perfect trees](#example-nonuniformly-parametrized-inductive--perfect-trees)
 * [Indexed Inductives and Fording](#indexed-inductives-and-fording)
   * [Example: Function images](#example-function-images)
   * [Example: The finite sets](#example-the-finite-sets)
 * [Nested Inductives](#nested-inductives)
   * [Example: Finitely branching trees](#example-finitely-branching-trees)
-  * [Non-example: Truly nested inductive - bushes](#non-example-truly-nested-inductive---bushes)
+  * [Non-example: Truly nested inductive — bushes](#non-example-truly-nested-inductive--bushes)
 * [Inductive–Inductives](#inductiveinductives)
   * [Example: Intrinsically well-formed contexts and types](#example-intrinsically-well-formed-contexts-and-types)
 * [Inductive–Recursives](#inductiverecursives)
@@ -77,7 +79,7 @@ or as encoding mutual inductive types, which are indexed inductive types anyway.
 `A` selects the constructor, `B` selects the recursive element,
 and `d` returns the index of that recursive element.
 
-#### Example: Mutual inductives - even and odd naturals
+#### Example: Mutual inductives — even and odd naturals
 
 ```
 data Even : 𝒰 where
@@ -103,7 +105,7 @@ Sₑ o = isup Even (in2 ∗) (λ _ → o)
 Sₒ e = isup Odd ∗ (λ _ → e)
 ```
 
-#### Example: Nonuniformly parametrized inductive - accessibility predicate
+#### Example: Nonuniformly parametrized inductive — accessibility predicate
 
 ```
 variable
@@ -116,7 +118,7 @@ data Acc (t : T) : 𝒰 where
 Acc t = IW T (λ _ → 𝟙) (λ t ∗ → ∃[ s ] s < t) (λ t ∗ (s , _) → s) t
 ```
 
-#### Example: Nonuniformly parametrized inductive - perfect trees
+#### Example: Nonuniformly parametrized inductive — perfect trees
 
 ```
 data PTree (A : 𝒰) : 𝒰 where
@@ -232,7 +234,7 @@ Eval' = IW I A B d
   d _ (in3 _) ∗ = List Tree
 ```
 
-#### Non-example: Truly nested inductive - bushes
+#### Non-example: Truly nested inductive — bushes
 It's unclear how this might be encoded either as indexed inductives or as an indexed W type.
 
 ```

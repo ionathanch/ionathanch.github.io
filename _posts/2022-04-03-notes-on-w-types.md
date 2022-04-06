@@ -267,9 +267,10 @@ data Ctxt : 𝒰 where
   · : Ctxt
   _∷_ : ∀ Γ → Type Γ → Ctxt
 
-data Type (Γ : Ctxt) : 𝒰 where
-  U : Type Γ
-  Pi : ∀ (A : Type Γ) → Type (Γ ∷ A) → Type Γ
+data Type : Ctxt → 𝒰 where
+  U : ∀ Γ → Type Γ
+  Var : ∀ Γ → Type (Γ ∷ U Γ)
+  Pi : ∀ Γ → (A : Type Γ) → Type (Γ ∷ A) → Type Γ
 ```
 
 To encode this inductive–inductive type, it's split into two mutual inductives:
@@ -283,6 +284,7 @@ data Ctxt' : 𝒰 where
 
 data Type' : 𝒰 where
   U : Ctxt' → Type'
+  Var : Ctxt' → Type'
   Pi : Ctxt' → Type' → Type' → Type'
 
 data Ctxt-wf : Ctxt' → 𝒰 where
@@ -291,6 +293,7 @@ data Ctxt-wf : Ctxt' → 𝒰 where
 
 data Type-wf : Ctxt' → Type' → 𝒰 where
   U-wf : ∀ {Γ} → Ctxt-wf Γ → Type-wf Γ (U Γ)
+  Var-wf : ∀ {Γ} → Ctxt-wf Γ → Type-wf (Γ ∷ U Γ) (Var Γ)
   Pi-wf : ∀ {Γ} {A B} → Ctxt-wf Γ → Type-wf Γ A →
           Type-wf (Γ ∷ A) B → Type-wf Γ (Pi Γ A B)
 ```
@@ -299,8 +302,8 @@ In other words, `Ctxt'` and `Type'` describe the syntax,
 while `Ctxt-wf` and `Type-wf` describe the well-formedness rules.
 
 ```
-Γ ⩴ · | Γ ∷ A      (Ctxt')
-A, B ⩴ U | Π A B   (Type' with Ctxt' argument omitted)
+Γ ⩴ · | Γ ∷ A            (Ctxt')
+A, B ⩴ U | Var | Π A B   (Type' with Ctxt' argument omitted)
 
 ─── ·-wf
 ⊢ ·
@@ -310,12 +313,16 @@ A, B ⩴ U | Π A B   (Type' with Ctxt' argument omitted)
 ⊢ Γ ∷ A
 
 ⊢ Γ
-───── U-wf
-Γ ⊢ U
+────────── U-wf
+Γ ⊢ U type
+
+⊢ Γ
+──────────────── Var-wf
+Γ ∷ U ⊢ Var type
 
 ⊢ Γ  Γ ⊢ A  Γ ∷ A ⊢ B
 ───────────────────── Pi-wf
-Γ ⊢ Π A B
+Γ ⊢ Π A B type
 ```
 
 The final encoding of a context or a type is then the erased type
@@ -323,11 +330,12 @@ paired with its well-formedness.
 
 ```
 Ctxt = Σ[ Γ ∈ Ctxt' ] Ctxt-wf Γ
-Type Γ = Σ[ A ∈ Type' ] Type-wf Γ A
+Type (Γ , Γ-wf) = Σ[ A ∈ Type' ] Type-wf Γ A
 
 · = · , ·-wf
 (Γ , Γ-wf) ∷ (A , A-wf) = Γ ∷ A , ∷-wf Γ-wf A-wf
 U (Γ , Γ-wf) = U Γ , U-wf Γ-wf
+Var (Γ , Γ-wf) = Var Γ , Var-wf Γ-wf
 Pi (Γ , Γ-wf) (A , A-wf) (B , B-wf) = Pi Γ A B , Pi-wf Γ-wf A-wf B-wf
 ```
 

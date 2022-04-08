@@ -168,6 +168,52 @@ The current blurb on dentistry symbols is added as part of the
 the new code points are highlighted in
 [this code chart](https://www.unicode.org/charts/PDF/Unicode-3.2/U32-2300.pdf).
 
-## Japanese Dentistry Notation
+## Let's Ask the Internet
 
-Just kidding. I wouldn't know where to start with that.
+I don't have any dentistry friends, but surely someone knows, so I asked around.
+I asked the [Medical Sciences Stack Exchange](https://medicalsciences.stackexchange.com/q/30986/25025),
+I asked on the [Unicode mailing list](https://corp.unicode.org/pipermail/unicode/2022-April/010100.html),
+and I even threw the question out there on [Twitter](https://twitter.com/ionathanch/status/1512337408217399296).
+In the end, though, someone I knew found it with a method so simple it never occurred to me.
+
+{% include image.html
+           img="/assets/images/dentistry-symbols/4.png"
+           width="75%"
+           title="found it here: [link to Google Books with preview]
+Jonathan @ 12:50 - omg how
+▓▓▓ @ 12:50 - googled “dentistry symbol circle triangle line” lol"
+           caption="I can't believe I didn't think of that." %}
+
+And indeed, an explanation can be found right there in
+[Dental Computing and Applications: Advanced Techniques for Clinical Dentistry](https://books.google.ca/books?id=v0PT19rirp8C&pg=PA310&lpg=PA310&dq=dentistry+symbol+triangle+circle+line&source=bl&ots=7VxtA6MSPY&sig=ACfU3U0ff_i--C4UTXKyxLJ3ZM-uRusEXA&hl=en&sa=X&ved=2ahUKEwjKps2hnoX3AhW1D0QIHfmPCE84ChDoAXoECA4QAw#v=onepage&q=dentistry%20symbol%20triangle%20circle%20line&f=false)
+by Andriani Daskalaki, published in 2009.
+In fact, a simple "dentistry unicode" search on Google Books takes me right there.
+
+Of course, this isn't the _origin_ of the symbols, but it does explain what they mean.
+According to Chapter XVII on
+[Unicode Characters for Human Dentition](https://doi.org/10.4018/978-1-60566-292-3.ch017)<sup><a name="rra" href="#arr">†</a></sup>,
+the notation comes from Japan's dental insurance claim system.
+
+> Although these signs are not specific to dentistry, we assigned a specific meaning to these modified numerical symbols in accordance with the dental insurance claim system in Japan.
+<br/>...<br/>
+Figure 4 shows nine characters in three groups denoting artificial teeth, supernumerary teeth and an abbreviation for a group of teeth respectively. A triangle with a bar indicates an artificial spacer, especially on a denture, a circle with a bar indicates a supernumerary tooth, and a tilde with a bar indicates an abbreviation for a group of teeth.
+
+{% include image.html
+           img="/assets/images/dentistry-symbols/5.png"
+           width="50%"
+           title="Figure 4. The second group of symbols, denoting artificial teeth, supernumerary teeth and an abbreviation for a group of teeth.
+⏅⏂⏈
+⏃⏀⏆
+⏄⏁⏇
+Figure 5. The third group of symbols, which are used for classifying the quadrants of the human jaw.
+⏌⏊⎿
+⏋⏉⎾"
+           caption="Now this would've been useful in the Rationale document." %}
+
+So that's the end of the mystery.
+I should go update all the places I've asked with this discovery now.
+
+<hr/>
+
+<sup><a name="arr" href="#rra">†</a></sup><small>This does require access to IGI Global's resources,
+but you can just find the entire book [here](http://libgen.rs/book/index.php?md5=01C0ED9BA9ABCAFF42AC0DEECFF9D5E2).</small>

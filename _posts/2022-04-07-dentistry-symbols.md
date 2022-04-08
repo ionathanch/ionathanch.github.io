@@ -46,6 +46,7 @@ their names describe the appearance of the symbols but not so much their functio
 23C7 ⏇ DENTISTRY SYMBOL LIGHT DOWN AND HORIZONTAL WITH WAVE
 23C8 ⏈ DENTISTRY SYMBOL LIGHT UP AND HORIZONTAL WITH WAVE
 23C9 ⏉ DENTISTRY SYMBOL LIGHT DOWN AND HORIZONTAL
+23CA ⏊ DENTISTRY SYMBOL LIGHT UP AND HORIZONTAL
 ```
 
 The [JIS X 0213](https://en.wikipedia.org/wiki/JIS_X_0213) is yet another character set encoding standard

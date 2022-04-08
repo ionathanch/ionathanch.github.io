@@ -122,7 +122,7 @@ The Wikipedia article on [dental notation](https://en.wikipedia.org/wiki/Dental_
 doesn't seem to use these symbols (and nor does the corresponding German article,
 which is much more comprehensive).
 
-The Committee, on the other hand, seem satisfied with this explanation.
+The committees, on the other hand, seem satisfied with this explanation.
 The [meeting minutes](https://www.unicode.org/L2/L2000/00234-n2203m.pdf)
 for an ISO/IEC subcommittee meeting over 21–24 March 2000 note a comment
 (Section 8.20, page 44) by Dr. Ken Whistler of Sybase, Inc.:
@@ -130,7 +130,7 @@ for an ISO/IEC subcommittee meeting over 21–24 March 2000 note a comment
 > ii) The Dental symbols are sufficiently explained - these are box-drawing characters overlaid in specific manner.
 
 The [meeting minutes](https://www.unicode.org/L2/L2000/00115.htm)
-for a Unicode Technical Committee meeding on 28 April 2000 read:
+for a Unicode Technical Committee meeting on 28 April 2000 read:
 
 > **[83-M3] Motion**: Accept the twenty five characters documented in the report on the Beijing meeting, sections E 1, 2, 3, 5, 6, 7, 8, 9 [L2/00-108]:
 <br/>
@@ -152,7 +152,7 @@ From [9 March 2001](https://www.unicode.org/wg2/docs/n2328.pdf)
 <br/>
 The Japanese remarked in Athens that the glyphs for the dentistry symbols 23C0-23CC should fill a notional square. We have provided the editor with corrected glyphs.
 
-And from [2 April 2001](https://www.unicode.org/wg2/docs/n2353.pdf),
+And from [2–5 April 2001](https://www.unicode.org/wg2/docs/n2353.pdf),
 more remarks on the shape of the characters (Section 7.1, page 21),
 and the proposed character names are changed from DENTIST to DENTISTRY (Section 7.1, page 22):
 
@@ -161,6 +161,12 @@ and the proposed character names are changed from DENTIST to DENTISTRY (Section 
 Japan will supply suitable fonts. Kana has to cover all existing Kana characters also. As to the Dentist symbols, glyphs do not seem to look square. We need to know why current glyphs are not acceptable. A single font is needed for a range.
 
 > **SE6**: [...] Rename DENTIST to DENTISTRY symbols ... should it be DENTAL? Accept DENTISTRY.
+
+On 27 March 2002, Unicode 3.2 is released.
+The current blurb on dentistry symbols is added as part of the
+[Unicode Standard Annex #28](https://www.unicode.org/reports/tr28/tr28-3.html#12_5_technical_symbols);
+the new code points are highlighted in
+[this code chart](https://www.unicode.org/charts/PDF/Unicode-3.2/U32-2300.pdf).
 
 ## Japanese Dentistry Notation
 

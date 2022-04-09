@@ -213,6 +213,41 @@ Figure 5. The third group of symbols, which are used for classifying the quadran
 So that's the end of the mystery.
 I should go update all the places I've asked with this discovery now.
 
+## Updates from the Unicode Mailing List
+
+Since the original publication of this post I've received some replies
+to my question posted to the Unicode mailing list,
+in particular [Ryusei Yamaguchi](https://corp.unicode.org/pipermail/unicode/2022-April/010106.html)'s response.
+Some of the sources cited agree with the above:
+[歯式の記載について](http://endai.umin.ac.jp/endai/jss57/jss_sisiki.htm) on dental notation
+lists using ⏈ for describing a span of upper teeth and ⏇ for describing a span of lower teeth.
+
+> ⏈: この記号の両端の歯の間に存在する全ての歯（上顎用で正中を越える）
+<br/>
+[DeepL translation: "All teeth present between the teeth on either side of this sign (for maxillary and beyond the median)"]
+<br/>
+⏇: この記号の両端の歯の間に存在する全ての歯（下顎用で正中を越える）
+<br/>
+[DeepL translation: "All teeth present between the teeth on either side of this sign (for mandible and beyond the midline)"]
+
+On the other hand, [電子レセプトの作成手引き](https://www.ssk.or.jp/seikyushiharai/rezept/iryokikan/iryokikan_02.files/jiki_s01.pdf)
+on filing electronic dental insurance claims uses △ to indicate 「部近心隙」 (page 25),
+which seems to mean a diastema, or a tooth gap,
+so that ⏅⏃⏄ are used to indicate a gap between the front teeth,
+rather than artificial teeth as previously suggested.
+This usage is further backed up by the [歯式メーカー](https://www.kartemaker.com/shishiki/) app,
+which describes using △ to indicate a gap.
+
+> △で隙を入力します。選択した歯の近心の隙を入力します。
+<br/>
+[Google Translate: "Enter the gap with △. Enter the mesial gap of the selected tooth."]
+
+Finally, there doesn't seem to be any other explanation of the circle and the usage of ⏂⏀⏁.
+Circled numbers indicate dental implants at the given tooth position,
+so it doesn't make sense in that case for the circle to go in between teeth.
+It's likely, then, that they are indeed for indicating supernumary teeth,
+and in particular the mesiodentes that occur between the two front teeth.
+
 <hr/>
 
 <sup><a name="arr" href="#rra">†</a></sup><small>This does require access to IGI Global's resources,

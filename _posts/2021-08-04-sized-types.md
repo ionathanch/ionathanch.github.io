@@ -183,16 +183,16 @@ We can express this in the type theory using an existentially-quantified inducti
 although reaching this conclusion goes through a different informal argument).
 
 To test this hypothesis, we should first be able to express our `plus` function above using it,
-directly replacing `Nat [∞]` with `∃δ. Nat [δ]`, constructing such a thing as a pair `〈s, e〉`
-and destructing it by `let 〈α, x〉 := p in ...`.
+directly replacing `Nat [∞]` with `∃δ. Nat [δ]`, constructing such a thing as a pair `⟨s, e⟩`
+and destructing it by `let ⟨α, x⟩ := p in ...`.
 
 ```
 fix plus [α] [β] (n : Nat [α]) (m : Nat [β]) : ∃δ. Nat [δ] :=
   case n of
-    zero [γ] ⇒ 〈β, m〉
+    zero [γ] ⇒ ⟨β, m⟩
     succ [γ] k ⇒
-      let 〈δ, x〉 := plus [γ] [β] k m
-      in  〈δ+1, succ {δ+1} [δ] x〉
+      let ⟨δ, x⟩ := plus [γ] [β] k m
+      in  ⟨δ+1, succ {δ+1} [δ] x⟩
 ```
 
 So far, so good! The resulting code is a little wordier, but intuitively type checks.
@@ -203,10 +203,10 @@ Obviously such a (recursive) function would need to be syntactically guard-check
 ```
 fix cast (n : Nat) : ∃δ. Nat [δ] :=
   case n of 
-    zero ⇒ 〈∘+1, zero {∘+1} [∘]〉
+    zero ⇒ ⟨∘+1, zero {∘+1} [∘]⟩
     succ k ⇒
-      let 〈δ, x〉 := cast k
-      in 〈δ+1, succ {δ+1} [δ] x〉
+      let ⟨δ, x⟩ := cast k
+      in ⟨δ+1, succ {δ+1} [δ] x⟩
 ```
 
 In the base case, we need some concrete size; we can easily add a base size ∘ to the size algebra.
@@ -256,7 +256,7 @@ If we were working with unsized inductives, the first limit ordinal ω would be 
 However, we run into a problem when we attempt the same with sized inductives:
 
 ```
-L {?+1} [?] (λn: ∃α. Nat [α] ⇒ let 〈β, x〉 := n in natToOrd [β] x)
+L {?+1} [?] (λn: ∃α. Nat [α] ⇒ let ⟨β, x⟩ := n in natToOrd [β] x)
 ```
 
 First of all, what should the size that goes in the hole `?` be?
@@ -270,7 +270,7 @@ which means that sizes might now involve arbitrary terms beyond the size algebra
 (natToOrd: ∀α. Nat [α] → Ord [α])(n: ∃α. Nat [α]) ⊢ n : ∃α. Nat [α]
 (natToOrd: ∀α. Nat [α] → Ord [α])(n: ∃α. Nat [α])(β)(x : Nat [β]) ⊢ natToOrd [β] x : Ord [β]
 ---------------------------------------------------------------------------------------------------
-(natToOrd: ∀α. Nat [α] → Ord [α])(n: ∃α. Nat [α]) ⊢ let 〈β, x〉 := n in natToOrd [β] x : Ord [fst n]
+(natToOrd: ∀α. Nat [α] → Ord [α])(n: ∃α. Nat [α]) ⊢ let ⟨β, x⟩ := n in natToOrd [β] x : Ord [fst n]
 ```
 
 ## Choose your Fighter
@@ -306,13 +306,13 @@ However, if projecting the elements out of the pair is allowed, then the axiom i
 For the general axiom of choice, this is implemented as
 
 ```
-AC g = 〈λa: A ⇒ fst (g a), λa: A ⇒ snd (g a)〉
+AC g = ⟨λa: A ⇒ fst (g a), λa: A ⇒ snd (g a)⟩
 ```
 
 By analogy, `C` should be implemented as
 
 ```
-C g = 〈λa: A ⇒ fst (g a), λa: A ⇒ snd (g a)〉
+C g = ⟨λa: A ⇒ fst (g a), λa: A ⇒ snd (g a)⟩
 ```
 
 but this doesn't type check: `λa: A ⇒ fst (g a)` is a function from `A` to a size,
@@ -322,14 +322,14 @@ That is, given a function `f` from some `A` to a size, we have the size expressi
 Then we are able to complete the implementation of `C`.
 
 ```
-C g = 〈lim A (λa: A ⇒ fst (g a)), λa: A ⇒ snd (g a)〉
+C g = ⟨lim A (λa: A ⇒ fst (g a)), λa: A ⇒ snd (g a)⟩
 ```
 
 Finally, we can define the limit ordinal ω, perhaps with a few more steps than desired.
 
 ```
 ω : Ord [lim (∃α. Nat [α]) (λn: ∃α. Nat [α] ⇒ fst n)]
-ω = let 〈β, x〉 := C (λn: ∃α. Nat [α] ⇒ 〈fst n, natToOrd [fst n] (snd n)〉)
+ω = let ⟨β, x⟩ := C (λn: ∃α. Nat [α] ⇒ ⟨fst n, natToOrd [fst n] (snd n)⟩)
     in L [β] x
 ```
 

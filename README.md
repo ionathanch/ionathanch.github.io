@@ -17,7 +17,7 @@ Most of these changes are marked with a comment indicating where the original wa
 * NEW: `assets/css/fonts.scss` loads fonts if not present locally
 * Moved pagination buttons to below page content in `_layouts/index.html`
 * Added option to display longer page title than in the sidebar to `_layouts/page.html` using `long_title`
-* Added option to display alternate tab title to `_includes/head.html` using `tab_title`
+* Added option to display alternate tab title `tab_title` and Open Graph meta tags to `_includes/head.html`
 * Added image caption styling, custom fonts, and widened column in `assets/css/main.scss`
 
 ## Special assets

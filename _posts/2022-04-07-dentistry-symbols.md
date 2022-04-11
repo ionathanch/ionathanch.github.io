@@ -68,7 +68,7 @@ The document doesn't actually explain what the symbols mean.
 {% include image.html
            img="/assets/images/dentistry-symbols/1.png"
            width="50%"
-           title="Excerpt from 'Addition of medical symbols and enclosed numbers' showing the dentistry symbols, proposed codepoints, and their names."
+           title="Excerpt from 'Addition of medical symbols and enclosed numbers' showing the dentistry symbols, proposed code points, and their names."
            caption="There you have it. The earliest references to these symbols that I could find." %}
 
 The Unicode Technical Committee has the same questions I do.

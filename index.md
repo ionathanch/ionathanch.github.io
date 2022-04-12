@@ -3,15 +3,28 @@ layout: page
 title: About
 ---
 
-Hello! My name is <span title="or ionchy (virtually)">Jonathan (legally) or Jon (informally)</span>. I am a Master's student in the [Software Practices Lab](https://spl.cs.ubc.ca/) at UBC. My research interests include dependent types, proof assistants, type theory, compilers, and mathematical logic.
+Hello! My name is <span title="or ionchy (virtually)">Jonathan (legally) or Jon (informally)</span>.
+I'm a Master's student in the [Software Practices Lab](https://spl.cs.ubc.ca/) at UBC.
+My research interests include dependent types, type theory, proof assistants, compilers, and mathematical logic.
 
 ## Research
 
-I am working with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on two projects, both of which are about sized types, a type-based method of checking termination of recursive functions. The first, [Is Sized Typing for Coq Practical?](https://arxiv.org/abs/1912.05601), explores the viability of an implementation of fully-inferred sized types in Coq's kernel in terms of performance and metatheory, and the second, [Towards a Syntatic Model of Sized Dependent Types](/assets/pdfs/src2022-abstract.pdf), seeks to prove the logical consistency of a different sized type theory by compiling to a type theory that is known to be consistent.
+I'm working with Prof. [William J. Bowman](https://www.williamjbowman.com/index.html) on two projects,
+both of which are about sized types, a type-based method of checking termination of recursive functions.
+The first, [Is Sized Typing for Coq Practical?](https://arxiv.org/abs/1912.05601),
+explores the viability of an implementation of fully-inferred sized types in Coq's kernel in terms of performance and metatheory, and the second,
+[Towards a Syntatic Model of Sized Dependent Types](https://popl22.sigplan.org/details/POPL-2022-student-research-competition/1/Towards-a-Syntactic-Model-of-Sized-Dependent-Types),
+seeks to prove the logical consistency of a different sized type theory by compiling to a type theory believed to be consistent.
 
 ## Experience
 
-I have been a graduate TA for two courses at UBC: **CPSC 311** (_Definition of Programing Languages_) in 2020WT1 and 2021WT1, where students learn about various features of PLs and write interpreters for them, and **CPSC 312** (_Functional and Logic Programming_) in 2020WT2, where students get some hands-on experience using Haskell and Prolog. I have also been a student volunteer at POPL 2020, ICFP 2020, and POPL 2021, as well as an attendee at PLISS 2019 and OPLSS 2021.
+I have been a graduate TA for two courses at UBC: **CPSC 311** (_Definition of Programing Languages_) in 2020WT1 and 2021WT1,
+where students learn about various features of PLs and write interpreters for them,
+and **CPSC 312** (_Functional and Logic Programming_) in 2020WT2,
+where students get some hands-on experience using Haskell and Prolog.
+I have also been a student volunteer for POPL 2020, ICFP 2020, and POPL 2021,
+as well as an attendee at PLISS 2019 and OPLSS 2021 (remotely).
+If all goes well, I will be attending OPLSS 2022 in person as well!
 
 <hr>
 

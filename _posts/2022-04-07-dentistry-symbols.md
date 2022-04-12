@@ -8,7 +8,7 @@ tags:
 
 The Unicode Standard has its fair share of mysterious and sometimes unexplained characters.
 The [story of the Farsi symbol](http://archives.miloush.net/michkap/archive/2005/01/29/363208.html)
-(U+262B ☫ FARSI SYMBOL) is one of the more well-known ones.
+(U+262B ☫ <span class="small-caps">farsi symbol</span>) is one of the more well-known ones.
 Many blocks, especially the "miscellaneous" blocks, have smatterings of rather arbitrary character sets
 grouped together only by history.
 One such block is Miscellaneous Technical, which contains completely unrelated groups of characters,
@@ -86,7 +86,7 @@ on 23 November 1999, Lisa Moore, chair of the Committee, writes:
 
 > 6) Twenty Seven Dentist Characters. The UTC will consider the ten double circled numbers as part of the general mechanism to be defined in the future. See 4) above. The remaining seventeen dentist symbols were not accepted due to insufficient evidence of usage. Please provide documents with examples of usage, and explain if any of these characters are combining, or if any extend across other symbols to delineate quadrants of the jaw.
 
-The 17 symbols refer to the 15 dentistry symbols along with U+29FA ⧺ DOUBLE PLUS and U+29FB ⧻ TRIPLE PLUS,
+The 17 symbols refer to the 15 dentistry symbols along with U+29FA ⧺ <span class="small-caps">double plus</span> and U+29FB ⧻ <span class="small-caps">triple plus</span>,
 which are later encoded in Miscellaneous Mathematical Symbols-B.
 In a [proposal revision](https://www.unicode.org/L2/L2000/00024.pdf) on 31 January 2000,
 Professor Kohji Shibano, chairman of the JCS committee, writes:

@@ -4,7 +4,8 @@ title: About
 ---
 
 Hello! My name is <span title="or ionchy (virtually)">Jonathan (legally) or Jon (informally)</span>.
-I'm a Master's student in the [Software Practices Lab](https://spl.cs.ubc.ca/) at UBC.
+I'm a Master's student in the [Software Practices Lab](https://spl.cs.ubc.ca/) at UBC,
+and I'll be joining the [PLClub](https://www.cis.upenn.edu/~plclub/) at UPenn in Fall 2022 as a PhD student.
 My research interests include dependent types, type theory, proof assistants, compilers, and mathematical logic.
 
 ## Research

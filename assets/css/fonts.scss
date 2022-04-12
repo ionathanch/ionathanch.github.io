@@ -5,7 +5,9 @@
 
 @font-face {
   font-family: "Roboto Slab";
-  src: url("/assets/fonts/RobotoSlab.ttf") format("truetype");
+  src: 
+    local("Roboto Slab"),
+    url("/assets/fonts/RobotoSlab.ttf") format("truetype");
 }
 
 // https://github.com/cormullion/juliamono
@@ -16,6 +18,13 @@
     local("Julia Mono"),
     url("/assets/fonts/JuliaMono.woff2") format("woff2");
   text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "STIX Two";
+  src:
+    local("STIX Two Math"),
+    url("/assets/fonts/STIXTwoMath.woff2") format("woff2");
 }
 
 // https://github.com/adobe-fonts/source-sans

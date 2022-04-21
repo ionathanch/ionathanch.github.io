@@ -71,6 +71,14 @@ Jonathan Chan and William J. Bowman
 
 # Scholarships and Awards
 
+**George M. Ball, Jr. Fellowship** (UPenn), *2022*
+<br/>
+<small>Donor-named fellowships like these provide a one-time $3,000 award, which will be offered to you in the middle of your first semester upon enrollment.  This honor and award is in recognition of your outstanding academic accomplishments and research potential.</small>
+
+**British Columbia Graduate Scholarship (declined)** (UBC), *2022*
+<br/>
+<small>The province of British Columbia has funded BC Graduate Scholarships (BCGS) in any field of study, with emphasis on research in science, technology, engineering and mathematics (STEM) fields, and support for Indigenous students. The scholarships of $15,000 will be awarded by graduate programs and disciplinary Faculties.</small>
+
 **Canada Graduate Scholarship – Master's**, *2021*
 <br/>
 [[Outline of proposed research](/assets/pdfs/cgs-m-proposal.pdf)]

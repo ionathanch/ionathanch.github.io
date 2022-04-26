@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Coind</title><link rel="stylesheet" href="../css/Agda.css"></head><body><pre class="Agda"><a id="32" class="Keyword">open</a> <a id="37" class="Keyword">import</a> <a id="44" href="https://agda.github.io/agda-stdlib/Data.Empty.html" class="Module">Data.Empty</a>
+
+<a id="56" class="Symbol">{-#</a> <a id="60" class="Keyword">NO_UNIVERSE_CHECK</a> <a id="78" class="Symbol">#-}</a>
+<a id="82" class="Keyword">record</a> <a id="Contra"></a><a id="89" href="Coind.html#89" class="Record">Contra</a> <a id="96" class="Symbol">:</a> <a id="98" href="https://agda.github.io/agda-stdlib/Agda.Primitive.html#326" class="Primitive">Set</a> <a id="102" class="Keyword">where</a>
+  <a id="110" class="Keyword">coinductive</a>
+  <a id="124" class="Keyword">constructor</a> <a id="contra"></a><a id="136" href="Coind.html#136" class="CoinductiveConstructor">contra</a>
+  <a id="145" class="Keyword">field</a>
+    <a id="Contra.A"></a><a id="155" href="Coind.html#155" class="Field">A</a> <a id="157" class="Symbol">:</a> <a id="159" href="https://agda.github.io/agda-stdlib/Agda.Primitive.html#326" class="Primitive">Set</a>
+    <a id="Contra.a"></a><a id="167" href="Coind.html#167" class="Field">a</a> <a id="169" class="Symbol">:</a> <a id="171" href="Coind.html#155" class="Field">A</a>
+    <a id="Contra.¬a"></a><a id="177" href="Coind.html#177" class="Field">¬a</a> <a id="180" class="Symbol">:</a> <a id="182" href="Coind.html#155" class="Field">A</a> <a id="184" class="Symbol">→</a> <a id="186" href="https://agda.github.io/agda-stdlib/Data.Empty.html#526" class="Datatype">⊥</a>
+<a id="188" class="Keyword">open</a> <a id="193" href="Coind.html#89" class="Module">Contra</a>
+
+<a id="¬c"></a><a id="201" href="Coind.html#201" class="Function">¬c</a> <a id="204" class="Symbol">:</a> <a id="206" href="Coind.html#89" class="Record">Contra</a> <a id="213" class="Symbol">→</a> <a id="215" href="https://agda.github.io/agda-stdlib/Data.Empty.html#526" class="Datatype">⊥</a>
+<a id="217" href="Coind.html#201" class="Function">¬c</a> <a id="220" class="Symbol">=</a> <a id="222" class="Symbol">λ</a> <a id="224" href="Coind.html#224" class="Bound">c</a> <a id="226" class="Symbol">→</a> <a id="228" class="Symbol">(</a><a id="229" href="Coind.html#177" class="Field">¬a</a> <a id="232" href="Coind.html#224" class="Bound">c</a><a id="233" class="Symbol">)</a> <a id="235" class="Symbol">(</a><a id="236" href="Coind.html#167" class="Field">a</a> <a id="238" href="Coind.html#224" class="Bound">c</a><a id="239" class="Symbol">)</a>
+
+<a id="242" class="Symbol">{-#</a> <a id="246" class="Keyword">NON_TERMINATING</a> <a id="262" class="Symbol">#-}</a>
+<a id="c"></a><a id="266" href="Coind.html#266" class="Function">c</a> <a id="268" class="Symbol">:</a> <a id="270" href="Coind.html#89" class="Record">Contra</a>
+<a id="277" href="Coind.html#266" class="Function">c</a> <a id="279" class="Symbol">=</a> <a id="281" href="Coind.html#136" class="CoinductiveConstructor">contra</a> <a id="288" href="Coind.html#89" class="Record">Contra</a> <a id="295" href="Coind.html#266" class="Function">c</a> <a id="297" href="Coind.html#201" class="Function">¬c</a>
+
+<a id="ng"></a><a id="301" href="Coind.html#301" class="Function">ng</a> <a id="304" class="Symbol">:</a> <a id="306" href="https://agda.github.io/agda-stdlib/Data.Empty.html#526" class="Datatype">⊥</a>
+<a id="308" href="Coind.html#301" class="Function">ng</a> <a id="311" class="Symbol">=</a> <a id="313" href="Coind.html#201" class="Function">¬c</a> <a id="316" href="Coind.html#266" class="Function">c</a></pre></body></html>

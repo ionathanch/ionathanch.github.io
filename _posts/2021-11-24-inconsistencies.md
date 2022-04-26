@@ -7,6 +7,18 @@ tags:
   - inconsistency
 ---
 
+<!--
+This is a temporary fix while GitHub Pages' syntax highlighter, Rouge,
+does not yet have a lexer for Agda: https://github.com/rouge-ruby/rouge/issues/709.
+So in the meantime, we use Haskell's highlighter, and manually disable errors.
+-->
+
+<style>
+  .highlight .err {
+    background-color: inherit;
+  }
+</style>
+
 While it's rather difficult to accidentally prove an inconsistency in a well-meaning type theory that isn't obviously inconsistent
 (have you ever unintentionally proven that a type corresponding to an ordinal is strictly larger than itself? I didn't think so),
 it feels like it's comparatively easy to add rather innocent features to your type theory that will suddenly make it inconsistent.
@@ -34,7 +46,7 @@ Conceptually, `℘ X` is the powerset of `X`, implemented as `X → Type`;
 `τ` and `σ` then form an isomorphism between `U` and the powerset of its powerset, which is an inconsistency.
 Hurkens defines `U`, `τ`, and `σ` as follows, mechanized in Agda below.
 
-```
+```haskell
 U : Set
 U = ∀ (X : Set) → (℘ (℘ X) → X) → ℘ (℘ X)
 
@@ -77,7 +89,7 @@ although we also have the possibility of lowering the return type of `℘`.
 An impredicative `Set₁` above a predicative `Set` may be inconsistent as well,
 since we never make use of the impredicativity of `Set` itself.
 
-```
+```haskell
 ℘ : ∀ {ℓ} → Set ℓ → Set₁
 ℘ {ℓ} S = S → Set
 
@@ -136,7 +148,7 @@ then to extract the element of `U` as needed using the strongness of the pair.
 Notice that we don't actually need the second component of the pair, which we can trivially fill in with `⊤`.
 This means we could instead simply use the following record type in Agda.
 
-```
+```haskell
 record Lower (A : Set₁) : Set where
   constructor lower
   field raise : A
@@ -148,7 +160,7 @@ To allow type checking this definition, we need to again turn on type-in-type, d
 If we really want to make sure we really never make use of type-in-type,
 we can postulate `Lower`, `lower`, and `raise`, and use rewrite rules to recover the computational behaviour of the projection.
 
-```
+```haskell
 {-# OPTIONS --rewriting #-}
 
 postulate
@@ -164,7 +176,7 @@ Refactoring the existing proof is straightforward:
 any time an element of `U` is used, it must first be raised back to its original universe,
 and any time an element of `U` is produced, it must be lowered down to the desired universe.
 
-```
+```haskell
 U : Set
 U = Lower (∀ (X : Set) → (℘ (℘ X) → X) → ℘ (℘ X))
 
@@ -248,7 +260,7 @@ some of them resembling the set-theoretical Russell's paradox.
 A negative inductive type is one where the inductive type appears to the left of an odd number of arrows in a constructor's type.
 For instance, the following definition will allow us to derive an inconsistency.
 
-```
+```haskell
 record Bad : Set where
   constructor mkBad
   field bad : Bad → ⊥
@@ -258,14 +270,14 @@ open Bad
 The field of a `Bad` essentially contains a negation of `Bad` itself (and I believe this is why this is considered a "negative" type).
 So when given a `Bad`, applying it to its own field, we obtain its negation.
 
-```
+```haskell
 notBad : Bad → ⊥
 notBad b = b.bad b
 ```
 
 Then from the negation of `Bad` we construct a `Bad`, which we apply to its negation to obtain an inconsistency.
 
-```
+```haskell
 bottom : ⊥
 bottom = notBad (mkBad notBad)
 ```
@@ -281,7 +293,7 @@ Strict positivity is the usual condition imposed on all inductive types in Coq.
 If instead we allow positive inductive types in general, when combined with an impredicative universe (we'll use `Set` again),
 we can define an inconsistency corresponding to Russell's paradox.
 
-```
+```haskell
 {-# NO_POSITIVITY_CHECK #-}
 record Bad : Set₁ where
   constructor mkBad
@@ -291,7 +303,7 @@ record Bad : Set₁ where
 From this definition, we can prove an injection from `℘ Bad` to `Bad` via an injection from `℘ Bad` to `℘ (℘ Bad)`
 defined as a partially-applied equality type.
 
-```
+```haskell
 f : ℘ Bad → Bad
 f p = mkBad (_≡ p)
 
@@ -309,7 +321,7 @@ Coquand and Paulin [[5](#5)] use the following definitions in their proof, which
 since `℘ Bad` otherwise does not live in `Set`.
 In this case, weak impredicative pairs would suffice, since the remaining definitions can all live in the same impredicative universe.
 
-```
+```haskell
 P₀ : ℘ Bad
 P₀ x = Σ[ P ∈ ℘ Bad ] x ≡ f P × ¬ (P x)
 
@@ -324,7 +336,7 @@ From here, we can prove `P₀ x₀ ↔ ¬ P₀ x₀`. The rest of the proof can 
 Another type-theoretic encoding of Russell's paradox is Berardi's paradox [[6](#6)].
 It begins with a retraction, which looks like half an isomorphism.
 
-```
+```haskell
 record _◁_ {ℓ} (A B : Set ℓ) : Set ℓ where
   constructor _,_,_
   field
@@ -339,7 +351,7 @@ If we postulate the axiom of choice, then we can push the universal quantificati
 yielding a `ϕ` and a `ψ` such that `ψ ∘ ϕ ≡ id` only when given some proof of `A ⊲ B`.
 However, a retraction of powersets can be stipulated out of thin air using only the axiom of excluded middle.
 
-```
+```haskell
 record _◁′_ {ℓ} (A B : Set ℓ) : Set ℓ where
   constructor _,_,_
   field
@@ -366,7 +378,7 @@ Here, we need an impredicative `Set` so that `U` can also live in `Set` and so t
 Note that we project the equality out of the record while the record is impredicative,
 so putting `_≡_` in `Set` as well will help us avoid large eliminations for now.
 
-```
+```haskell
 projᵤ : U → ℘ U
 projᵤ u = u U
 
@@ -384,7 +396,7 @@ Now onto Russell's paradox.
 Defining `_∈_` to be `projᵤ` and letting `r ≝ injᵤ (λ u → ¬ u ∈ u)`,
 we can show a curious inconsistent statement.
 
-```
+```haskell
 r∈r≡r∉r : r ∈ r ≡ (¬ r ∈ r)
 r∈r≡r∉r = cong (λ f → f (λ u → ¬ u ∈ u) r) projᵤ∘injᵤ
 ```
@@ -406,7 +418,7 @@ then prove a falsehood by providing an ordinal that is obviously *not* well-foun
 This representation can be type checked using Agda's `NO_UNIVERSE_CHECK` pragma,
 and normally it would live in `Set₁` due to one constructor argument type living in `Set₁`.
 
-```
+```haskell
 {-# NO_UNIVERSE_CHECK #-}
 data Ord : Set where
   ↑_ : Ord → Ord
@@ -427,14 +439,14 @@ while `⊔f≤s` states that it is the *least* upper bound.
 Finally, `↑s≤↑s` is simply the monotonicity of taking the successor of an ordinal with respect to the preorder.
 It's possible to show that `≤` is indeed a preorder by proving its reflexivity and transitivity.
 
-```
+```haskell
 s≤s : ∀ {s : Ord} → s ≤ s
 s≤s≤s : ∀ {r s t : Ord} → r ≤ s → s ≤ t → r ≤ t
 ```
 
 From the preorder we define a corresponding strict order.
 
-```
+```haskell
 _<_ : Ord → Ord → Set
 r < s = ↑ r ≤ s
 ```
@@ -447,7 +459,7 @@ which we'll call the "infinite" ordinal,
 defined as the limit ordinal of *all* ordinals,
 which is possible due to the impredicativity of `Ord`.
 
-```
+```haskell
 ∞ : Ord
 ∞ = ⊔ (λ s → s)
 
@@ -460,7 +472,7 @@ whose construction for some ordinal `s` relies on showing that all smaller ordin
 Finally, wellfoundness is defined as a proof that *all* ordinals are accessible,
 using a lemma to extract accessibility of all smaller or equal ordinals.
 
-```
+```haskell
 record Acc (s : Ord) : Set where
   inductive
   pattern
@@ -497,7 +509,7 @@ In any case, we proceed to actually deriving the inconsistency, which is easy:
 show that `∞` is in fact *not* accessible using `∞<∞`,
 then derive falsehood directly.
 
-```
+```haskell
 ¬accessible∞ : Acc ∞ → ⊥
 ¬accessible∞ (acc p) = ¬accessible∞ (p ∞ ∞<∞)
 
@@ -507,6 +519,48 @@ ng = ¬accessible∞ (accessible ∞)
 
 The complete Agda proof can be found at [Ordinals.html](/assets/agda/Ordinals.html),
 while a partial Coq proof of accessibility of ordinals can be found at [Ordinals.html](/assets/coq/Ordinals.html).
+
+### Relaxed Guardedness
+
+The recursive calls of cofixpoints must be *guarded by constructors*,
+meaning that they only appear as arguments to constructors of the coinductive type of the cofixpoint.
+What's more, the constructor argument type must be syntactically the coinductive type,
+not merely a polymorphic type that's filled in to be the coinductive type later.
+If the guardedness condition is relaxed to ignore this second condition,
+then we can derive an inconsistency with impredicative coinductives.
+Again, we define one using `NO_UNIVERSE_CHECK`, with contradictory fields.
+Evidently we should never be able to construct such a coinductive.
+
+```haskell
+{-# NO_UNIVERSE_CHECK #-}
+record Contra : Set where
+  coinductive
+  constructor contra
+  field
+    A : Set
+    a : A
+    ¬a : A → ⊥
+
+¬c : Contra → ⊥
+¬c = λ c → (¬a c) (a c)
+```
+
+However, if the type field in `Contra` is `Contra` itself,
+then we can in fact construct one coinductively.
+Here, we use `NON_TERMINATING` to circumvent Agda's perfectly correct guardedness checker,
+but notice that the recursive call is inside of `contra` and therefore still "guarded".
+This easily leads to an inconsistency.
+
+```haskell
+{-# NON_TERMINATING #-}
+c : Contra
+c = contra Contra c ¬c
+
+ng : ⊥
+ng = ¬c c
+```
+
+This counterexample is due to Giménez [[8](#8)] and the complete proof can be found at [Coind.html](/assets/agda/Coind.html).
 
 ## Summary
 
@@ -520,6 +574,7 @@ The combinations of features that yield inconsistencies are:
 * Non-strictly-positive inductive types + impredicativity
 * Impredicativity + excluded middle + unrestricted large elimination
 * Impredicative inductive types + unrestricted large elimination (again)
+* Relaxed guardedness of cofixpoints
 
 ## Source Files
 
@@ -549,6 +604,10 @@ The combinations of features that yield inconsistencies are:
 <details>
   <summary>Accessibility of ordinals: <a href="/assets/coq/Ordinals.html">Ordinals.html</a></summary>
   <iframe src="/assets/coq/Ordinals.html" width="100%"></iframe>
+</details>
+<details>
+  <summary>Relaxed guardedness: <a href="/assets/agda/Coind.html">Coind.html</a></summary>
+  <iframe src="/assets/agda/Coind.html" width ="100%"></iframe>
 </details>
 
 <script>
@@ -588,3 +647,5 @@ The combinations of features that yield inconsistencies are:
 [<a name="6">6</a>] Barbanera, Franco; Berardi, Stefano. (JFP 1996). _Proof-irrelevance out of excluded middle and choice in the calculus of constructions_. ᴅᴏɪ:[10.1017/S0956796800001829](https://doi.org/10.1017/S0956796800001829).
 <br/>
 [<a name="7">7</a>] Pfenning, Frank; Christine, Paulin-Mohring. (MFPS 1989). _Inductively defined types in the Calculus of Constructions_. ᴅᴏɪ:[10.1007/BFb0040259](https://doi.org/10.1007/BFb0040259).
+<br/>
+[<a name="8">8</a>] Giménez, Eduardo. (TYPES 1994). _Codifying guarded definitions with recursive schemes_. ᴅᴏɪ:[10.1007/3-540-60579-7_3](https://doi.org/10.1007/3-540-60579-7_3).

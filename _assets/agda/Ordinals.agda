@@ -1,4 +1,4 @@
-open import Data.Empty using (⊥; ⊥-elim)
+open import Data.Empty
 
 infix 30 ↑_
 infix 30 ⊔_

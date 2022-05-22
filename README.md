@@ -1,9 +1,13 @@
-# Building
+### ⚠️ This repository has moved to [ionathanch.gitlab.io](https://gitlab.com/ionathanch/ionathanch.gitlab.io/). ⚠️
+
+<hr/>
+
+## Building
 1. Install the [correct version](https://pages.github.com/versions/) of Ruby.
 2. `make install`
 3. `make`
 
-# Theme changes to Hydeout
+## Theme changes to Hydeout
 Most of these changes are marked with a comment indicating where the original was modified.
 * Added profile picture to `_includes/sidebar.html`
 * Removed category links with blank `_includes/category-links.html`
@@ -20,11 +24,11 @@ Most of these changes are marked with a comment indicating where the original wa
 * Added option to display alternate tab title `tab_title` and Open Graph meta tags to `_includes/head.html`
 * Added image caption styling, custom fonts, and widened column in `assets/css/main.scss`
 
-## Special assets
+### Special assets
 * Sidebar profile picture: Add the relative path of the image to `_config.yml` under `profile`
 * KaTeX script: Add the relative path of `katex.min.js` to `_config.yml` under `katex.js_path`
 
-## Images with captions
+### Images with captions
 To add an image with a caption, use the following code, replacing the content within the [brackets]:
 
 ```liquid

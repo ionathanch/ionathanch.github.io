@@ -1,4 +1,4 @@
-### ⚠️ This repository has moved to [ionathanch.gitlab.io](https://gitlab.com/ionathanch/ionathanch.gitlab.io/). ⚠️
+### ⚠️ This repository has moved to [ionchy.srht.site](https://git.sr.ht/~ionchy/ionathan.ch). ⚠️
 
 <hr/>
 
